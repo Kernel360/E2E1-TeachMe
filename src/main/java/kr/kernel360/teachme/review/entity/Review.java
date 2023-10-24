@@ -31,7 +31,7 @@ public class Review {
     private String content;
 
     @Builder
-    public Review(Long id, Member member, Lecture lecture, double score, String content) {
+    protected Review(Long id, Member member, Lecture lecture, double score, String content) {
         this.id = id;
         this.member = member;
         this.lecture = lecture;

@@ -24,7 +24,7 @@ public class Learning {
     private Member member;
 
     @Builder
-    public Learning(Long id, Lecture lecture, Member member) {
+    protected Learning(Long id, Lecture lecture, Member member) {
         this.id = id;
         this.lecture = lecture;
         this.member = member;

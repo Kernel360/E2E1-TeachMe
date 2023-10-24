@@ -15,6 +15,10 @@ public class Lecture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "platform_id")
+    private Platform platform;
+
     private String teacher;
 
     @Column(columnDefinition = "TEXT")
@@ -30,8 +34,9 @@ public class Lecture {
     private BigDecimal score;
 
     @Builder
-    public Lecture(Long id, String teacher, String url, String imageUrl, Category category, BigDecimal score) {
+    protected Lecture(Long id, Platform platform, String teacher, String url, String imageUrl, Category category, BigDecimal score) {
         this.id = id;
+        this.platform = platform;
         this.teacher = teacher;
         this.url = url;
         this.imageUrl = imageUrl;

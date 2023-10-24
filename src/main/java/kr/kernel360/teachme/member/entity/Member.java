@@ -21,7 +21,7 @@ public class Member {
     private String userName;
 
     @Builder
-    public Member(Long id, String email, String password, String userName) {
+    protected Member(Long id, String email, String password, String userName) {
         this.id = id;
         this.email = email;
         this.password = password;
