@@ -42,7 +42,7 @@ public class InflearnLectureListCrawlingService {
 				inflearnCourse.setStudentCnt(course.select("span.student_cnt").text());
 				inflearnCourse.setInstructor(course.select("div.instructor").text());
 
-				if(course.select("div.price > del").size() > 0) {
+				if(!course.select("div.price > del").isEmpty()) {
 					inflearnCourse.setRealIntPrice(Integer.parseInt(StringUtil.removeNotNumeric(course.select("div.price > del")
 							.text())));
 					inflearnCourse.setSaleIntPrice(Integer.parseInt(StringUtil.removeNotNumeric(course.select("div.price > span.pay_price")
