@@ -11,13 +11,16 @@ public class CrawlingFastcampus {
     }
 
     public FastcampusResponse getFastcampusResponse() {
-        System.out.println(apiUrl);
 
         RestTemplate restTemplate = new RestTemplate();
 
-        FastcampusResponse fastcampusResponse = restTemplate.getForObject(apiUrl, FastcampusResponse.class);
-
+        FastcampusResponse fastcampusResponse = restTemplate.getForObject("https://fastcampus.co.kr/.api/www/categories/1/page", FastcampusResponse.class);
 
         return fastcampusResponse;
+    }
+
+    public static void main(String[] args) {
+        CrawlingFastcampus crawl = new CrawlingFastcampus("https://fastcampus.co.kr/.api/www/categories/1/page");
+        System.out.println(crawl.getFastcampusResponse().getData().getCategoryInfo().getCourses().get(0).toString());
     }
 }
