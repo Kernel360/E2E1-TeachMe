@@ -17,6 +17,7 @@ public class InflearnLectureListCrawlingService {
 
 	private final static String MASTER_URL = "https://www.inflearn.com";
 	private final static String TARGET_URL = "https://www.inflearn.com/courses";
+	private final static String PAGE_URL = "https://www.inflearn.com/courses?order=seq&page=";
 
 	public static void main(String[] args) throws IOException {
 
@@ -29,7 +30,7 @@ public class InflearnLectureListCrawlingService {
 		List<InflearnResponseDto> crawledDataList = new ArrayList<>();
 
 		for(var i = 1; i <= pageNum; i++) {
-			String pageUrl = "https://www.inflearn.com/courses?order=seq&page=" + i;
+			String pageUrl = PAGE_URL + i;
 			Connection pageConn = Jsoup.connect(pageUrl);
 			Document document = pageConn.get();
 			Elements courseElements = document.select("div.course");
