@@ -3,6 +3,7 @@ package kr.kernel360.teachme.lecture.entity;
 import kr.kernel360.teachme.member.entity.Member;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 
@@ -24,9 +25,10 @@ public class Learning {
     private Member member;
 
     @Builder
-    protected Learning(Long id, Lecture lecture, Member member) {
-        this.id = id;
+    protected Learning(Lecture lecture, Member member) {
+        Assert.notNull(lecture, "Learning lecture must not be null");
         this.lecture = lecture;
+        Assert.notNull(member, "Learning member must not be null");
         this.member = member;
     }
 

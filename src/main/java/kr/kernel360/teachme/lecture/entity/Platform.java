@@ -1,13 +1,16 @@
 package kr.kernel360.teachme.lecture.entity;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
 @Table(name = "platform")
+@Getter
 public class Platform {
 
     @Id
@@ -17,8 +20,8 @@ public class Platform {
     private String name;
 
     @Builder
-    protected Platform(Long id, String name) {
-        this.id = id;
+    protected Platform(String name) {
+        Assert.hasLength(name, "Platform name must not be empty");
         this.name = name;
     }
 }
