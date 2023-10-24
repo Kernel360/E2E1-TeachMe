@@ -38,15 +38,6 @@ public class InflearnCrawlingService {
 				final int saleIntPrice = toInt(removeNotNumeric(salePrice));
 
 				InflearnResponseDto inflearnResponseDto =  new InflearnResponseDto(title, id, realIntPrice, saleIntPrice, instructor, description, skills);
-				System.out.println(inflearnResponseDto.toString());
-				// System.out.println(j + ".강의 제목: " + title);
-				// System.out.println(j + ".강의 id: " + id);
-				// System.out.println(j + ".가격: " + realIntPrice);
-				// System.out.println(j + ".할인 가격: " + saleIntPrice);
-				// System.out.println(j + ".강의자: " + instructor);
-				// System.out.println(j + ".강의 부가설명: " + description);
-				// System.out.println(j + ".기술 스택: " + skills);
-				// System.out.println("------------------------");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,11 +1,9 @@
 package kr.kernel360.teachme.lecture.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -19,8 +17,4 @@ public class InflearnResponseDto {
 	private String instructor;
 	private String description;
 	private String skills;
-
-	public static class LectureInfo {
-
-	}
 }
