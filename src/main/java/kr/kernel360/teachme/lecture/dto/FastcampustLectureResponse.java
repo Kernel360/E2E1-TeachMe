@@ -2,8 +2,6 @@ package kr.kernel360.teachme.lecture.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class FastcampustLectureResponse {
 
