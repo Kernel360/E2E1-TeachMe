@@ -41,6 +41,7 @@ public class InflearnLectureListCrawlingService {
 			}
 			if(crawledDataList.size() > 10) break;
 		}
+
 		return crawledDataList;
 	}
 
