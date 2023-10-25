@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import kr.kernel360.teachme.lecture.dto.InflearnResponseDto;
+import kr.kernel360.teachme.lecture.dto.InflearnLectureListResponse;
 
 public class InflearnLectureListCrawlingService {
 
@@ -27,7 +27,7 @@ public class InflearnLectureListCrawlingService {
 
 		if(pageNum == 0) return;
 
-		List<InflearnResponseDto> crawledDataList = new ArrayList<>();
+		List<InflearnLectureListResponse> crawledDataList = new ArrayList<>();
 
 		for(var i = 1; i <= pageNum; i++) {
 			String pageUrl = PAGE_URL + i;
@@ -36,7 +36,7 @@ public class InflearnLectureListCrawlingService {
 			Elements courseElements = document.select("div.course");
 
             for (Element course : courseElements) {
-				InflearnResponseDto inflearnCourse = new InflearnResponseDto();
+				InflearnLectureListResponse inflearnCourse = new InflearnLectureListResponse();
 				inflearnCourse.setTitle(course.select("div.course_title").text());
 				inflearnCourse.setImageSource(course.select("figure.is_thumbnail > img").attr("src"));
 				inflearnCourse.setStudentCnt(course.select("span.student_cnt").text());
@@ -61,9 +61,7 @@ public class InflearnLectureListCrawlingService {
 
 				crawledDataList.add(inflearnCourse);
             }
-
 			if(crawledDataList.size() > 10) break;
-
 		}
 		System.out.println(crawledDataList.get(1).getSkills());
 	}

@@ -6,7 +6,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InflearnResponseDto {
+public class InflearnLectureListResponse {
 	private String title;
 	private String imageSource;
 	private int studentCnt;
