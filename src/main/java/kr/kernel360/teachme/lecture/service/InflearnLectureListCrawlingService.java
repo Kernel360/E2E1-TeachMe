@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.kernel360.teachme.lecture.entity.InflearnLecture;
 import kr.kernel360.teachme.lecture.util.StringUtil;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -12,7 +13,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import kr.kernel360.teachme.lecture.dto.InflearnLectureListResponse;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InflearnLectureListCrawlingService {
 
 	private final static String MASTER_URL = "https://www.inflearn.com";
@@ -86,8 +89,15 @@ public class InflearnLectureListCrawlingService {
 		return inflearnCourse;
 	}
 
+	public static void saveCrawledData(List<InflearnLectureListResponse> crawledData) {
+		List<InflearnLecture> lectureList = new ArrayList<>();
+		for(InflearnLectureListResponse data : crawledData) {
+			lectureList.add(data.toEntity());
+		}
+	}
+
 	public static void main(String[] args) throws IOException {
 		List<InflearnLectureListResponse> crawledDataList = crawlInflearnLectureList();
-		System.out.println(crawledDataList.get(1).getSkills());
+		saveCrawledData(crawledDataList);
 	}
 }
