@@ -1,11 +1,15 @@
 package kr.kernel360.teachme.lecture.dto;
 
 import kr.kernel360.teachme.lecture.entity.Fastcampus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FastcampustLectureResponse {
     private Long id;
     private String state;
@@ -15,15 +19,15 @@ public class FastcampustLectureResponse {
     private String keywords;
     private String desktopCardAsset;
 
-    public Fastcampus toEntity(){
-        return Fastcampus.builder()
-                .id(this.id)
-                .state(this.state)
-                .slug(this.slug)
-                .publicTitle(this.publicTitle)
-                .publicDescription(this.publicDescription)
-                .keywords(this.keywords)
-                .desktopCardAsset(this.desktopCardAsset);
+    public Fastcampus toEntity(Fastcampus fastcampus){
+        return fastcampus.builder()
+                .id(id)
+                .state(state)
+                .slug(slug)
+                .publicTitle(publicTitle)
+                .publicDescription(publicDescription)
+                .keywords(keywords)
+                .desktopCardAsset(desktopCardAsset).build();
     }
 }
 
