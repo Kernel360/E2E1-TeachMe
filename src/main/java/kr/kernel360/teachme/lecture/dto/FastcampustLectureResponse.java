@@ -11,12 +11,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FastcampustLectureResponse {
+
     private Long id;
+
     private String state;
+
     private String slug;
+
     private String publicTitle;
+
     private String publicDescription;
+
     private String keywords;
+
     private String desktopCardAsset;
 
     public Fastcampus toEntity(Fastcampus fastcampus){
