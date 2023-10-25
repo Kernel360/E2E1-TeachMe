@@ -1,5 +1,6 @@
 package kr.kernel360.teachme.lecture.dto;
 
+import kr.kernel360.teachme.lecture.entity.Inflearn;
 import kr.kernel360.teachme.lecture.util.StringUtil;
 import lombok.*;
 
