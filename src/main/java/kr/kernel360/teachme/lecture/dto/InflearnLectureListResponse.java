@@ -1,6 +1,6 @@
 package kr.kernel360.teachme.lecture.dto;
 
-import kr.kernel360.teachme.lecture.entity.Inflearn;
+import kr.kernel360.teachme.lecture.entity.InflearnLecture;
 import kr.kernel360.teachme.lecture.util.StringUtil;
 import lombok.*;
 
@@ -24,12 +24,12 @@ public class InflearnLectureListResponse {
 		this.studentCnt = StringUtil.isNumeric(studentCnt) ? Integer.parseInt(studentCnt) : 0;
 	}
 
-	public Inflearn toEntity() {
-		Inflearn inflearn = Inflearn.builder()
+	public InflearnLecture toEntity() {
+		InflearnLecture inflearn = InflearnLecture.builder()
 			.title(title)
 			.imageSource(imageSource)
 			.studentCnt(studentCnt)
-			.id(id)
+			.uniqueId(id)
 			.realIntPrice(realIntPrice)
 			.saleIntPrice(saleIntPrice)
 			.instructor(instructor)
