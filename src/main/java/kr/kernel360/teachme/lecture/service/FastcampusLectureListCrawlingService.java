@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FastcampusLectureListCrawlingService {
 
@@ -20,15 +21,13 @@ public class FastcampusLectureListCrawlingService {
 
         return fastcampusResponse;
     }
-    public static List<FastcampustLectureResponse> convertLectureListToLecture(FastcampustLectureListResponse lecutreList) {
-        List<FastcampustLectureResponse> lectures = new ArrayList<>();
+    public static List<FastcampustLectureResponse> convertLectureListToLecture(FastcampustLectureListResponse lectureList) {
         ModelMapper modelMapper = new ModelMapper();
-        for(var i = 0; i < lecutreList.getData().getCategoryList().size(); i++) {
-            for(var j = 0; j < lecutreList.getData().getCategoryList().get(i).getCourses().size(); j++) {
-                lectures.add(modelMapper.map(lecutreList.getData().getCategoryList().get(i).getCourses().get(j), FastcampustLectureResponse.class));
-            }
-        }
-        return lectures;
+
+        return lectureList.getData().getCategoryList().stream()
+                .flatMap(category -> category.getCourses().stream())
+                .map(course -> modelMapper.map(course, FastcampustLectureResponse.class))
+                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
