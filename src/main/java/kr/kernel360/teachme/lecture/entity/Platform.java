@@ -9,9 +9,9 @@ import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
-@Table(name = "category")
+@Table(name = "platform")
 @Getter
-public class Category {
+public class Platform {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,8 @@ public class Category {
     private String name;
 
     @Builder
-    protected Category(String name) {
-        Assert.hasLength(name, "Category name must not be empty");
+    protected Platform(String name) {
+        Assert.hasLength(name, "Platform name must not be empty");
         this.name = name;
     }
 }
