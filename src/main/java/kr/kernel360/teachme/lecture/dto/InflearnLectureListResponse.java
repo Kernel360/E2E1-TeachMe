@@ -1,6 +1,8 @@
 package kr.kernel360.teachme.lecture.dto;
 
+import kr.kernel360.teachme.lecture.entity.InflearnConnectLecture;
 import kr.kernel360.teachme.lecture.entity.InflearnLecture;
+import kr.kernel360.teachme.lecture.entity.Lecture;
 import kr.kernel360.teachme.lecture.util.StringUtil;
 import lombok.*;
 
@@ -40,4 +42,19 @@ public class InflearnLectureListResponse {
 			;
 		return inflearn;
 	}
+
+	public Lecture toLectureEntity(){
+		Lecture lecture = Lecture.builder()
+				.lectureId(id)
+				.platform("Inflearn")
+				.title(title)
+				.descrition(description)
+				.keywords(skills)
+				.url(url)
+				.img(imageSource)
+				.build();
+		return lecture;
+	}
+
+
 }
