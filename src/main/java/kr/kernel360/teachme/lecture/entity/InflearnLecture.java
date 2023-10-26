@@ -40,6 +40,7 @@ public class InflearnLecture {
 	@Column(columnDefinition =  "TEXT")
 	private String url;
 
+	@Column(columnDefinition =  "TEXT")
 	private String description;
 
 	private String skills;

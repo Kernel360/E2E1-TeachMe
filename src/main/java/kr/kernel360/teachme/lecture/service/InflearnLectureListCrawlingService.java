@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.kernel360.teachme.lecture.entity.InflearnLecture;
+import kr.kernel360.teachme.lecture.repository.InflearnRepository;
 import kr.kernel360.teachme.lecture.util.StringUtil;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -13,15 +14,19 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import kr.kernel360.teachme.lecture.dto.InflearnLectureListResponse;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
 
-@Component
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
 public class InflearnLectureListCrawlingService {
 
 	private final static String MASTER_URL = "https://www.inflearn.com";
 	private final static String TARGET_URL = "https://www.inflearn.com/courses";
 	private final static String PAGE_URL = "https://www.inflearn.com/courses?order=seq&page=";
-
+	private final InflearnRepository inflearnRepository;
 
 	private static List<InflearnLectureListResponse> crawlInflearnLectureList() throws IOException {
 		Connection conn = Jsoup.connect(TARGET_URL);
@@ -94,10 +99,12 @@ public class InflearnLectureListCrawlingService {
 		for(InflearnLectureListResponse data : crawledData) {
 			lectureList.add(data.toEntity());
 		}
+
 	}
 
 	public static void main(String[] args) throws IOException {
 		List<InflearnLectureListResponse> crawledDataList = crawlInflearnLectureList();
 		saveCrawledData(crawledDataList);
+
 	}
 }
