@@ -17,10 +17,9 @@ function crawlFastcampusData() {
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         async: false,
-        success: function(data) {
-            alert(data);
+        success: function() {
             fastcampus_btn.innerText = "크롤링 완료!";
-            fastcampus_btn.disabled = false
+            fastcampus_btn.disabled = false;
             fastcampus_btn.removeEventListener("click", crawlFastcampusData);
         }
     });
@@ -39,10 +38,9 @@ function crawlInflearnData() {
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         async: false,
-        success: function(data) {
-            alert(data);
+        success: function() {
             inflearn_btn.innerText = "크롤링 완료!";
-            inflearn_btn.disabled = false
+            inflearn_btn.disabled = false;
             inflearn_btn.removeEventListener("click", crawlInflearnData);
         }
     })
