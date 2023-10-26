@@ -46,4 +46,8 @@ public class FastcampusLectureListCrawlingService {
         fastcampusRepository.saveAll(lectureList);
         return lectures;
     }
+
+    public void crawling() {
+
+    }
 }
