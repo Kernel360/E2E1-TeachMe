@@ -1,6 +1,5 @@
 package kr.kernel360.teachme.lecture.dto;
 
-import kr.kernel360.teachme.lecture.entity.InflearnConnectLecture;
 import kr.kernel360.teachme.lecture.entity.InflearnLecture;
 import kr.kernel360.teachme.lecture.entity.Lecture;
 import kr.kernel360.teachme.lecture.util.StringUtil;
