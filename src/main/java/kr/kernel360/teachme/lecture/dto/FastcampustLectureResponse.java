@@ -25,7 +25,7 @@ public class FastcampustLectureResponse {
     private String desktopCardAsset;
 
     public FastcampusLecture toEntity(){
-        FastcampusLecture fastcampusLecture = FastcampusLecture.builder()
+        return FastcampusLecture.builder()
                 .uniqueId(id)
                 .state(state)
                 .slug(slug)
@@ -34,7 +34,6 @@ public class FastcampustLectureResponse {
                 .keywords(keywords)
                 .desktopCardAsset(desktopCardAsset)
                 .build();
-        return fastcampusLecture;
     }
 }
 

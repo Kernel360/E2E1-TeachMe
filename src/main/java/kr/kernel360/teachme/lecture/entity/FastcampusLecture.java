@@ -24,8 +24,10 @@ public class FastcampusLecture {
 
     private String publicTitle;
 
+    @Column(columnDefinition = "TEXT")
     private String publicDescription;
 
+    @Column(columnDefinition = "TEXT")
     private String keywords;
 
     @Column(columnDefinition = "TEXT")
