@@ -36,6 +36,7 @@ public class FastcampustLectureResponse {
                 .desktopCardAsset(desktopCardAsset)
                 .build();
     }
+
     public Lecture toLectureEntity(){
         return Lecture.builder()
             .lectureId(id)
@@ -47,7 +48,6 @@ public class FastcampustLectureResponse {
             .img(desktopCardAsset)
             .build();
     }
-
 }
 
 
