@@ -1,11 +1,9 @@
 package kr.kernel360.teachme.lecture.dto;
 
-import kr.kernel360.teachme.lecture.entity.Fastcampus;
+import kr.kernel360.teachme.lecture.entity.FastcampusLecture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -26,15 +24,17 @@ public class FastcampustLectureResponse {
 
     private String desktopCardAsset;
 
-    public Fastcampus toEntity(Fastcampus fastcampus){
-        return fastcampus.builder()
-                .id(id)
+    public FastcampusLecture toEntity(){
+        FastcampusLecture fastcampusLecture = FastcampusLecture.builder()
+                .uniqueId(id)
                 .state(state)
                 .slug(slug)
                 .publicTitle(publicTitle)
                 .publicDescription(publicDescription)
                 .keywords(keywords)
-                .desktopCardAsset(desktopCardAsset).build();
+                .desktopCardAsset(desktopCardAsset)
+                .build();
+        return fastcampusLecture;
     }
 }
 
