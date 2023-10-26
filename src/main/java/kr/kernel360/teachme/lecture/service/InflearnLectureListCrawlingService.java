@@ -110,7 +110,6 @@ public class InflearnLectureListCrawlingService {
 		return inflearnRepository.count() > 0;
 	}
 
-
 	public void saveInflearnToLecture(List<InflearnLectureListResponse> crawledData){
 		List<Lecture> lectureList = new ArrayList<>();
 		for(InflearnLectureListResponse data : crawledData) {
@@ -118,8 +117,6 @@ public class InflearnLectureListCrawlingService {
 		}
 		lectureRepository.saveAll(lectureList);
 	}
-
-
 
 	@Transactional
 	public void runInflearnLectureCrawler() {

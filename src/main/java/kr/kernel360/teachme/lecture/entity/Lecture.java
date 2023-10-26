@@ -25,7 +25,7 @@ public class Lecture {
     private String title;
 
     @Column(columnDefinition = "TEXT")
-    private String descrition;
+    private String description;
 
     @Column(columnDefinition = "TEXT")
     private String keywords;
@@ -37,15 +37,14 @@ public class Lecture {
     private String img;
 
     @Builder
-    protected Lecture(Long lectureId, String platform, String title, String descrition, String keywords, String url, String img){
+    protected Lecture(Long lectureId, String platform, String title, String description, String keywords, String url, String img){
         this.lectureId = lectureId;
         this.platform = platform;
         this.title = title;
-        this.descrition = descrition;
+        this.description = description;
         this.keywords = keywords;
         this.url = url;
         this.img = img;
     }
-
 
 }
