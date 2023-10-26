@@ -1,6 +1,6 @@
 package kr.kernel360.teachme.lecture.dto;
 
-import kr.kernel360.teachme.lecture.entity.InflearnConnectLecture;
+
 import kr.kernel360.teachme.lecture.entity.InflearnLecture;
 import kr.kernel360.teachme.lecture.entity.Lecture;
 import kr.kernel360.teachme.lecture.util.StringUtil;
@@ -48,7 +48,7 @@ public class InflearnLectureListResponse {
 				.lectureId(id)
 				.platform("Inflearn")
 				.title(title)
-				.descrition(description)
+				.description(description)
 				.keywords(skills)
 				.url(url)
 				.img(imageSource)
