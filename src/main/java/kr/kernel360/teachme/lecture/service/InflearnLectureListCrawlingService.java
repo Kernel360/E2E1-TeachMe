@@ -2,6 +2,7 @@ package kr.kernel360.teachme.lecture.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import kr.kernel360.teachme.lecture.entity.InflearnLecture;
@@ -16,28 +17,27 @@ import org.jsoup.select.Elements;
 import kr.kernel360.teachme.lecture.dto.InflearnLectureListResponse;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class InflearnLectureListCrawlingService {
 
-	private final static String MASTER_URL = "https://www.inflearn.com";
-	private final static String TARGET_URL = "https://www.inflearn.com/courses";
-	private final static String PAGE_URL = "https://www.inflearn.com/courses?order=seq&page=";
 	private final InflearnRepository inflearnRepository;
 
-	private static List<InflearnLectureListResponse> crawlInflearnLectureList() throws IOException {
-		Connection conn = Jsoup.connect(TARGET_URL);
+	private List<InflearnLectureListResponse> crawlInflearnLectureList() throws IOException {
+		String target_url = "https://www.inflearn.com/courses";
+		Connection conn = Jsoup.connect(target_url);
 		Document doc = conn.get();
 		int pageNum = getPageNumFromInflearn(doc);
 
-		if(pageNum == 0) return null;
+		if(pageNum == 0) return Collections.emptyList();
 
 		List<InflearnLectureListResponse> crawledDataList = new ArrayList<>();
 
 		for(var i = 1; i <= pageNum; i++) {
+			String PAGE_URL = "https://www.inflearn.com/courses?order=seq&page=";
 			String pageUrl = PAGE_URL + i;
 			Connection pageConn = Jsoup.connect(pageUrl);
 			Document document = pageConn.get();
@@ -47,7 +47,6 @@ public class InflearnLectureListCrawlingService {
 				InflearnLectureListResponse inflearnCourse = buildCourseToObject(course);
 				crawledDataList.add(inflearnCourse);
 			}
-			if(crawledDataList.size() > 10) break;
 		}
 
 		return crawledDataList;
@@ -59,15 +58,15 @@ public class InflearnLectureListCrawlingService {
 			Elements pageLinks = paginationElement.select("a");
 			if (!pageLinks.isEmpty()) {
 				Element lastPageLink = pageLinks.last();
-				String lastPageText = lastPageLink.text();
-				int lastPageNum = Integer.parseInt(lastPageText);
-				return lastPageNum;
+                assert lastPageLink != null;
+                String lastPageText = lastPageLink.text();
+				return Integer.parseInt(lastPageText);
 			}
 		}
 		return 0;
 	}
 
-	private static InflearnLectureListResponse buildCourseToObject(Element course) {
+	private InflearnLectureListResponse buildCourseToObject(Element course) {
 		InflearnLectureListResponse inflearnCourse = new InflearnLectureListResponse();
 		inflearnCourse.setTitle(course.select("div.course_title").text());
 		inflearnCourse.setImageSource(course.select("figure.is_thumbnail > img").attr("src"));
@@ -86,6 +85,7 @@ public class InflearnLectureListCrawlingService {
 			inflearnCourse.setSaleIntPrice(price);
 		}
 
+		String MASTER_URL = "https://www.inflearn.com";
 		inflearnCourse.setUrl(MASTER_URL + course.select("a.e_course_click").attr("href"));
 		inflearnCourse.setDescription(course.select("p.course_description").text());
 		inflearnCourse.setDifficulty(course.select("div.course_level > span").text());
@@ -94,17 +94,27 @@ public class InflearnLectureListCrawlingService {
 		return inflearnCourse;
 	}
 
-	public static void saveCrawledData(List<InflearnLectureListResponse> crawledData) {
+	public void saveCrawledData(List<InflearnLectureListResponse> crawledData) {
 		List<InflearnLecture> lectureList = new ArrayList<>();
 		for(InflearnLectureListResponse data : crawledData) {
 			lectureList.add(data.toEntity());
 		}
-
+		inflearnRepository.saveAll(lectureList);
 	}
 
-	public static void main(String[] args) throws IOException {
-		List<InflearnLectureListResponse> crawledDataList = crawlInflearnLectureList();
-		saveCrawledData(crawledDataList);
+	public boolean isAtLeastOneRowExists() {
+		return inflearnRepository.count() > 0;
+	}
 
+	@Transactional
+	public void runInflearnLectureCrawler() {
+		if(isAtLeastOneRowExists()) return;
+		List<InflearnLectureListResponse> crawledDataList = null;
+		try {
+			crawledDataList = crawlInflearnLectureList();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		saveCrawledData(crawledDataList);
 	}
 }
