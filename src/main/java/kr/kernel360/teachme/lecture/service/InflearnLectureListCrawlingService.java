@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import kr.kernel360.teachme.exception.CrawlerException;
 import kr.kernel360.teachme.lecture.entity.InflearnLecture;
 import kr.kernel360.teachme.lecture.repository.InflearnRepository;
 import kr.kernel360.teachme.lecture.util.StringUtil;
@@ -27,8 +28,8 @@ public class InflearnLectureListCrawlingService {
 	private final InflearnRepository inflearnRepository;
 
 	private List<InflearnLectureListResponse> crawlInflearnLectureList() throws IOException {
-		String target_url = "https://www.inflearn.com/courses";
-		Connection conn = Jsoup.connect(target_url);
+		String targetUrl = "https://www.inflearn.com/courses";
+		Connection conn = Jsoup.connect(targetUrl);
 		Document doc = conn.get();
 		int pageNum = getPageNumFromInflearn(doc);
 
@@ -37,8 +38,8 @@ public class InflearnLectureListCrawlingService {
 		List<InflearnLectureListResponse> crawledDataList = new ArrayList<>();
 
 		for(var i = 1; i <= pageNum; i++) {
-			String PAGE_URL = "https://www.inflearn.com/courses?order=seq&page=";
-			String pageUrl = PAGE_URL + i;
+			String url = "https://www.inflearn.com/courses?order=seq&page=";
+			String pageUrl = url + i;
 			Connection pageConn = Jsoup.connect(pageUrl);
 			Document document = pageConn.get();
 			Elements courseElements = document.select("div.course");
@@ -85,8 +86,8 @@ public class InflearnLectureListCrawlingService {
 			inflearnCourse.setSaleIntPrice(price);
 		}
 
-		String MASTER_URL = "https://www.inflearn.com";
-		inflearnCourse.setUrl(MASTER_URL + course.select("a.e_course_click").attr("href"));
+		String masterUrl = "https://www.inflearn.com";
+		inflearnCourse.setUrl(masterUrl + course.select("a.e_course_click").attr("href"));
 		inflearnCourse.setDescription(course.select("p.course_description").text());
 		inflearnCourse.setDifficulty(course.select("div.course_level > span").text());
 		inflearnCourse.setSkills(course.select("div.course_skills > span").text());
@@ -113,7 +114,7 @@ public class InflearnLectureListCrawlingService {
 		try {
 			crawledDataList = crawlInflearnLectureList();
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new CrawlerException("크롤링 중 에러 발생", e);
 		}
 		saveCrawledData(crawledDataList);
 	}
