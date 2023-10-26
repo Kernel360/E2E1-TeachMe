@@ -109,7 +109,7 @@ public class InflearnLectureListCrawlingService {
 
 	@Transactional
 	public void runInflearnLectureCrawler() {
-		if(isAtLeastOneRowExists()) return;
+		if(isAtLeastOneRowExists()) throw new CrawlerException("크롤링 불가 상태");
 		List<InflearnLectureListResponse> crawledDataList = null;
 		try {
 			crawledDataList = crawlInflearnLectureList();

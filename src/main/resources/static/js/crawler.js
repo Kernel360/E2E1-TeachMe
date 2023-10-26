@@ -16,11 +16,20 @@ function crawlFastcampusData() {
         data: JSON.stringify(inputData),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
-        async: false,
-        success: function() {
-            fastcampus_btn.innerText = "크롤링 완료!";
+        success: function(data) {
+            if(data.message === "크롤링 성공") {
+                fastcampus_btn.innerText = "크롤링 완료!";
+            } else {
+                fastcampus_btn.innerText = "크롤링 실패";
+            }
             fastcampus_btn.disabled = false;
             fastcampus_btn.removeEventListener("click", crawlFastcampusData);
+        },
+        error: function(e) {
+            alert(e);
+            console.log(e);
+            fastcampus_btn.innerText = "크롤링 실패";
+            fastcampus_btn.disabled = false;
         }
     });
 }
@@ -37,11 +46,19 @@ function crawlInflearnData() {
         data: JSON.stringify(inputData),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
-        async: false,
-        success: function() {
-            inflearn_btn.innerText = "크롤링 완료!";
+        success: function(data) {
+            if(data.message === "크롤링 성공") {
+                inflearn_btn.innerText = "크롤링 완료!";
+            } else {
+                inflearn_btn.innerText = "크롤링 실패";
+            }
             inflearn_btn.disabled = false;
             inflearn_btn.removeEventListener("click", crawlInflearnData);
+        },
+        error: function() {
+            alert("error");
+            inflearn_btn.innerText = "크롤링 실패";
+            inflearn_btn.disabled = false;
         }
     })
 }
