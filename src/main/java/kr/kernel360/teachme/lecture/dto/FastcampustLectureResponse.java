@@ -35,6 +35,7 @@ public class FastcampustLectureResponse {
                 .desktopCardAsset(desktopCardAsset)
                 .build();
     }
+
 }
 
 
