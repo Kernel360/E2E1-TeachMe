@@ -14,38 +14,53 @@ import java.math.BigDecimal;
 @Table(name = "lecture")
 @Getter
 public class Lecture {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long lectureId;
+    private String uniqueId;
 
-    private String platform;
+    @ManyToOne
+    @JoinColumn(name = "platform_id")
+    private Platform platform;
 
-    private String title;
-
-    @Column(columnDefinition = "TEXT")
-    private String descrition;
-
-    @Column(columnDefinition = "TEXT")
-    private String keywords;
+    private String teacher;
 
     @Column(columnDefinition = "TEXT")
+
+    private String description;
+
     private String url;
 
+
     @Column(columnDefinition = "TEXT")
-    private String img;
+    private String imageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    private BigDecimal score;
 
     @Builder
-    protected Lecture(Long lectureId, String platform, String title, String descrition, String keywords, String url, String img){
+
+    protected Lecture(Long lectureId, String platform, String title, String description, String keywords, String url, String img){
         this.lectureId = lectureId;
         this.platform = platform;
         this.title = title;
-        this.descrition = descrition;
+        this.description = description;
         this.keywords = keywords;
+
+    protected Lecture(String uniqueId, Platform platform, String teacher, String url, String imageUrl, Category category, BigDecimal score) {
+        Assert.hasLength(uniqueId, "Lecture unique id must not be empty");
+        this.uniqueId = uniqueId;
+        Assert.notNull(platform, "Lecture platform must not be null");
+        this.platform = platform;
+        this.teacher = teacher;
         this.url = url;
-        this.img = img;
+        this.imageUrl = imageUrl;
+        this.category = category;
+        this.score = score;
     }
-
-
 }
