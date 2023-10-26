@@ -12,12 +12,12 @@
         <div style="display: flex; justify-content: center; gap: 20px; flex-direction: column; align-items: center; background-color: white; padding-top: 50px; padding-bottom: 100px; width: 80%; margin: 0 auto; border-radius: 15px;">
             <h3>✨최근 추가된 강의</h3>
             <div class="parent-div">
-                <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                <div th:each="lecture : ${lectures}" class="card" style="width: 18rem;">
+                    <img th:src="${lecture.img}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title" th:text="${lecture.title}">Card title</h5>
+                        <p class="card-text ellipsis" th:text="${lecture.description}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a th:href="${lecture.url}" class="btn btn-primary">자세히 보기</a>
                     </div>
                 </div>
             </div>

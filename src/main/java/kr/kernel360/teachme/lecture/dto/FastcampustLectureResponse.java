@@ -44,7 +44,7 @@ public class FastcampustLectureResponse {
             .title(publicTitle)
             .description(publicDescription)
             .keywords(keywords)
-            .url(slug)
+            .url("https://fastcampus.co.kr/" + slug)
             .img(desktopCardAsset)
             .build();
     }
