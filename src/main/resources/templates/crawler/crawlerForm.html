@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/defaultLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Crawler Test</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+</head>
+<body>
+    <div layout:fragment="content">
+        <button id="fastcampus_crawler_button">패스트캠퍼스 크롤러 시작하기</button>
+        <button id="inflearn_crawler_button">인프런 크롤러 시작하기</button>
+        <script th:src="@{/js/crawler.js}"></script>
+    </div>
+</body>
+</html>

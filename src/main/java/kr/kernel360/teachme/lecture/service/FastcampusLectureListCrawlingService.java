@@ -35,4 +35,8 @@ public class FastcampusLectureListCrawlingService {
         List<FastcampustLectureResponse> lectures = convertLectureListToLecture(crawledData);
         System.out.println(lectures.get(0).toString());
     }
+
+    public void crawling() {
+
+    }
 }
