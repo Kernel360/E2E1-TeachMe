@@ -1,14 +1,14 @@
 package kr.kernel360.teachme.lecture.service;
 
-import kr.kernel360.teachme.lecture.dto.FastcampusResponse;
+import kr.kernel360.teachme.exception.CrawlerException;
 import kr.kernel360.teachme.lecture.dto.FastcampustLectureListResponse;
 import kr.kernel360.teachme.lecture.dto.FastcampustLectureResponse;
 import kr.kernel360.teachme.lecture.entity.FastcampusLecture;
 import kr.kernel360.teachme.lecture.repository.FastcampusRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -23,9 +23,7 @@ public class FastcampusLectureListCrawlingService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        FastcampustLectureListResponse fastcampusResponse = restTemplate.getForObject("https://fastcampus.co.kr/.api/www/categories/all", FastcampustLectureListResponse.class);
-
-        return fastcampusResponse;
+        return restTemplate.getForObject("https://fastcampus.co.kr/.api/www/categories/all", FastcampustLectureListResponse.class);
     }
     public static List<FastcampustLectureResponse> convertLectureListToLecture(FastcampustLectureListResponse lectureList) {
         ModelMapper modelMapper = new ModelMapper();
@@ -36,9 +34,21 @@ public class FastcampusLectureListCrawlingService {
                 .collect(Collectors.toList());
     }
 
+    public boolean isAtLeastOneRowExists() {
+        return fastcampusRepository.count() > 0;
+    }
+
+    @Transactional
     public List<FastcampustLectureResponse> create() {
+        if(isAtLeastOneRowExists()) throw new CrawlerException("크롤링 불가 상태");
         FastcampustLectureListResponse crawledData = getFastcampusResponse();
-        List<FastcampustLectureResponse> lectures = convertLectureListToLecture(crawledData);
+        List<FastcampustLectureResponse> lectures = new ArrayList<>();
+        try {
+            lectures = convertLectureListToLecture(crawledData);
+        } catch (NullPointerException e) {
+            throw new CrawlerException("크롤링 중 오류 발생 : 크롤링 된 데이터가 없습니다.", e);
+        }
+
         List<FastcampusLecture> lectureList = new ArrayList<>();
         for (FastcampustLectureResponse lecture : lectures){
             lectureList.add(lecture.toEntity());
@@ -47,7 +57,4 @@ public class FastcampusLectureListCrawlingService {
         return lectures;
     }
 
-    public void crawling() {
-
-    }
 }
