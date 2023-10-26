@@ -1,6 +1,7 @@
 package kr.kernel360.teachme.lecture.dto;
 
 import kr.kernel360.teachme.lecture.entity.FastcampusLecture;
+import kr.kernel360.teachme.lecture.entity.Lecture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,17 @@ public class FastcampustLectureResponse {
                 .build();
     }
 
+    public Lecture toLectureEntity(){
+        return Lecture.builder()
+            .lectureId(id)
+            .platform("fastcampus")
+            .title(publicTitle)
+            .description(publicDescription)
+            .keywords(keywords)
+            .url(slug)
+            .img(desktopCardAsset)
+            .build();
+    }
 }
 
 
