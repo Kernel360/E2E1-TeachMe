@@ -40,4 +40,19 @@ public class InflearnLectureListResponse {
 			;
 		return inflearn;
 	}
+
+
+	public Lecture toLectureEntity(){
+		Lecture lecture = Lecture.builder()
+				.lectureId(id)
+				.platform("Inflearn")
+				.title(title)
+				.description(description)
+				.keywords(skills)
+				.url(url)
+				.img(imageSource)
+				.build();
+		return lecture;
+	}
+
 }

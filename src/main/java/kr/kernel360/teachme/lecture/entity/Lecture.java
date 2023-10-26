@@ -28,7 +28,11 @@ public class Lecture {
     private String teacher;
 
     @Column(columnDefinition = "TEXT")
+
+    private String description;
+
     private String url;
+
 
     @Column(columnDefinition = "TEXT")
     private String imageUrl;
@@ -40,6 +44,14 @@ public class Lecture {
     private BigDecimal score;
 
     @Builder
+
+    protected Lecture(Long lectureId, String platform, String title, String description, String keywords, String url, String img){
+        this.lectureId = lectureId;
+        this.platform = platform;
+        this.title = title;
+        this.description = description;
+        this.keywords = keywords;
+
     protected Lecture(String uniqueId, Platform platform, String teacher, String url, String imageUrl, Category category, BigDecimal score) {
         Assert.hasLength(uniqueId, "Lecture unique id must not be empty");
         this.uniqueId = uniqueId;
