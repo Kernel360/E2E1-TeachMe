@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/defaultLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Teach Me : 내가 고르는 강의 - 강의 리스트</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style/lecture/list.css}">
+</head>
+<body>
+    <div class="content" layout:fragment="content">
+        <div class="search_menu" style="width: 80%; margin: 0 auto">
+            <label>
+                <select>
+                    <option>등록 순</option>
+                </select>
+            </label>
+            <label>
+                <input type="text" placeholder="검색어 입력"/>
+            </label>
+            <button>검색</button>
+        </div>
+    </div>
+</body>
+</html>

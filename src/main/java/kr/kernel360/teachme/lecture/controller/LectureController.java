@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/lecture")
 public class LectureController {
 
-    @ApiOperation(value="테스트 사이트", notes="정상 동작 시 페이지 return")
-    @GetMapping("/admin")
-    public String viewTest() {
-        return "hi";
+    @ApiOperation(value="강의 리스트 사이트", notes="강의 리스트 출력 및 검색")
+    @GetMapping("/list")
+    public String getLectureListForm() {
+        return "lecture/list";
     }
+
 
 }

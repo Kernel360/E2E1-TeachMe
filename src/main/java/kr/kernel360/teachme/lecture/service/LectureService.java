@@ -16,6 +16,6 @@ public class LectureService {
     private final LectureRepository lectureRepository;
 
     public List<Lecture> getLatestLectures() {
-        return lectureRepository.findByOrderByIdDesc(PageRequest.of(0, 9));
+        return lectureRepository.findByOrderByIdDesc(PageRequest.of(0, 12));
     }
 }
