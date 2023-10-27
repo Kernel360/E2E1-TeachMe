@@ -2,10 +2,17 @@ package kr.kernel360.teachme.lecture.controller;
 
 import io.swagger.annotations.ApiOperation;
 import kr.kernel360.teachme.lecture.entity.Lecture;
+import kr.kernel360.teachme.lecture.entity.Api;
 import kr.kernel360.teachme.lecture.service.LectureService;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -23,5 +30,14 @@ public class HomeController {
         List<Lecture> lectures = lectureService.getLatestLectures();
         model.addAttribute("lectures", lectures);
         return "home";
+    }
+
+    @GetMapping("/all")
+    @ResponseBody
+    public Api<List<Lecture>> list(
+        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)
+        Pageable pageable
+    ){
+        return lectureService.all(pageable);
     }
 }
