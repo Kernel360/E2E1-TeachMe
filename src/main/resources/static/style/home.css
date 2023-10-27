@@ -16,3 +16,12 @@
 .card {
     width: calc(33.3333% - 20px);
 }
+
+.ellipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 3; /* 표시할 줄의 수 */
+    line-height: 1.2em; /* 라인 높이, em 단위 */
+    max-height: 3.6em; /* 라인 높이 x 라인 수 */
+}

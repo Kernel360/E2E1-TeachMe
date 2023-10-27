@@ -1,13 +1,10 @@
 package kr.kernel360.teachme.lecture.entity;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @NoArgsConstructor
 @Entity
