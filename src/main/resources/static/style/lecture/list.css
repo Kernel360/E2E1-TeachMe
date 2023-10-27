@@ -1,0 +1,6 @@
+.search_menu {
+    width: 80%;
+    margin: 0 auto;
+    text-align: right;
+    z-index: -1;
+}

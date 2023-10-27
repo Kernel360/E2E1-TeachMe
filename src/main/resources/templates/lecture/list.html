@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/defaultLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Teach Me : 내가 고르는 강의 - 강의 리스트</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style/lecture/list.css}">
+</head>
+<body>
+    <div class="content" layout:fragment="content">
+        <div class="search_menu" style="width: 80%; margin: 0 auto; margin-bottom: 50px;">
+            <label>
+                <select>
+                    <option>등록 순</option>
+                </select>
+            </label>
+            <label>
+                <input type="text" placeholder="검색어 입력"/>
+            </label>
+            <button>검색</button>
+        </div>
+        <div th:each="lecture : ${lecturePage.body}" style="display: flex; gap: 20px; align-items: center; background-color: white; width: 80%; margin: 10px auto; border-radius: 15px;">
+            <img th:src="${lecture.img}" style="width: 200px; height: 130px; border-radius: 10px;" alt="...">
+            <span th:text="${lecture.title}"></span>
+        </div>
+        <nav aria-label="Page navigation example" style="width: 80%; margin: 0 auto; margin-top:50px; ">
+            <ul class="pagination" style="justify-content: center;">
+                <li class="page-item" th:classappend="${!(lecturePage.pagination.page == 0)} ? '': 'disabled'">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page})}" th:if="${!(lecturePage.pagination.page == 0)}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 1})}" th:text="${lecturePage.pagination.page + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${!(lecturePage.pagination.page == lecturePage.pagination.totalPage)} ? '': 'disabled'">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 2})}" th:if="${!(lecturePage.pagination.page == lecturePage.pagination.totalPage)}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+<!--                <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#" th:text="${lecturePage.pagination.page + 1}"></a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

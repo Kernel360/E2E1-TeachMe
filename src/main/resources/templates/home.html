@@ -9,9 +9,12 @@
 </head>
 <body>
     <div class="content" layout:fragment="content">
-        <div style="display: flex; justify-content: center; gap: 20px; flex-direction: column; align-items: center; background-color: white; padding-top: 50px; padding-bottom: 100px; width: 80%; margin: 0 auto; border-radius: 15px;">
+        <div style="display: flex; justify-content: center; gap: 20px; flex-direction: column; align-items: center; background-color: white; padding-top: 50px; width: 80%; margin: 0 auto; border-radius: 15px; margin-bottom: 100px;">
             <h3>✨최근 추가된 강의</h3>
             <div class="parent-div">
+                <div th:if="${#lists.size(lectures) == 0}" style="text-align: center">
+                    <p style="color: grey">최근 추가된 강의가 없습니다.😢</p>
+                </div>
                 <div th:each="lecture : ${lectures}" class="card" style="width: 18rem;">
                     <img th:src="${lecture.img}" class="card-img-top" alt="...">
                     <div class="card-body">
