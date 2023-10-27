@@ -1,12 +1,14 @@
 package kr.kernel360.teachme.lecture.service;
 
 import kr.kernel360.teachme.lecture.entity.Lecture;
+import kr.kernel360.teachme.lecture.entity.Api;
+import kr.kernel360.teachme.lecture.entity.Pagination;
 import kr.kernel360.teachme.lecture.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,4 +20,25 @@ public class LectureService {
     public List<Lecture> getLatestLectures() {
         return lectureRepository.findByOrderByIdDesc(PageRequest.of(0, 9));
     }
+
+    public Api<List<Lecture>> all(Pageable pageable) {
+        var list = lectureRepository.findAll(pageable);
+
+        var pagination = Pagination.builder()
+            .page(list.getNumber())
+            .size(list.getSize())
+            .currentElements(list.getNumberOfElements())
+            .totalElements(list.getTotalElements())
+            .totalPage(list.getTotalPages())
+            .build()
+            ;
+
+        var response = Api.<List<Lecture>>builder()
+            .body(list.toList())
+            .pagination(pagination)
+            .build();
+
+        return response;
+    }
+
 }
