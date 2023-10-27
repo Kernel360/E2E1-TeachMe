@@ -1,0 +1,27 @@
+/* 부모 요소 스타일 */
+.parent-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    background-color: white;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 15px;
+}
+
+.card {
+    width: calc(33.3333% - 20px);
+}
+
+.ellipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 3; /* 표시할 줄의 수 */
+    line-height: 1.2em; /* 라인 높이, em 단위 */
+    max-height: 3.6em; /* 라인 높이 x 라인 수 */
+}

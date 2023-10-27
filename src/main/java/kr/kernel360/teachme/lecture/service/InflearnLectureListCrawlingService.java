@@ -7,7 +7,9 @@ import java.util.List;
 
 import kr.kernel360.teachme.exception.CrawlerException;
 import kr.kernel360.teachme.lecture.entity.InflearnLecture;
+import kr.kernel360.teachme.lecture.entity.Lecture;
 import kr.kernel360.teachme.lecture.repository.InflearnRepository;
+import kr.kernel360.teachme.lecture.repository.LectureRepository;
 import kr.kernel360.teachme.lecture.util.StringUtil;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InflearnLectureListCrawlingService {
 
 	private final InflearnRepository inflearnRepository;
+	private final LectureRepository lectureRepository;
 
 	private List<InflearnLectureListResponse> crawlInflearnLectureList() throws IOException {
 		String targetUrl = "https://www.inflearn.com/courses";
@@ -107,6 +110,14 @@ public class InflearnLectureListCrawlingService {
 		return inflearnRepository.count() > 0;
 	}
 
+	public void saveInflearnToLecture(List<InflearnLectureListResponse> crawledData){
+		List<Lecture> lectureList = new ArrayList<>();
+		for(InflearnLectureListResponse data : crawledData) {
+			lectureList.add(data.toLectureEntity());
+		}
+		lectureRepository.saveAll(lectureList);
+	}
+
 	@Transactional
 	public void runInflearnLectureCrawler() {
 		if(isAtLeastOneRowExists()) throw new CrawlerException("크롤링 불가 상태");
@@ -117,5 +128,12 @@ public class InflearnLectureListCrawlingService {
 			throw new CrawlerException("크롤링 중 에러 발생", e);
 		}
 		saveCrawledData(crawledDataList);
+
+		try {
+			saveInflearnToLecture(crawledDataList);
+		} catch (Exception e) {
+			throw new CrawlerException("인프런을 lecture 테이블에 저장하지 못함.", e);
+		}
+
 	}
 }
