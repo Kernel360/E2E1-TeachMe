@@ -68,7 +68,7 @@ public class CrawlerController {
                 inflearnLectureDetailCrawlingService.runInflearnLectureDetailCrawler();
                 response.setMessage(CRAWLING_SUCEED_MESSAGE);
                 return ResponseEntity.ok(response);
-            } catch (CrawlerException | IOException e) {
+            } catch (CrawlerException e) {
                 response.setMessage(CRAWLING_FAILURE_MESSAGE + e.getMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
             }

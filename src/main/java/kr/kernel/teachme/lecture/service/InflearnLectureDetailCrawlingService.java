@@ -60,4 +60,15 @@ public class InflearnLectureDetailCrawlingService {
 		response.setImageSource(imageSource);
 		return response;
 	}
+
+	public void runInflearnLectureDetailCrawler() {
+		if (!inflearnRepository.existsByDetailUploadFlagIsFalse()) throw new CrawlerException("업데이트할 데이터가 없습니다.");
+		List<InflearnLecture> updateList = getLectureListNotUpdated();
+		try {
+			updateList = updateLectureDetail(updateList);
+		} catch (IOException e) {
+			throw new CrawlerException("크롤링 중 에러 발생", e);
+		}
+		inflearnRepository.saveAll(updateList);
+	}
 }
