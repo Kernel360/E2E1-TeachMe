@@ -35,6 +35,7 @@ public class CrawlerController {
 
     @ApiOperation(value="어드민 크롤링 요청", notes="요청 Parameter에 따라 크롤러 작동")
     @PostMapping("/crawling")
+
     public ResponseEntity<CrawlingResponse> crawlLectureData(@RequestBody CrawlingRequest crawling) {
         CrawlingResponse response = new CrawlingResponse();
         if(crawling.getPlatform().equals("fastcampus")) {
@@ -55,9 +56,9 @@ public class CrawlerController {
                 response.setMessage(CRAWLING_FAILURE_MESSAGE + e.getMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
             }
-
         }
     }
+  
     @ApiOperation(value="어드민 상세 정보 크롤링 요청", notes="요청 Parameter에 따라 크롤러 작동")
     @PostMapping("/detailCrawling")
     public ResponseEntity<CrawlingResponse>  crawlLectureDetail(@RequestBody CrawlingRequest crawling) {

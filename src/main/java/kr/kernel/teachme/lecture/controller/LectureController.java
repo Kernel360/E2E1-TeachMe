@@ -5,6 +5,10 @@ import kr.kernel.teachme.lecture.dto.PaginationResponse;
 import kr.kernel.teachme.lecture.entity.Lecture;
 import kr.kernel.teachme.lecture.service.LectureService;
 import lombok.RequiredArgsConstructor;
+import kr.kernel.teachme.lecture.entity.Api;
+import kr.kernel.teachme.lecture.entity.Lecture;
+import kr.kernel.teachme.lecture.service.LectureService;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -31,6 +36,5 @@ public class LectureController {
         model.addAttribute("lecturePage", lectureApiList);
         return "lecture/list";
     }
-
 
 }

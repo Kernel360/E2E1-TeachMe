@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.Entity;
+
+import kr.kernel.teachme.lecture.entity.InflearnLecture;
+
 @Data
 @NoArgsConstructor
 public class InflearnLectureDetailResponse {

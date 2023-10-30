@@ -13,7 +13,9 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
+
 public class HomeController {
+  
     private final LectureService lectureService;
 
     @ApiOperation(value="홈 화면", notes="홈 화면에 인기 강의 목록 출력")

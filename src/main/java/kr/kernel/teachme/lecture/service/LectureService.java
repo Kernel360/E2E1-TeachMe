@@ -3,6 +3,7 @@ package kr.kernel.teachme.lecture.service;
 import kr.kernel.teachme.lecture.dto.PaginationResponse;
 import kr.kernel.teachme.lecture.entity.Lecture;
 import kr.kernel.teachme.lecture.dto.Pagination;
+
 import kr.kernel.teachme.lecture.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
