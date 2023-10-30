@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface FastcampusRepository extends JpaRepository<FastcampusLecture, Long> {
-    List<FastcampusLecture> findByDetailUploadFlagFalse();
+    List<FastcampusLecture> findAllByDetailUploadFlagFalse();
+    boolean existsByDetailUploadFlagIsFalse();
 }

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import kr.kernel.teachme.exception.CrawlerException;
 import kr.kernel.teachme.lecture.dto.CrawlingRequest;
 import kr.kernel.teachme.lecture.dto.CrawlingResponse;
+import kr.kernel.teachme.lecture.service.FastcampusLectureDetailCrawlingService;
 import kr.kernel.teachme.lecture.service.FastcampusLectureListCrawlingService;
 import kr.kernel.teachme.lecture.service.InflearnLectureDetailCrawlingService;
 import kr.kernel.teachme.lecture.service.InflearnLectureListCrawlingService;
@@ -23,6 +24,7 @@ public class CrawlerController {
     private final InflearnLectureListCrawlingService inflearnLectureListCrawlingService;
     private final FastcampusLectureListCrawlingService fastcampusLectureListCrawlingService;
     private final InflearnLectureDetailCrawlingService inflearnLectureDetailCrawlingService;
+    private final FastcampusLectureDetailCrawlingService fastcampusLectureDetailCrawlingService;
 
     private static final String CRAWLING_SUCEED_MESSAGE = "크롤링 성공";
     private static final String CRAWLING_FAILURE_MESSAGE = "크롤링 실패: ";
@@ -73,8 +75,14 @@ public class CrawlerController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
             }
         } else {
-            //TODO: 패캠
-            return ResponseEntity.ok(response);
+            try {
+                fastcampusLectureDetailCrawlingService.update();
+                response.setMessage(CRAWLING_SUCEED_MESSAGE);
+                return ResponseEntity.ok(response);
+            } catch (CrawlerException e){
+                response.setMessage(CRAWLING_FAILURE_MESSAGE + e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            }
         }
     }
 }

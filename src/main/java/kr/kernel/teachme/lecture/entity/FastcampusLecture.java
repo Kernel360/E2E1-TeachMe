@@ -44,7 +44,7 @@ public class FastcampusLecture {
 
     private String instructor;
 
-    private String totalClassHours;
+    private int totalClassHours;
 
     @ColumnDefault("false")
     private boolean detailUploadFlag;
@@ -61,7 +61,7 @@ public class FastcampusLecture {
         this.desktopCardAsset=desktopCardAsset;
     }
 
-    public void updateDetailInfo(int categoryId, int subCategoryId, int listPrice, int salePrice, String instructor, String totalClassHours, boolean detailUploadFlag){
+    public void updateDetailInfo(int categoryId, int subCategoryId, int listPrice, int salePrice, String instructor, int totalClassHours){
         this.categoryId=categoryId;
         this.subCategoryId=subCategoryId;
         this.listPrice=listPrice;
