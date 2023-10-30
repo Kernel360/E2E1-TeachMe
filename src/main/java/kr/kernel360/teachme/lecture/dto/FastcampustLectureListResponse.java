@@ -1,7 +1,6 @@
 package kr.kernel360.teachme.lecture.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import kr.kernel360.teachme.lecture.entity.Category;
 import lombok.Data;
 
 import java.time.LocalDateTime;
