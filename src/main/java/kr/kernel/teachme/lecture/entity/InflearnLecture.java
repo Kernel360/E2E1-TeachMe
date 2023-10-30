@@ -53,9 +53,8 @@ public class InflearnLecture {
 	private boolean detailUploadFlag;
 
 	@Builder
-	protected InflearnLecture(Long id, String title, String imageSource, int studentCnt, int realIntPrice, int saleIntPrice, String instructor, String url, String description, String skills, int videoCnt, int duration, boolean detailUploadFlag) {
+	protected InflearnLecture(String title, String imageSource, int studentCnt, int realIntPrice, int saleIntPrice, String instructor, String url, String description, String skills, int videoCnt, int duration, boolean detailUploadFlag) {
 		Assert.hasLength(title, "Inflearn lecture title must not be empty");
-		this.id = id;
 		this.title = title;
 		this.imageSource = imageSource;
 		this.studentCnt = studentCnt;
@@ -71,9 +70,10 @@ public class InflearnLecture {
 		this.detailUploadFlag = detailUploadFlag;
 	}
 
-	protected void updateDetailInfo(int videoCnt, int duration) {
+	public void updateDetailInfo(int videoCnt, int duration, String imageSource) {
 		this.videoCnt = videoCnt;
 		this.duration = duration;
+		this.imageSource = this.imageSource.isBlank() ? imageSource : this.imageSource;
 		this.detailUploadFlag = true;
 	}
 }

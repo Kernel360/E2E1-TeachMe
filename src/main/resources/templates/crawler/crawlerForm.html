@@ -28,6 +28,24 @@
                     </div>
                 </div>
             </div>
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <div class="card" style="width: 18rem; display: inline-block;">
+                    <img src="https://blog.kakaocdn.net/dn/Nshc5/btqEg0805Se/6s5j05LmQ2s6xrhz7Txeh0/img.png" class="card-img-top" alt="..." style="height: 100px;">
+                    <div class="card-body">
+                        <h5 class="card-title">패스트캠퍼스 크롤링</h5>
+                        <p class="card-text">패스트캠퍼스의 강의 상세 데이터를 크롤링 합니다. 데이터베이스 테이블이 대상 데이터가 존재하지 않으면 작동하지 않습니다.</p>
+                        <button id="fastcampus_detail_crawler_button" class="btn btn-primary">패스트캠퍼스 크롤러 시작하기</button>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem; display: inline-block;">
+                    <img src="https://blog.kakaocdn.net/dn/cu8mId/btqHYIdMAMZ/38sKPDXjkKIXnCYiTMAFd0/img.png" class="card-img-top" alt="..." style="height: 100px;">
+                    <div class="card-body">
+                        <h5 class="card-title">인프런 상세 정보 크롤링</h5>
+                        <p class="card-text">인프런의 강의 상세 데이터를 크롤링 합니다. 데이터베이스 테이블에 대상 데이터가 존재하지 않으면 작동하지 않습니다.</p>
+                        <button id="inflearn_detail_crawler_button" class="btn btn-primary">인프런 크롤러 시작하기</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <script th:src="@{/js/crawler.js}"></script>
     </div>

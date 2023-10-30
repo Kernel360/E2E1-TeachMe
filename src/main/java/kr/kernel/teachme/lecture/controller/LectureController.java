@@ -1,7 +1,7 @@
 package kr.kernel.teachme.lecture.controller;
 
 import io.swagger.annotations.ApiOperation;
-import kr.kernel.teachme.lecture.entity.Api;
+import kr.kernel.teachme.lecture.dto.PaginationResponse;
 import kr.kernel.teachme.lecture.entity.Lecture;
 import kr.kernel.teachme.lecture.service.LectureService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class LectureController {
     @GetMapping("/list")
     public String getLectureListForm(@RequestParam(defaultValue = "1") int page, Model model) {
         Pageable pageable = PageRequest.of(page -1, 10, Sort.Direction.DESC, "id");
-        Api<List<Lecture>> lectureApiList = lectureService.all(pageable);
+        PaginationResponse<List<Lecture>> lectureApiList = lectureService.all(pageable);
         model.addAttribute("lecturePage", lectureApiList);
         return "lecture/list";
     }

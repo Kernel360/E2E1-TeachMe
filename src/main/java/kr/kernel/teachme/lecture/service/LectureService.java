@@ -1,8 +1,8 @@
 package kr.kernel.teachme.lecture.service;
 
-import kr.kernel.teachme.lecture.entity.Api;
+import kr.kernel.teachme.lecture.dto.PaginationResponse;
 import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.lecture.entity.Pagination;
+import kr.kernel.teachme.lecture.dto.Pagination;
 import kr.kernel.teachme.lecture.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +21,7 @@ public class LectureService {
         return lectureRepository.findByOrderByIdDesc(PageRequest.of(0, 12));
     }
 
-    public Api<List<Lecture>> all(Pageable pageable) {
+    public PaginationResponse<List<Lecture>> all(Pageable pageable) {
         var list = lectureRepository.findAll(pageable);
 
         var pagination = Pagination.builder()
@@ -33,7 +33,7 @@ public class LectureService {
             .build()
             ;
 
-        var response = Api.<List<Lecture>>builder()
+        var response = PaginationResponse.<List<Lecture>>builder()
             .body(list.toList())
             .pagination(pagination)
             .build();
