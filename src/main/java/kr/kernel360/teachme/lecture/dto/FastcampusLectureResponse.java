@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FastcampustLectureResponse {
+public class FastcampusLectureResponse {
 
     private Long id;
 

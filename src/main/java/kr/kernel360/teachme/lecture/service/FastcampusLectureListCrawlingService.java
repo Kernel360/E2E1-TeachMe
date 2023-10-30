@@ -1,8 +1,8 @@
 package kr.kernel360.teachme.lecture.service;
 
 import kr.kernel360.teachme.exception.CrawlerException;
-import kr.kernel360.teachme.lecture.dto.FastcampustLectureListResponse;
-import kr.kernel360.teachme.lecture.dto.FastcampustLectureResponse;
+import kr.kernel360.teachme.lecture.dto.FastcampusLectureListResponse;
+import kr.kernel360.teachme.lecture.dto.FastcampusLectureResponse;
 import kr.kernel360.teachme.lecture.entity.FastcampusLecture;
 import kr.kernel360.teachme.lecture.entity.Lecture;
 import kr.kernel360.teachme.lecture.repository.FastcampusRepository;
@@ -22,27 +22,27 @@ public class FastcampusLectureListCrawlingService {
 
     private final FastcampusRepository fastcampusRepository;
     private final LectureRepository lectureRepository;
-    public static FastcampustLectureListResponse getFastcampusResponse() {
+    public static FastcampusLectureListResponse getFastcampusResponse() {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        return restTemplate.getForObject("https://fastcampus.co.kr/.api/www/categories/all", FastcampustLectureListResponse.class);
+        return restTemplate.getForObject("https://fastcampus.co.kr/.api/www/categories/all", FastcampusLectureListResponse.class);
     }
-    public static List<FastcampustLectureResponse> convertLectureListToLecture(FastcampustLectureListResponse lectureList) {
+    public static List<FastcampusLectureResponse> convertLectureListToLecture(FastcampusLectureListResponse lectureList) {
         ModelMapper modelMapper = new ModelMapper();
 
         return lectureList.getData().getCategoryList().stream()
                 .flatMap(category -> category.getCourses().stream())
-                .map(course -> modelMapper.map(course, FastcampustLectureResponse.class))
+                .map(course -> modelMapper.map(course, FastcampusLectureResponse.class))
                 .collect(Collectors.toList());
     }
 
     public boolean isAtLeastOneRowExists() {
         return fastcampusRepository.count() > 0;
     }
-    public List<Lecture> toLectureList(List<FastcampustLectureResponse> lectures) {
+    public List<Lecture> toLectureList(List<FastcampusLectureResponse> lectures) {
         List<Lecture> lectureList = new ArrayList<>();
-        for (FastcampustLectureResponse lecture : lectures){
+        for (FastcampusLectureResponse lecture : lectures){
             lectureList.add(lecture.toLectureEntity());
         }
         return lectureList;
@@ -50,8 +50,8 @@ public class FastcampusLectureListCrawlingService {
     @Transactional
     public void create() {
         if(isAtLeastOneRowExists()) throw new CrawlerException("크롤링 불가 상태");
-        FastcampustLectureListResponse crawledData = getFastcampusResponse();
-        List<FastcampustLectureResponse> lectures = new ArrayList<>();
+        FastcampusLectureListResponse crawledData = getFastcampusResponse();
+        List<FastcampusLectureResponse> lectures = new ArrayList<>();
         try {
             lectures = convertLectureListToLecture(crawledData);
         } catch (NullPointerException e) {
@@ -59,7 +59,7 @@ public class FastcampusLectureListCrawlingService {
         }
 
         List<FastcampusLecture> fastcampuslectureList = new ArrayList<>();
-        for (FastcampustLectureResponse lecture : lectures){
+        for (FastcampusLectureResponse lecture : lectures){
             fastcampuslectureList.add(lecture.toEntity());
         }
         lectureRepository.saveAll(toLectureList(lectures));

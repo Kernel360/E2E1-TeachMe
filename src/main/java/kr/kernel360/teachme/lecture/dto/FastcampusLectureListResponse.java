@@ -1,14 +1,13 @@
 package kr.kernel360.teachme.lecture.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import kr.kernel360.teachme.lecture.entity.Category;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class FastcampustLectureListResponse {
+public class FastcampusLectureListResponse {
     private Data data;
 
     @lombok.Data
