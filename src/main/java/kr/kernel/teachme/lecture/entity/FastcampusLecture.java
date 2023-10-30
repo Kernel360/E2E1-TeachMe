@@ -35,7 +35,7 @@ public class FastcampusLecture {
 
     @Builder
     protected FastcampusLecture(Long uniqueId, String state, String slug, String publicTitle, String publicDescription, String keywords, String desktopCardAsset){
-        this.uniqueId=id;
+        this.uniqueId=uniqueId;
         this.state=state;
         this.slug=slug;
         Assert.hasLength(publicTitle, "Fastcampus lecture title must not be empty");
