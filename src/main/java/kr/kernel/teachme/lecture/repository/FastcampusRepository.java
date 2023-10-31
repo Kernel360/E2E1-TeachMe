@@ -10,4 +10,5 @@ import java.util.List;
 public interface FastcampusRepository extends JpaRepository<FastcampusLecture, Long> {
     List<FastcampusLecture> findAllByDetailUploadFlagFalse();
     boolean existsByDetailUploadFlagIsFalse();
+
 }
