@@ -1,4 +1,4 @@
-package kr.kernel.teachme.lecture.service;
+package kr.kernel.teachme.crawler.service;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -15,9 +15,9 @@ import kr.kernel.teachme.lecture.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
 
 import kr.kernel.teachme.exception.CrawlerException;
-import kr.kernel.teachme.lecture.dto.InflearnLectureDetailResponse;
-import kr.kernel.teachme.lecture.entity.InflearnLecture;
-import kr.kernel.teachme.lecture.repository.InflearnRepository;
+import kr.kernel.teachme.crawler.dto.InflearnLectureDetailResponse;
+import kr.kernel.teachme.crawler.entity.InflearnLecture;
+import kr.kernel.teachme.crawler.repository.InflearnRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -46,13 +46,12 @@ public class InflearnLectureDetailCrawlingService {
 			}
 			lecture.updateDetailInfo(detailResponse.getVideoCnt(), detailResponse.getDuration(), detailResponse.getImageSource(), detailResponse.getPostDate(), detailResponse.getUpdateDate());
 			updatedList.add(lecture);
-			if(crawlLimit > 1000) break;
+			if(crawlLimit > 300) break;
 		}
 		return updatedList;
 	}
 
-	private InflearnLectureDetailResponse crawlInflearnLectureDetail(InflearnLecture lecture) throws Exception
-		{
+	private InflearnLectureDetailResponse crawlInflearnLectureDetail(InflearnLecture lecture) throws IOException, ParseException {
 		String pageUrl = lecture.getUrl();
 		InflearnLectureDetailResponse response = new InflearnLectureDetailResponse();
 

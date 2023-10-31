@@ -1,20 +1,18 @@
-package kr.kernel.teachme.lecture.controller;
+package kr.kernel.teachme.crawler.controller;
 
 import io.swagger.annotations.ApiOperation;
 import kr.kernel.teachme.exception.CrawlerException;
-import kr.kernel.teachme.lecture.dto.CrawlingRequest;
-import kr.kernel.teachme.lecture.dto.CrawlingResponse;
-import kr.kernel.teachme.lecture.service.FastcampusLectureDetailCrawlingService;
-import kr.kernel.teachme.lecture.service.FastcampusLectureListCrawlingService;
-import kr.kernel.teachme.lecture.service.InflearnLectureDetailCrawlingService;
-import kr.kernel.teachme.lecture.service.InflearnLectureListCrawlingService;
+import kr.kernel.teachme.crawler.dto.CrawlingRequest;
+import kr.kernel.teachme.crawler.dto.CrawlingResponse;
+import kr.kernel.teachme.crawler.service.FastcampusLectureDetailCrawlingService;
+import kr.kernel.teachme.crawler.service.FastcampusLectureListCrawlingService;
+import kr.kernel.teachme.crawler.service.InflearnLectureDetailCrawlingService;
+import kr.kernel.teachme.crawler.service.InflearnLectureListCrawlingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController

@@ -1,4 +1,4 @@
-package kr.kernel.teachme.lecture.service;
+package kr.kernel.teachme.crawler.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import kr.kernel.teachme.exception.CrawlerException;
-import kr.kernel.teachme.lecture.dto.InflearnLectureListResponse;
-import kr.kernel.teachme.lecture.entity.InflearnLecture;
+import kr.kernel.teachme.crawler.dto.InflearnLectureListResponse;
+import kr.kernel.teachme.crawler.entity.InflearnLecture;
 import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.lecture.repository.InflearnRepository;
+import kr.kernel.teachme.crawler.repository.InflearnRepository;
 import kr.kernel.teachme.lecture.repository.LectureRepository;
 import kr.kernel.teachme.lecture.util.StringUtil;
 
