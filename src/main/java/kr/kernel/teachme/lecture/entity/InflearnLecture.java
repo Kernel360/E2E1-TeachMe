@@ -1,5 +1,7 @@
 package kr.kernel.teachme.lecture.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,6 +54,9 @@ public class InflearnLecture {
 	@ColumnDefault("false")
 	private boolean detailUploadFlag;
 
+	private Date postDate;
+	private Date updateDate;
+
 	@Builder
 	protected InflearnLecture(String title, String imageSource, int studentCnt, int realIntPrice, int saleIntPrice, String instructor, String url, String description, String skills, int videoCnt, int duration, boolean detailUploadFlag) {
 		Assert.hasLength(title, "Inflearn lecture title must not be empty");
@@ -70,10 +75,12 @@ public class InflearnLecture {
 		this.detailUploadFlag = detailUploadFlag;
 	}
 
-	public void updateDetailInfo(int videoCnt, int duration, String imageSource) {
+	public void updateDetailInfo(int videoCnt, int duration, String imageSource, Date postDate, Date updateDate) {
 		this.videoCnt = videoCnt;
 		this.duration = duration;
 		this.imageSource = this.imageSource.isBlank() ? imageSource : this.imageSource;
 		this.detailUploadFlag = true;
+		this.postDate = postDate;
+		this.updateDate = updateDate;
 	}
 }

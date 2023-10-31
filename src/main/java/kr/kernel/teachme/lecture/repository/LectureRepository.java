@@ -12,4 +12,6 @@ import java.util.List;
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
 
     List<Lecture> findByOrderByIdDesc(Pageable pageable);
+    void deleteByUrl(String url);
+    void deleteByLectureId(Long id);
 }
