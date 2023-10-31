@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,27 +24,38 @@ public class FastcampusLectureDetailCrawlingService {
     private final FastcampusRepository fastcampusRepository;
     private final LectureRepository lectureRepository;
 
+    public void deleteLecture (FastcampusLecture lecture) {
+        lectureRepository.deleteByLectureId(lecture.getUniqueId());
+        fastcampusRepository.delete(lecture);
+    }
     public List<FastcampusLecture> getFastcampusDetailResponse(List<FastcampusLecture> fastcampusLectures){
         List<FastcampusLecture> fastcampusLectureList = new ArrayList<>();
         String baseUrl = "https://fastcampus.co.kr/.api/www/courses/";
         RestTemplate restTemplate = new RestTemplate();
 
         for (FastcampusLecture lecture : fastcampusLectures){
+            try{
+                String detailUrl = baseUrl + lecture.getUniqueId() + "/products";
+                FastcampusLectureDetailResponse response = restTemplate.getForObject(detailUrl,FastcampusLectureDetailResponse.class);
+                List<FastcampusLectureDetailResponse.Products> productsList = response.getData().getProducts();
+                if (productsList.isEmpty()) {
+                    deleteLecture(lecture);
+                    continue;
+                }
+                FastcampusLectureDetailResponse.Products products = response.getData().getProducts().get(0);
 
-            String detailUrl = baseUrl + lecture.getUniqueId() + "/products";
-            FastcampusLectureDetailResponse response = restTemplate.getForObject(detailUrl,FastcampusLectureDetailResponse.class);
-            FastcampusLectureDetailResponse.Products products = response.getData().getProducts().get(0);
+                int categoryId = products.getCategoryId();
+                int subCategoryId = products.getSubCategoryId();
+                int listPrice=products.getListPrice();
+                int salePrice=products.getSalePrice();
+                String instructor=response.getData().getCourse().getInstructor();
+                int totalClassHours= response.getData().getCourse().getTotalClassHours();
 
-
-            int categoryId = products.getCategoryId();
-            int subCategoryId = products.getSubCategoryId();
-            int listPrice=products.getListPrice();
-            int salePrice=products.getSalePrice();
-            String instructor=response.getData().getCourse().getInstructor();
-            int totalClassHours= response.getData().getCourse().getTotalClassHours();
-
-            lecture.updateDetailInfo(categoryId,subCategoryId,listPrice,salePrice,instructor,totalClassHours);
-            fastcampusLectureList.add(lecture);
+                lecture.updateDetailInfo(categoryId,subCategoryId,listPrice,salePrice,instructor,totalClassHours);
+                fastcampusLectureList.add(lecture);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return fastcampusLectureList;
     }
