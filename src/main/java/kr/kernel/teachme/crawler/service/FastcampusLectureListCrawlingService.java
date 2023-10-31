@@ -1,11 +1,11 @@
-package kr.kernel.teachme.lecture.service;
+package kr.kernel.teachme.crawler.service;
 
 import kr.kernel.teachme.exception.CrawlerException;
-import kr.kernel.teachme.lecture.dto.FastcampusLectureListResponse;
-import kr.kernel.teachme.lecture.dto.FastcampusLectureResponse;
-import kr.kernel.teachme.lecture.entity.FastcampusLecture;
+import kr.kernel.teachme.crawler.dto.FastcampusLectureListResponse;
+import kr.kernel.teachme.crawler.dto.FastcampusLectureResponse;
+import kr.kernel.teachme.crawler.entity.FastcampusLecture;
 import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.lecture.repository.FastcampusRepository;
+import kr.kernel.teachme.crawler.repository.FastcampusRepository;
 import kr.kernel.teachme.lecture.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

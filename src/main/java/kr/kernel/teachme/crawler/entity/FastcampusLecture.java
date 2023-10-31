@@ -1,4 +1,4 @@
-package kr.kernel.teachme.lecture.entity;
+package kr.kernel.teachme.crawler.entity;
 
 import lombok.Builder;
 import lombok.Getter;

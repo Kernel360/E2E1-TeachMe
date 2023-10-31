@@ -1,6 +1,6 @@
-package kr.kernel.teachme.lecture.repository;
+package kr.kernel.teachme.crawler.repository;
 
-import kr.kernel.teachme.lecture.entity.FastcampusLecture;
+import kr.kernel.teachme.crawler.entity.FastcampusLecture;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

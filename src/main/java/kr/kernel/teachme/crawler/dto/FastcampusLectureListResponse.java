@@ -1,4 +1,4 @@
-package kr.kernel.teachme.lecture.dto;
+package kr.kernel.teachme.crawler.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

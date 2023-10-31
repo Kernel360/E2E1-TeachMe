@@ -5,9 +5,6 @@ import kr.kernel.teachme.lecture.dto.PaginationResponse;
 import kr.kernel.teachme.lecture.entity.Lecture;
 import kr.kernel.teachme.lecture.service.LectureService;
 import lombok.RequiredArgsConstructor;
-import kr.kernel.teachme.lecture.entity.Api;
-import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.lecture.service.LectureService;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

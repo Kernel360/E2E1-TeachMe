@@ -1,4 +1,4 @@
-package kr.kernel.teachme.lecture.entity;
+package kr.kernel.teachme.crawler.entity;
 
 import java.util.Date;
 
@@ -58,7 +58,7 @@ public class InflearnLecture {
 	private Date updateDate;
 
 	@Builder
-	protected InflearnLecture(String title, String imageSource, int studentCnt, int realIntPrice, int saleIntPrice, String instructor, String url, String description, String skills, int videoCnt, int duration, boolean detailUploadFlag) {
+	protected InflearnLecture(String title, String imageSource, int studentCnt, int realIntPrice, int saleIntPrice, String instructor, String url, String description, String skills, boolean detailUploadFlag) {
 		Assert.hasLength(title, "Inflearn lecture title must not be empty");
 		this.title = title;
 		this.imageSource = imageSource;
@@ -70,8 +70,6 @@ public class InflearnLecture {
 		this.url = url;
 		this.description = description;
 		this.skills = skills;
-		this.videoCnt = videoCnt;
-		this.duration = duration;
 		this.detailUploadFlag = detailUploadFlag;
 	}
 

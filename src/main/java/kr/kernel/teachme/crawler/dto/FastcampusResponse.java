@@ -1,7 +1,6 @@
-package kr.kernel.teachme.lecture.dto;
+package kr.kernel.teachme.crawler.dto;
 
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.List;
 
@@ -39,7 +38,6 @@ public class FastcampusResponse {
         private String publicDescription;
         private List<String> keywords;
         private Extras extras;
-//        private Format format;
         private String desktopCardAsset;
         private String pageTemplate;
         private CardInfo cardInfo;

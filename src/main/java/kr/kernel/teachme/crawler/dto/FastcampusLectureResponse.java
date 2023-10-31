@@ -1,7 +1,7 @@
-package kr.kernel.teachme.lecture.dto;
+package kr.kernel.teachme.crawler.dto;
 
 import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.lecture.entity.FastcampusLecture;
+import kr.kernel.teachme.crawler.entity.FastcampusLecture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

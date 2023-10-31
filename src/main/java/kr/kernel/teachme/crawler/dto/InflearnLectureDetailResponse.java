@@ -1,4 +1,4 @@
-package kr.kernel.teachme.lecture.dto;
+package kr.kernel.teachme.crawler.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.persistence.Entity;
-import javax.validation.constraints.Null;
-
-import kr.kernel.teachme.lecture.entity.InflearnLecture;
 
 @Data
 @NoArgsConstructor
@@ -27,18 +22,18 @@ public class InflearnLectureDetailResponse {
 	public void setInflearnInfoToData(String info) {
 		Pattern pattern = Pattern.compile("총 (\\d+)개 수업(?: \\((\\d+)시간(?: (\\d+)분)?\\))?");
 		Matcher matcher = pattern.matcher(info);
-		int videoCnt = 0;
+		int video = 0;
 		int hours = 0;
 		int minutes = 0;
 
 		if (matcher.find()) {
-			videoCnt = Integer.parseInt(matcher.group(1));
+			video = Integer.parseInt(matcher.group(1));
 			hours = (matcher.group(2) == null) ? 0 : Integer.parseInt(matcher.group(2));
 			minutes = (matcher.group(3) == null) ? 0 : Integer.parseInt(matcher.group(3));
 		} else {
 			throw new IllegalArgumentException();
 		}
-		this.videoCnt = videoCnt;
+		this.videoCnt = video;
 		this.duration = (hours * 60) + minutes;
 	}
 

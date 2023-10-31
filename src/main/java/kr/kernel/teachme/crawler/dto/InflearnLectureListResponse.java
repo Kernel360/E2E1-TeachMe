@@ -1,6 +1,6 @@
-package kr.kernel.teachme.lecture.dto;
+package kr.kernel.teachme.crawler.dto;
 
-import kr.kernel.teachme.lecture.entity.InflearnLecture;
+import kr.kernel.teachme.crawler.entity.InflearnLecture;
 import kr.kernel.teachme.lecture.entity.Lecture;
 import kr.kernel.teachme.lecture.util.StringUtil;
 import lombok.*;
@@ -26,7 +26,7 @@ public class InflearnLectureListResponse {
 	}
 
 	public InflearnLecture toEntity() {
-		InflearnLecture inflearn = InflearnLecture.builder()
+		return InflearnLecture.builder()
 			.title(title)
 			.imageSource(imageSource)
 			.studentCnt(studentCnt)
@@ -38,12 +38,11 @@ public class InflearnLectureListResponse {
 			.skills(skills)
 			.build()
 			;
-		return inflearn;
 	}
 
 
 	public Lecture toLectureEntity(){
-		Lecture lecture = Lecture.builder()
+		return Lecture.builder()
 				.lectureId(id)
 				.platform("Inflearn")
 				.title(title)
@@ -52,7 +51,6 @@ public class InflearnLectureListResponse {
 				.url(url)
 				.img(imageSource)
 				.build();
-		return lecture;
 	}
 
 }
