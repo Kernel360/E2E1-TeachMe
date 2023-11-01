@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @NoArgsConstructor
 @Entity
 @Table(name = "lecture")
@@ -17,8 +19,6 @@ public class Lecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Long lectureId;
 
     private String platform;
 
@@ -48,15 +48,20 @@ public class Lecture {
 
     private Date updateDate;
 
+    @ColumnDefault("false")
+    private boolean deatailUploadFlag;
+
     @Builder
-    protected Lecture(Long lectureId, String platform, String title, String description, String keywords, String url, String img){
-        this.lectureId = lectureId;
+    protected Lecture(String platform, String title, String description, String keywords, String url, String img, int price, int discountPrice, String instructor){
         this.platform = platform;
         this.title = title;
         this.description = description;
         this.keywords = keywords;
         this.url = url;
         this.img = img;
+        this.price = price;
+        this.discountPrice = discountPrice;
+        this.instructor = instructor;
     }
 
 }

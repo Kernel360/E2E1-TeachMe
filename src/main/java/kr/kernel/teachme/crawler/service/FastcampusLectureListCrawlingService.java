@@ -55,7 +55,7 @@ public class FastcampusLectureListCrawlingService {
     public List<Lecture> toLectureList(List<FastcampusLectureResponse> lectures) {
         List<Lecture> lectureList = new ArrayList<>();
         for (FastcampusLectureResponse lecture : lectures){
-            lectureList.add(lecture.toLectureEntity());
+            //lectureList.add(lecture.toLectureEntity());
         }
         return lectureList;
     }

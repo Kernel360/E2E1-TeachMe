@@ -13,5 +13,6 @@ public interface LectureRepository extends JpaRepository<Lecture, Long> {
 
     List<Lecture> findByOrderByIdDesc(Pageable pageable);
     void deleteByUrl(String url);
-    void deleteByLectureId(Long id);
+    void deleteByLectureId(Lecture id);
+    List<Lecture> findAllByDetailUploadFlagIsFalseAndPlatform(String platform);
 }

@@ -7,9 +7,7 @@ import java.util.List;
 
 import kr.kernel.teachme.exception.CrawlerException;
 import kr.kernel.teachme.crawler.dto.InflearnLectureListResponse;
-import kr.kernel.teachme.crawler.entity.InflearnLecture;
 import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.crawler.repository.InflearnRepository;
 import kr.kernel.teachme.lecture.repository.LectureRepository;
 import kr.kernel.teachme.lecture.util.StringUtil;
 
@@ -29,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class InflearnLectureListCrawlingService {
 
-	private final InflearnRepository inflearnRepository;
 	private final LectureRepository lectureRepository;
 
 	private List<InflearnLectureListResponse> crawlInflearnLectureList() throws IOException {
@@ -76,7 +73,6 @@ public class InflearnLectureListCrawlingService {
 		InflearnLectureListResponse inflearnCourse = new InflearnLectureListResponse();
 		inflearnCourse.setTitle(course.select("div.course_title").text());
 		inflearnCourse.setImageSource(course.select("figure.is_thumbnail > img").attr("src"));
-		inflearnCourse.setStudentCnt(course.select("span.student_cnt").text());
 		inflearnCourse.setInstructor(course.select("div.instructor").text());
 
 		if(!course.select("div.price > del").isEmpty()) {
@@ -94,30 +90,21 @@ public class InflearnLectureListCrawlingService {
 		String masterUrl = "https://www.inflearn.com";
 		inflearnCourse.setUrl(masterUrl + course.select("a.e_course_click").attr("href"));
 		inflearnCourse.setDescription(course.select("p.course_description").text());
-		inflearnCourse.setDifficulty(course.select("div.course_level > span").text());
 		inflearnCourse.setSkills(course.select("div.course_skills > span").text());
 
 		return inflearnCourse;
 	}
 
 	public void saveCrawledData(List<InflearnLectureListResponse> crawledData) {
-		List<InflearnLecture> lectureList = new ArrayList<>();
+		List<Lecture> lectureList = new ArrayList<>();
 		for(InflearnLectureListResponse data : crawledData) {
 			lectureList.add(data.toEntity());
 		}
-		inflearnRepository.saveAll(lectureList);
+		lectureRepository.saveAll(lectureList);
 	}
 
 	public boolean isAtLeastOneRowExists() {
-		return inflearnRepository.count() > 0;
-	}
-
-	public void saveInflearnToLecture(List<InflearnLectureListResponse> crawledData){
-		List<Lecture> lectureList = new ArrayList<>();
-		for(InflearnLectureListResponse data : crawledData) {
-			lectureList.add(data.toLectureEntity());
-		}
-		lectureRepository.saveAll(lectureList);
+		return lectureRepository.count() > 0;
 	}
 
 	public void runInflearnLectureCrawler() {
@@ -129,12 +116,5 @@ public class InflearnLectureListCrawlingService {
 			throw new CrawlerException("크롤링 중 에러 발생", e);
 		}
 		saveCrawledData(crawledDataList);
-
-		try {
-			saveInflearnToLecture(crawledDataList);
-		} catch (Exception e) {
-			throw new CrawlerException("인프런을 lecture 테이블에 저장하지 못함.", e);
-		}
-
 	}
 }

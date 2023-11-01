@@ -1,5 +1,6 @@
 package kr.kernel.teachme.crawler.entity;
 
+import kr.kernel.teachme.lecture.entity.Lecture;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,9 @@ public class FastcampusLecture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long uniqueId;
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Lecture uniqueId;
 
     private String state;
 
@@ -55,7 +58,7 @@ public class FastcampusLecture {
     private LocalDateTime updatedAt;
 
     @Builder
-    protected FastcampusLecture(Long uniqueId, String state, String slug, String publicTitle, String publicDescription, String keywords, String desktopCardAsset, LocalDateTime createdAt, LocalDateTime updatedAt){
+    protected FastcampusLecture(Lecture uniqueId, String state, String slug, String publicTitle, String publicDescription, String keywords, String desktopCardAsset, LocalDateTime createdAt, LocalDateTime updatedAt){
         this.uniqueId=uniqueId;
         this.state=state;
         this.slug=slug;
