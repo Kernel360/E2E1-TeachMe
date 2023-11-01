@@ -9,17 +9,28 @@
 </head>
 <body>
     <div class="content" layout:fragment="content">
-        <div class="search_menu" style="width: 80%; margin: 0 auto; margin-bottom: 50px;">
+        <form class="search_menu" style="width: 80%; margin: 0 auto; margin-bottom: 50px;">
             <label>
-                <select>
+                <input class="search_check" type="checkbox">
+                패캠만 보기
+            </label>
+            <label>
+                <input class="search_check" type="checkbox">
+                인프런만 보기
+            </label>
+            <label>
+                <select class="search_select">
                     <option>등록 순</option>
                 </select>
             </label>
             <label>
-                <input type="text" placeholder="검색어 입력"/>
+                <input class="search_input" type="text" placeholder="검색어 입력"/>
             </label>
-            <button>검색</button>
-        </div>
+            <button type="submit" class="search_btn">🔍  검색</button>
+        </form>
+        <table>
+
+        </table>
         <div th:each="lecture : ${lecturePage.body}" style="display: flex; gap: 20px; align-items: center; background-color: white; width: 80%; margin: 10px auto; border-radius: 15px;">
             <img th:src="${lecture.img}" style="width: 200px; height: 130px; border-radius: 10px;" alt="...">
             <span th:text="${lecture.title}"></span>
