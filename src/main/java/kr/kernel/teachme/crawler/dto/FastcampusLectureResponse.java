@@ -1,19 +1,20 @@
 package kr.kernel.teachme.crawler.dto;
 
 import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.crawler.entity.FastcampusLecture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class FastcampusLectureResponse {
 
-    private Lecture id;
+    private Long id;
 
     private String state;
 
@@ -31,31 +32,32 @@ public class FastcampusLectureResponse {
 
     private LocalDateTime updatedAt;
 
-    public FastcampusLecture toEntity(){
-        return FastcampusLecture.builder()
-                .uniqueId(id)
-                .state(state)
-                .slug(slug)
-                .publicTitle(publicTitle)
-                .publicDescription(publicDescription)
-                .keywords(keywords)
-                .desktopCardAsset(desktopCardAsset)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+    public Lecture toEntity(){
+        return Lecture.builder()
+                .lectureId(id)
+                .platform("fastcampus")
+                .title(publicTitle)
+                .description(publicDescription)
+                .keywords(trimFirstAndLastCharacter(keywords))
+                .img(desktopCardAsset)
+                .createDate(convertLocalDateTimeToDate(createdAt))
+                .updateDate(convertLocalDateTimeToDate(updatedAt))
                 .build();
     }
 
-    // public Lecture toLectureEntity(){
-    //     return Lecture.builder()
-    //         .lectureId(id)
-    //         .platform("fastcampus")
-    //         .title(publicTitle)
-    //         .description(publicDescription)
-    //         .keywords(keywords)
-    //         .url("https://fastcampus.co.kr/" + slug)
-    //         .img(desktopCardAsset)
-    //         .build();
-    // }
+    private Date convertLocalDateTimeToDate(LocalDateTime dttm) {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        return Date.from(dttm.atZone(defaultZoneId).toInstant());
+    }
+
+    private String trimFirstAndLastCharacter(String keywords) {
+        if(keywords.length() <= 2) {
+            return keywords;
+        }
+
+        return keywords.substring(1, keywords.length() - 1);
+    }
+
 }
 
 

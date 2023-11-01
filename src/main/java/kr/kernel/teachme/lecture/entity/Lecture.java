@@ -1,9 +1,6 @@
 package kr.kernel.teachme.lecture.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,11 +11,12 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @Table(name = "lecture")
 @Getter
-@Setter
 public class Lecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long lectureId;
 
     private String platform;
 
@@ -49,11 +47,12 @@ public class Lecture {
     private Date updateDate;
 
     @ColumnDefault("false")
-    private boolean deatailUploadFlag;
+    private boolean detailUploadFlag;
 
     @Builder
-    protected Lecture(String platform, String title, String description, String keywords, String url, String img, int price, int discountPrice, String instructor){
+    protected Lecture(Long lectureId, String platform, String title, String description, String keywords, String url, String img, int price, int discountPrice, String instructor, Date createDate, Date updateDate){
         this.platform = platform;
+        this.lectureId = lectureId;
         this.title = title;
         this.description = description;
         this.keywords = keywords;
@@ -62,6 +61,24 @@ public class Lecture {
         this.price = price;
         this.discountPrice = discountPrice;
         this.instructor = instructor;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
+
+    public void updateInflearnDetailInfo(int duration, String img, Date createDate, Date updateDate) {
+        this.duration = duration;
+        this.img = img;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.detailUploadFlag = true;
+    }
+
+    public void updateFastcampusDetailInfo(int price, int discountPrice, String instructor, int duration) {
+        this.price = price;
+        this.discountPrice = discountPrice;
+        this.instructor = instructor;
+        this.duration = duration;
+        this.detailUploadFlag = true;
     }
 
 }

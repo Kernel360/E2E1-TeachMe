@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InflearnLectureListCrawlingService {
 
 	private final LectureRepository lectureRepository;
+	private static final String platform = "inflearn";
 
 	private List<InflearnLectureListResponse> crawlInflearnLectureList() throws IOException {
 		String targetUrl = "https://www.inflearn.com/courses";
@@ -104,7 +105,7 @@ public class InflearnLectureListCrawlingService {
 	}
 
 	public boolean isAtLeastOneRowExists() {
-		return lectureRepository.count() > 0;
+		return lectureRepository.countByPlatform(platform) > 0;
 	}
 
 	public void runInflearnLectureCrawler() {
