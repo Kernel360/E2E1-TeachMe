@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +27,10 @@ public class FastcampusLectureResponse {
 
     private String desktopCardAsset;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     public FastcampusLecture toEntity(){
         return FastcampusLecture.builder()
                 .uniqueId(id)
@@ -34,6 +40,8 @@ public class FastcampusLectureResponse {
                 .publicDescription(publicDescription)
                 .keywords(keywords)
                 .desktopCardAsset(desktopCardAsset)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .build();
     }
 

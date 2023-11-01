@@ -46,7 +46,7 @@ public class InflearnLectureDetailCrawlingService {
 			}
 			lecture.updateDetailInfo(detailResponse.getVideoCnt(), detailResponse.getDuration(), detailResponse.getImageSource(), detailResponse.getPostDate(), detailResponse.getUpdateDate());
 			updatedList.add(lecture);
-			if(crawlLimit > 300) break;
+			if(crawlLimit % 10 == 0) Thread.sleep(5000);
 		}
 		return updatedList;
 	}
