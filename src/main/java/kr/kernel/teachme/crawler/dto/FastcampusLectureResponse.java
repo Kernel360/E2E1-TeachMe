@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class FastcampusLectureResponse {
 
-    private Long id;
+    private Lecture id;
 
     private String state;
 
@@ -45,17 +45,17 @@ public class FastcampusLectureResponse {
                 .build();
     }
 
-    public Lecture toLectureEntity(){
-        return Lecture.builder()
-            .lectureId(id)
-            .platform("fastcampus")
-            .title(publicTitle)
-            .description(publicDescription)
-            .keywords(keywords)
-            .url("https://fastcampus.co.kr/" + slug)
-            .img(desktopCardAsset)
-            .build();
-    }
+    // public Lecture toLectureEntity(){
+    //     return Lecture.builder()
+    //         .lectureId(id)
+    //         .platform("fastcampus")
+    //         .title(publicTitle)
+    //         .description(publicDescription)
+    //         .keywords(keywords)
+    //         .url("https://fastcampus.co.kr/" + slug)
+    //         .img(desktopCardAsset)
+    //         .build();
+    // }
 }
 
 
