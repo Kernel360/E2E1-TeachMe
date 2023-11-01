@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @NoArgsConstructor
 @Entity
@@ -34,6 +35,18 @@ public class Lecture {
 
     @Column(columnDefinition = "TEXT")
     private String img;
+
+    private String instructor;
+
+    private int price;
+
+    private int discountPrice;
+
+    private int duration;
+
+    private Date createDate;
+
+    private Date updateDate;
 
     @Builder
     protected Lecture(Long lectureId, String platform, String title, String description, String keywords, String url, String img){

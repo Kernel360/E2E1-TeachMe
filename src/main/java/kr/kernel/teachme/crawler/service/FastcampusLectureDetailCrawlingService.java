@@ -20,7 +20,7 @@ import java.util.List;
 public class FastcampusLectureDetailCrawlingService {
     private final FastcampusRepository fastcampusRepository;
     private final LectureRepository lectureRepository;
-    public List<FastcampusLecture> getFastcampusDetailResponse(List<FastcampusLecture> fastcampusLectures){
+    public List<FastcampusLecture> getFastcampusDetailResponse(List<FastcampusLecture> fastcampusLectures) throws InterruptedException {
         List<FastcampusLecture> fastcampusLectureList = new ArrayList<>();
         String baseUrl = "https://fastcampus.co.kr/.api/www/courses/";
 
@@ -46,6 +46,8 @@ public class FastcampusLectureDetailCrawlingService {
 
             lecture.updateDetailInfo(categoryId,subCategoryId,listPrice,salePrice,instructor,totalClassHours);
             fastcampusLectureList.add(lecture);
+
+            Thread.sleep(500);
         }
         return fastcampusLectureList;
     }
