@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
+import kr.kernel.teachme.lecture.entity.Lecture;
 import kr.kernel.teachme.lecture.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -26,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class InflearnLectureDetailCrawlingService {
 	private final InflearnRepository inflearnRepository;
 	private final LectureRepository lectureRepository;
-	private List<InflearnLecture> getLectureListNotUpdated() {
-		return inflearnRepository.findAllByDetailUploadFlagIsFalse();
+	private List<Lecture> getLectureListNotUpdated() {
+		return lectureRepository.findAllByDetailUploadFlagIsFalseAndPlatform("inflearn");
 	}
 
 	private void deleteBootCamp(InflearnLecture lecture) {
@@ -81,12 +82,11 @@ public class InflearnLectureDetailCrawlingService {
 
 	public void runInflearnLectureDetailCrawler() {
 		if (!inflearnRepository.existsByDetailUploadFlagIsFalse()) throw new CrawlerException("업데이트할 데이터가 없습니다.");
-		List<InflearnLecture> updateList = getLectureListNotUpdated();
+		List<Lecture> updateList = getLectureListNotUpdated();
 		try {
-			updateList = updateLectureDetail(updateList);
+			//updateList = updateLectureDetail(updateList);
 		} catch (Exception e) {
 			throw new CrawlerException("크롤링 중 에러 발생", e);
 		}
-		inflearnRepository.saveAll(updateList);
 	}
 }

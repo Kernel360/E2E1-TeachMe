@@ -20,7 +20,7 @@ import java.util.List;
 public class FastcampusLectureDetailCrawlingService {
     private final FastcampusRepository fastcampusRepository;
     private final LectureRepository lectureRepository;
-    public List<FastcampusLecture> getFastcampusDetailResponse(List<FastcampusLecture> fastcampusLectures) throws InterruptedException {
+    private List<FastcampusLecture> getFastcampusDetailResponse(List<FastcampusLecture> fastcampusLectures) throws InterruptedException {
         List<FastcampusLecture> fastcampusLectureList = new ArrayList<>();
         String baseUrl = "https://fastcampus.co.kr/.api/www/courses/";
 
@@ -52,17 +52,17 @@ public class FastcampusLectureDetailCrawlingService {
         return fastcampusLectureList;
     }
 
-    public List<FastcampusLecture> getLectureIdsWithFalseDetailUploadFlag() {
+    private List<FastcampusLecture> getLectureIdsWithFalseDetailUploadFlag() {
         //false만 가져오기
         return fastcampusRepository.findAllByDetailUploadFlagFalse();
     }
 
-    public FastcampusLectureDetailResponse getDetailResponse(String url) {
+    private FastcampusLectureDetailResponse getDetailResponse(String url) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url,FastcampusLectureDetailResponse.class);
     }
 
-    public void deleteLecture (FastcampusLecture lecture) {
+    private void deleteLecture (FastcampusLecture lecture) {
         lectureRepository.deleteByLectureId(lecture.getUniqueId());
         fastcampusRepository.delete(lecture);
     }

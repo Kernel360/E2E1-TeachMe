@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import kr.kernel.teachme.lecture.entity.Lecture;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +27,9 @@ public class InflearnLecture {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@OneToOne
+	@JoinColumn(name = "id")
+	private Lecture id;
 
 	private String title;
 
@@ -55,7 +60,9 @@ public class InflearnLecture {
 	private boolean detailUploadFlag;
 
 	private Date postDate;
+
 	private Date updateDate;
+
 
 	@Builder
 	protected InflearnLecture(String title, String imageSource, int studentCnt, int realIntPrice, int saleIntPrice, String instructor, String url, String description, String skills, boolean detailUploadFlag) {
@@ -81,4 +88,6 @@ public class InflearnLecture {
 		this.postDate = postDate;
 		this.updateDate = updateDate;
 	}
+
+
 }
