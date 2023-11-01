@@ -1,4 +1,4 @@
-package kr.kernel.teachme.lecture.entity;
+package kr.kernel.teachme.crawler.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Entity
@@ -49,8 +50,12 @@ public class FastcampusLecture {
     @ColumnDefault("false")
     private boolean detailUploadFlag;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     @Builder
-    protected FastcampusLecture(Long uniqueId, String state, String slug, String publicTitle, String publicDescription, String keywords, String desktopCardAsset){
+    protected FastcampusLecture(Long uniqueId, String state, String slug, String publicTitle, String publicDescription, String keywords, String desktopCardAsset, LocalDateTime createdAt, LocalDateTime updatedAt){
         this.uniqueId=uniqueId;
         this.state=state;
         this.slug=slug;
@@ -59,6 +64,8 @@ public class FastcampusLecture {
         this.publicDescription=publicDescription;
         this.keywords=keywords;
         this.desktopCardAsset=desktopCardAsset;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public void updateDetailInfo(int categoryId, int subCategoryId, int listPrice, int salePrice, String instructor, int totalClassHours){

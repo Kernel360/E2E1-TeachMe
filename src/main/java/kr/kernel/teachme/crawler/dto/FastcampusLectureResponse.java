@@ -1,10 +1,12 @@
-package kr.kernel.teachme.lecture.dto;
+package kr.kernel.teachme.crawler.dto;
 
 import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.lecture.entity.FastcampusLecture;
+import kr.kernel.teachme.crawler.entity.FastcampusLecture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -25,6 +27,10 @@ public class FastcampusLectureResponse {
 
     private String desktopCardAsset;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     public FastcampusLecture toEntity(){
         return FastcampusLecture.builder()
                 .uniqueId(id)
@@ -34,6 +40,8 @@ public class FastcampusLectureResponse {
                 .publicDescription(publicDescription)
                 .keywords(keywords)
                 .desktopCardAsset(desktopCardAsset)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .build();
     }
 
