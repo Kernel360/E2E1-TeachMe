@@ -17,42 +17,42 @@ import lombok.RequiredArgsConstructor;
 
 import kr.kernel.teachme.exception.CrawlerException;
 import kr.kernel.teachme.crawler.dto.InflearnLectureDetailResponse;
-import kr.kernel.teachme.crawler.entity.InflearnLecture;
-import kr.kernel.teachme.crawler.repository.InflearnRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class InflearnLectureDetailCrawlingService {
-	private final InflearnRepository inflearnRepository;
 	private final LectureRepository lectureRepository;
+
+	private static final String platform = "inflearn";
 	private List<Lecture> getLectureListNotUpdated() {
-		return lectureRepository.findAllByDetailUploadFlagIsFalseAndPlatform("inflearn");
+		return lectureRepository.findAllByDetailUploadFlagIsFalseAndPlatform(platform);
 	}
 
-	private void deleteBootCamp(InflearnLecture lecture) {
-		lectureRepository.deleteByUrl(lecture.getUrl());
-		inflearnRepository.delete(lecture);
+	private void deleteNoLectureData(List<Lecture> lectureList) {
+		lectureRepository.deleteAll(lectureList);
 	}
-	private List<InflearnLecture>  updateLectureDetail(List<InflearnLecture> targetList) throws Exception {
-		List<InflearnLecture> updatedList = new ArrayList<>();
+	private List<Lecture>  updateLectureDetail(List<Lecture> targetList) throws Exception {
+		List<Lecture> updatedList = new ArrayList<>();
+		List<Lecture> deletedList = new ArrayList<>();
 		int crawlLimit = 0;
-		for (InflearnLecture lecture : targetList) {
+		for (Lecture lecture : targetList) {
 			crawlLimit++;
 			InflearnLectureDetailResponse detailResponse = crawlInflearnLectureDetail(lecture);
 			if (detailResponse.isDeletedFlag()) {
-				deleteBootCamp(lecture);
+				deletedList.add(lecture);
 				continue;
 			}
-			lecture.updateDetailInfo(detailResponse.getVideoCnt(), detailResponse.getDuration(), detailResponse.getImageSource(), detailResponse.getPostDate(), detailResponse.getUpdateDate());
+			lecture.updateInflearnDetailInfo(detailResponse.getDuration(), detailResponse.getImageSource(), detailResponse.getPostDate(), detailResponse.getUpdateDate());
 			updatedList.add(lecture);
-			if(crawlLimit % 10 == 0) Thread.sleep(5000);
+			if(crawlLimit == 50) break;
 		}
+		deleteNoLectureData(deletedList);
 		return updatedList;
 	}
 
-	private InflearnLectureDetailResponse crawlInflearnLectureDetail(InflearnLecture lecture) throws IOException, ParseException {
+	private InflearnLectureDetailResponse crawlInflearnLectureDetail(Lecture lecture) throws IOException, ParseException {
 		String pageUrl = lecture.getUrl();
 		InflearnLectureDetailResponse response = new InflearnLectureDetailResponse();
 
@@ -81,10 +81,11 @@ public class InflearnLectureDetailCrawlingService {
 	}
 
 	public void runInflearnLectureDetailCrawler() {
-		if (!inflearnRepository.existsByDetailUploadFlagIsFalse()) throw new CrawlerException("업데이트할 데이터가 없습니다.");
+		if (!lectureRepository.existsByDetailUploadFlagIsFalseAndPlatform(platform)) throw new CrawlerException("업데이트할 데이터가 없습니다.");
 		List<Lecture> updateList = getLectureListNotUpdated();
 		try {
-			//updateList = updateLectureDetail(updateList);
+			updateList = updateLectureDetail(updateList);
+			lectureRepository.saveAll(updateList);
 		} catch (Exception e) {
 			throw new CrawlerException("크롤링 중 에러 발생", e);
 		}
