@@ -21,6 +21,14 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', buildDir.toString() + '/generated/sources/annotationProcessor/java/main']
+        }
+    }
+}
+
 dependencies {
     // spring-boot
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -52,8 +60,14 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     // h2
     // runtimeOnly 'com.h2database:h2'
+    // Querydsl
+    implementation 'com.querydsl:querydsl-jpa:4.4.0'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
