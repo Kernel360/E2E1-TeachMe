@@ -1,8 +1,6 @@
 package kr.kernel.teachme.crawler.dto;
 
-import kr.kernel.teachme.crawler.entity.InflearnLecture;
 import kr.kernel.teachme.lecture.entity.Lecture;
-import kr.kernel.teachme.lecture.util.StringUtil;
 import lombok.*;
 
 @Data
