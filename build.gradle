@@ -61,10 +61,11 @@ dependencies {
     // h2
     // runtimeOnly 'com.h2database:h2'
     // Querydsl
-    implementation 'com.querydsl:querydsl-jpa:4.4.0'
+    implementation 'com.querydsl:querydsl-jpa:5.0.0'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    implementation 'com.google.guava:guava:30.1.1-jre'
 }
 
 tasks.named('test') {

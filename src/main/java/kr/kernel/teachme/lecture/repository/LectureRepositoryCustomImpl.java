@@ -3,7 +3,11 @@ package kr.kernel.teachme.lecture.repository;
 
 import java.util.List;
 
+import com.querydsl.core.QueryResults;
+import kr.kernel.teachme.lecture.dto.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -23,12 +27,12 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 	}
 
 	@Override
-	public List<Lecture> findBySearchOption(Pageable pageable, String filter, String sort, String option, String keyword) {
+	public Page<Lecture> findBySearchOption(Pageable pageable, SearchRequest search) {
 		JPQLQuery<Lecture> query = queryFactory.selectFrom(lecture)
-			.where(eqFilter(filter), eqOption(option, keyword), isUpdated())
-			.orderBy(sortList(sort))
-			;
-		return this.getQuerydsl().applyPagination(pageable, query).fetch();
+			.where(eqFilter(search.getSearchFilter()), eqOption(search.getSearchSelect(), search.getSearchInput()), isUpdated())
+			.orderBy(sortList(search.getSearchSort()));
+		QueryResults<Lecture> results = this.getQuerydsl().applyPagination(pageable, query).fetchResults();
+		return new PageImpl<>(results.getResults(), pageable, results.getTotal());
 	}
 
 	private BooleanExpression eqFilter(String filter) {
@@ -39,14 +43,17 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 	}
 
 	private BooleanExpression eqOption(String type,String keyword) {
-		if (type.equals("title")) {
-			return lecture.title.containsIgnoreCase(keyword);
-		} else if (type.equals("instructor")){
-			return lecture.instructor.containsIgnoreCase(keyword);
-		} else if (type.equals("keywords")) {
-			return lecture.keywords.containsIgnoreCase(keyword);
+		switch (type) {
+            case "title":
+                return lecture.title.containsIgnoreCase(keyword);
+            case "instructor":
+                return lecture.instructor.containsIgnoreCase(keyword);
+            case "keywords":
+                return lecture.keywords.containsIgnoreCase(keyword);
+			default:
+				throw new IllegalStateException("Unexpected value: " + type);
 		}
-		return null;
+
 	}
 
 	private BooleanExpression isUpdated() {

@@ -44,6 +44,18 @@
     box-shadow: 0 0 10px #007F48;
 }
 
+.search_sort {
+    border: 0;
+    padding: 7px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.search_sort:hover {
+    border-color: #007F48;
+    box-shadow: 0 0 10px #007F48;
+}
+
 .search_check {
     border: 0;
 }

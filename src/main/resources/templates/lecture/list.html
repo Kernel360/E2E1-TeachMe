@@ -9,22 +9,32 @@
 </head>
 <body>
     <div class="content" layout:fragment="content">
-        <form class="search_menu" style="width: 80%; margin: 0 auto; margin-bottom: 50px;">
+        <form method="get" th:action="@{/lecture/list}" class="search_menu" style="width: 80%; margin: 0 auto; margin-bottom: 50px;">
             <label>
-                <input class="search_check" type="checkbox">
+                <input id="fastcampus_check" class="search_check" type="checkbox">
                 패캠만 보기
             </label>
             <label>
-                <input class="search_check" type="checkbox">
+                <input id="inflearn_check" class="search_check" type="checkbox">
                 인프런만 보기
             </label>
+            <input type="hidden" id="search_filter" name="searchFilter" value="all">
             <label>
-                <select class="search_select">
-                    <option>등록 순</option>
+                <select id="search_sort" name="searchSort" class="search_sort">
+                    <option value="updateDate">최신 순</option>
+                    <option value="title">가나다 순</option>
+                    <option value="salePrice">가격 낮은 순</option>
                 </select>
             </label>
             <label>
-                <input class="search_input" type="text" placeholder="검색어 입력"/>
+                <select id="search_select" name="searchSelect" class="search_select">
+                    <option value="title">제목</option>
+                    <option value="instructor">강사명</option>
+                    <option value="keywords">키워드</option>
+                </select>
+            </label>
+            <label>
+                <input id="search_input" name="searchInput" class="search_input" type="text" placeholder="검색어 입력"/>
             </label>
             <button type="submit" class="search_btn">🔍  검색</button>
         </form>
@@ -55,6 +65,7 @@
 <!--                <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
             </ul>
         </nav>
+        <script th:src="@{/js/list.js}"></script>
     </div>
 </body>
 </html>
