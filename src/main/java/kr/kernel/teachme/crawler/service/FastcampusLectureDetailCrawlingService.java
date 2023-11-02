@@ -43,11 +43,13 @@ public class FastcampusLectureDetailCrawlingService {
             int salePrice = products.getSalePrice();
             String instructor = response.getData().getCourse().getInstructor();
             int totalClassHours = response.getData().getCourse().getTotalClassHours();
+            String url = detailUrl;
 
-            lecture.updateFastcampusDetailInfo(listPrice, salePrice, instructor, totalClassHours * 60);
+            lecture.updateFastcampusDetailInfo(listPrice, salePrice, instructor, totalClassHours * 60, detailUrl);
             fastcampusLectureList.add(lecture);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
+            if(fastcampusLectureList.size() > 10) break;
         }
         deleteNoLectureList(deleteLectureList);
         return fastcampusLectureList;
