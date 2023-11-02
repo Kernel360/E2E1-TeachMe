@@ -55,6 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // authorization
         http.authorizeRequests()
                 // /와 /home은 모두에게 허용
+                .antMatchers("/img/**", "/js/**", "/style/**").permitAll()
                 .antMatchers("/", "/home", "/signup", "/lecture/**").permitAll() //옮겨 놓기
                 .antMatchers("/crawler").hasRole("ADMIN")
                 //.antMatchers(HttpMethod.POST, "/notice").hasRole("ADMIN")
