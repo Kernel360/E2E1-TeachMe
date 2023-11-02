@@ -37,3 +37,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+kr/kernel/teachme/config/InitializeDefaultConfig.java
+
+

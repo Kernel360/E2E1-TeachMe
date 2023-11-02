@@ -26,7 +26,7 @@
 <nav th:fragment="headerFragment" class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid" style="margin-left: 200px;">
     <a class="navbar-brand" href="/">
-      <img th:src="@{images}" style="position: relative; bottom:6px;">
+      <img th:src="@{../img/logo.png}" style="position: relative; bottom:6px;">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -36,7 +36,7 @@
         <!-- home 화면: 모두 -->
         <li class="nav-item">
           <a class="nav-link active"
-             href="/home"> 홈 </a>
+             href="/"> 홈 </a>
         <!-- 강의 리스트: 로그인한 사용자만 -->
         <li class="nav-item">
           <a class="nav-link active"
@@ -49,7 +49,7 @@
           <a class="nav-link active"
              aria-current="page"
              sec:authorize="hasAnyRole('ROLE_ADMIN')"
-             href="/crawler/crawlerForm"> 크롤링 </a>
+             href="/crawler"> 크롤링 </a>
         </li>
         <!-- 로그인: 로그인 안한 사람만 -->
         <li class="nav-item">

@@ -1,8 +1,6 @@
 package kr.kernel.teachme.config;
 
 import lombok.RequiredArgsConstructor;
-//import me.benny.practice.spring.security.note.NoteService;
-//import me.benny.practice.spring.security.notice.NoticeService;
 import kr.kernel.teachme.member.entity.Member;
 import kr.kernel.teachme.member.service.MemberService;
 import org.springframework.context.annotation.Bean;
