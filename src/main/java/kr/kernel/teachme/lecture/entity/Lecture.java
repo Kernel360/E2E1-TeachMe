@@ -73,12 +73,13 @@ public class Lecture {
         this.detailUploadFlag = true;
     }
 
-    public void updateFastcampusDetailInfo(int price, int discountPrice, String instructor, int duration) {
+    public void updateFastcampusDetailInfo(int price, int discountPrice, String instructor, int duration, String detailUrl) {
         this.price = price;
         this.discountPrice = discountPrice;
         this.instructor = instructor;
         this.duration = duration;
         this.detailUploadFlag = true;
+        this.url = detailUrl;
     }
 
 }
