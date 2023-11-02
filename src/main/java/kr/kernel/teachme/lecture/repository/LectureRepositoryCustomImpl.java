@@ -31,7 +31,6 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 			.where(eqFilter(search.getSearchFilter()), eqOption(search.getSearchSelect(), search.getSearchInput()), isUpdated())
 			.orderBy(sortList(search.getSearchSort()));
 		QueryResults<Lecture> results = this.getQuerydsl().applyPagination(pageable, query).fetchResults();
-		System.out.println(results.toString());
 		return new PageImpl<>(results.getResults(), pageable, results.getTotal());
 	}
 
@@ -51,7 +50,7 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
             case "keywords":
                 return lecture.keywords.containsIgnoreCase(keyword);
 			default:
-				throw new IllegalStateException("Unexpected value: " + type);
+				return lecture.title.containsIgnoreCase(keyword);
 		}
 
 	}
