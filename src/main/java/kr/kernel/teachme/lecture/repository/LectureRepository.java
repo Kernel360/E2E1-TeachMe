@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface LectureRepository extends JpaRepository<Lecture, Long> {
+public interface LectureRepository extends JpaRepository<Lecture, Long>, LectureRepositoryCustom {
 
     List<Lecture> findByOrderByIdDesc(Pageable pageable);
     void deleteByUrl(String url);
