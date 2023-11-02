@@ -21,20 +21,20 @@
             <input type="hidden" id="search_filter" name="searchFilter" value="all">
             <label>
                 <select id="search_sort" name="searchSort" class="search_sort">
-                    <option value="updateDate">최신 순</option>
-                    <option value="title">가나다 순</option>
-                    <option value="salePrice">가격 낮은 순</option>
+                    <option value="updateDate" th:selected="${param.searchSort == 'updateDate'}">최신 순</option>
+                    <option value="title" th:selected="${param.searchSort == 'title'}">가나다 순</option>
+                    <option value="salePrice" th:selected="${param.searchSort == 'salePrice'}">가격 낮은 순</option>
                 </select>
             </label>
             <label>
                 <select id="search_select" name="searchSelect" class="search_select">
-                    <option value="title">제목</option>
-                    <option value="instructor">강사명</option>
-                    <option value="keywords">키워드</option>
+                    <option value="title" th:selected="${param.searchSelect == 'title'}">제목</option>
+                    <option value="instructor" th:selected="${param.searchSelect == 'instructor'}">강사명</option>
+                    <option value="keywords" th:selected="${param.searchSelect == 'keywords'}">키워드</option>
                 </select>
             </label>
             <label>
-                <input id="search_input" name="searchInput" class="search_input" type="text" placeholder="검색어 입력"/>
+                <input id="search_input" name="searchInput" class="search_input" type="text" placeholder="검색어 입력" th:value="${param.searchInput}"/>
             </label>
             <button type="submit" class="search_btn">🔍  검색</button>
         </form>
@@ -47,22 +47,19 @@
         </div>
         <nav aria-label="Page navigation example" style="width: 80%; margin: 0 auto; margin-top:50px; ">
             <ul class="pagination" style="justify-content: center;">
-                <li class="page-item" th:classappend="${!(lecturePage.pagination.page == 0)} ? '': 'disabled'">
-                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page})}" th:if="${!(lecturePage.pagination.page == 0)}" aria-label="Previous">
+                <li class="page-item" th:classappend="${(lecturePage.pagination.page == 0) ? 'disabled': ''}">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page})}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item active">
                     <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 1})}" th:text="${lecturePage.pagination.page + 1}"></a>
                 </li>
-                <li class="page-item" th:classappend="${!(lecturePage.pagination.page == lecturePage.pagination.totalPage)} ? '': 'disabled'">
-                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 2})}" th:if="${!(lecturePage.pagination.page == lecturePage.pagination.totalPage)}" aria-label="Next">
+                <li class="page-item" th:classappend="${!(lecturePage.pagination.page + 1 == lecturePage.pagination.totalPage) ? '': 'disabled'}">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 2})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
-<!--                <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#" th:text="${lecturePage.pagination.page + 1}"></a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
             </ul>
         </nav>
         <script th:src="@{/js/list.js}"></script>

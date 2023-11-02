@@ -67,3 +67,11 @@
 input, progress {
     accent-color: #007F48;
 }
+
+.pagination {
+    color: #007F48;
+}
+
+.active > .page-link {
+    background: #007F48;
+}

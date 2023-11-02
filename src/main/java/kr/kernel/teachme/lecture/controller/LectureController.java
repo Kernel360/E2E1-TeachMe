@@ -30,7 +30,6 @@ public class LectureController {
     @ApiOperation(value="강의 리스트 사이트", notes="강의 리스트 출력 및 검색")
     @GetMapping("/list")
     public String getLectureListForm(@RequestParam(defaultValue = "1") int page, Model model, @ModelAttribute SearchRequest search) {
-        System.out.println(search);
         Pageable pageable = PageRequest.of(page -1, 10, Sort.Direction.DESC, "id");
         PaginationResponse<List<Lecture>> lectureApiList = lectureService.searchList(pageable, search);
         model.addAttribute("lecturePage", lectureApiList);
