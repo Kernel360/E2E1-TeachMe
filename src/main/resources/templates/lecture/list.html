@@ -18,7 +18,7 @@
                 <input id="inflearn_check" class="search_check" type="checkbox">
                 인프런만 보기
             </label>
-            <input type="hidden" id="search_filter" name="searchFilter" value="all">
+            <input type="hidden" id="search_filter" name="searchFilter" th:value="${param.searchFilter}">
             <label>
                 <select id="search_sort" name="searchSort" class="search_sort">
                     <option value="updateDate">최신 순</option>
@@ -28,41 +28,76 @@
             </label>
             <label>
                 <select id="search_select" name="searchSelect" class="search_select">
-                    <option value="title">제목</option>
-                    <option value="instructor">강사명</option>
-                    <option value="keywords">키워드</option>
+                    <option value="title" th:selected="${param.searchSelect == 'title'}">제목</option>
+                    <option value="instructor" th:selected="${param.searchSelect == 'instructor'}">강사명</option>
+                    <option value="keywords" th:selected="${param.searchSelect == 'keywords'}">키워드</option>
                 </select>
             </label>
             <label>
-                <input id="search_input" name="searchInput" class="search_input" type="text" placeholder="검색어 입력"/>
+                <input id="search_input" name="searchInput" class="search_input" type="text" placeholder="검색어 입력" th:value="${param.searchInput}"/>
             </label>
-            <button type="submit" class="search_btn">🔍  검색</button>
+            <button type="submit" class="search_btn">🔍&nbsp;&nbsp;&nbsp;검색</button>
         </form>
-        <table>
-
+        <table class="lecture_table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>강의명 <span>상세정보 👉이름클릭</span></th>
+                    <th>강사</th>
+                    <th>총 가격</th>
+                    <th>플랫폼</th>
+                    <th>총 시간</th>
+                    <th>키워드</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="lecture : ${lecturePage.body}">
+                    <td><img th:src="${lecture.img}" style="width: 150px; height: 90px; border-radius: 10px;" alt="..."></td>
+                    <td style="max-width: 200px;"><a th:text="${lecture.title}" style="font-weight: bolder; font-size: 13px;"></a></td>
+                    <td style="max-width: 130px;">
+                        <span th:each="item : ${#strings.arraySplit(lecture.instructor, ',')}">
+                            <span class="instructor_name" th:text="${#strings.trim(item)}"></span>
+                        </span>
+                    </td>
+                    <td style="max-width: 100px;">
+                        <span class="sale_notice" th:if="${lecture.discountPrice < lecture.price}">
+                            할인중🎁
+                            <br>
+                        </span>
+                        <span class="price_notice" th:text="${lecture.discountPrice == 0 ? '무료' : #numbers.formatInteger(lecture.discountPrice, 3, 'COMMA') + '&#8361;'}"></span>
+                    </td>
+                    <td>
+                        <span class="fastcampus_notice" th:if="${#strings.equals(lecture.platform, 'fastcampus')}">패스트캠퍼스</span>
+                        <span class="inflearn_notice" th:if="${#strings.equals(lecture.platform, 'inflearn')}">인프런</span>
+                    </td>
+                    <td th:with="hours=${lecture.duration / 60}, minutes=${lecture.duration % 60}">
+                        <span class="time_notice" th:if="${hours > 0}" th:text="${hours} + '시간 '"></span>
+                        <span class="time_notice" th:if="${minutes > 0}" th:text="${minutes} + '분'"></span>
+                    </td>
+                    <td style="max-width: 130px;">
+                        <span th:each="keyword, iterStat : ${#strings.arraySplit(lecture.keywords, ',')}">
+                            <span th:if="${iterStat.count <= 3}" class="keyword_notice" th:text="${#strings.trim(keyword)}"></span>
+                            <span th:if="${iterStat.count == 3 and iterStat.size > 3}" class="keyword_notice">...</span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
         </table>
-        <div th:each="lecture : ${lecturePage.body}" style="display: flex; gap: 20px; align-items: center; background-color: white; width: 80%; margin: 10px auto; border-radius: 15px;">
-            <img th:src="${lecture.img}" style="width: 200px; height: 130px; border-radius: 10px;" alt="...">
-            <span th:text="${lecture.title}"></span>
-        </div>
         <nav aria-label="Page navigation example" style="width: 80%; margin: 0 auto; margin-top:50px; ">
             <ul class="pagination" style="justify-content: center;">
-                <li class="page-item" th:classappend="${!(lecturePage.pagination.page == 0)} ? '': 'disabled'">
-                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page})}" th:if="${!(lecturePage.pagination.page == 0)}" aria-label="Previous">
+                <li class="page-item" th:classappend="${(lecturePage.pagination.page == 0) ? 'disabled': ''}">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page}, searchFilter=${param.searchFilter}, searchSort=${param.searchSort}, searchSelect=${param.searchSelect}, searchInput=${param.searchInput})}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item active">
                     <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 1})}" th:text="${lecturePage.pagination.page + 1}"></a>
                 </li>
-                <li class="page-item" th:classappend="${!(lecturePage.pagination.page == lecturePage.pagination.totalPage)} ? '': 'disabled'">
-                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 2})}" th:if="${!(lecturePage.pagination.page == lecturePage.pagination.totalPage)}" aria-label="Next">
+                <li class="page-item" th:classappend="${!(lecturePage.pagination.page + 1 == lecturePage.pagination.totalPage) && (lecturePage.pagination.totalPage != 0) ? '': 'disabled'}">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 2}, searchFilter=${param.searchFilter}, searchSort=${param.searchSort}, searchSelect=${param.searchSelect}, searchInput=${param.searchInput})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
-<!--                <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#" th:text="${lecturePage.pagination.page + 1}"></a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
             </ul>
         </nav>
         <script th:src="@{/js/list.js}"></script>
