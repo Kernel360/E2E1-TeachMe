@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/defaultLayout}">
+
 <head>
   <link rel="stylesheet" type="text/css" href="style/signin.css">
-  <head th:insert="fragments/fragments.html::header"></head>
 </head>
 <body>
-<header th:insert="fragments/fragments.html::nav"></header>
-<div class="container">
+<div class="container" layout:fragment="content">
   <form class="form-signin" method="post" th:action="@{/signup}">
     <h2 class="form-signin-heading">회원가입</h2>
     <p>

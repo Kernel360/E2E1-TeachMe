@@ -10,14 +10,72 @@
 <div th:fragment="advertiseFragment" id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="height: 200px;">
   <div class="carousel-inner" style="z-index: -1">
     <div class="carousel-item active">
-      <img th:src="@{images}" class="d-block w-100" alt="..." style="height: 150px;">
+      <img th:src="@{../img/banner1.png}" class="d-block w-100" alt="..." style="height: 150px;">
     </div>
     <div class="carousel-item">
-      <img th:src="@{images}" class="d-block w-100" alt="..." style="height: 150px;">
+      <img th:src="@{../img/banner2.png}" class="d-block w-100" alt="..." style="height: 150px;">
     </div>
     <div class="carousel-item">
-      <img th:src="@{images}" class="d-block w-100" alt="..." style="height: 150px;">
+      <img th:src="@{../img/banner3.png}" class="d-block w-100" alt="..." style="height: 150px;">
     </div>
   </div>
 </div>
+
+<!-- fragment : header -->
+
+<nav th:fragment="headerFragment" class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid" style="margin-left: 200px;">
+    <a class="navbar-brand" href="/">
+      <img th:src="@{../img/logo.png}" style="position: relative; bottom:6px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- home 화면: 모두 -->
+        <li class="nav-item">
+          <a class="nav-link active"
+             href="/"> 홈 </a>
+        <!-- 강의 리스트: 로그인한 사용자만 -->
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             sec:authorize="isAuthenticated()"
+             href="/lecture/list"> 강의 리스트 </a>
+        </li>
+        <!-- 크롤링: 관리자만 -->
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             sec:authorize="hasAnyRole('ROLE_ADMIN')"
+             href="/crawler"> 크롤링 </a>
+        </li>
+        <!-- 로그인: 로그인 안한 사람만 -->
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             sec:authorize="!isAuthenticated()"
+             href="/login"> 로그인 </a>
+        </li>
+        <!-- 회원가입: 로그인 안한 사람만 -->
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             sec:authorize="!isAuthenticated()"
+             href="/signup"> 회원가입 </a>
+        </li>
+        <!-- 로그아웃: 로그인한 사람만 -->
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             sec:authorize="isAuthenticated()"
+             href="/logout"> 로그아웃 </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
 </body>
