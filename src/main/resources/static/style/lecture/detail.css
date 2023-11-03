@@ -1,0 +1,65 @@
+/* 부모 요소 스타일 */
+.parent-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    background-color: white;
+    padding-top: 30px;
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 15px;
+}
+
+
+.carousel {
+    display: none;
+}
+
+.thumbnail {
+    width:616px;
+    height:336px;
+}
+
+.title {
+    max-width: 50%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.homepageUrl {
+    color: white;
+    border-color: #007F48;
+    border-radius: 4px;
+    padding: 10px 15px;
+    background: #007F48;
+    text-decoration: none;
+    font-size: 17px;
+    transition: all 0.3s;
+    margin: 10px;
+}
+
+.homepageUrl:hover {
+    cursor: pointer;
+    background: #7CB302;
+}
+
+.like_button {
+    color: white;
+    border-radius: 4px;
+    padding: 10px 15px;
+    background: #007F48;
+    font-size: 17px;
+    transition: all 0.3s;
+    margin: 10px;
+    outline: none;
+    border: none;
+}
+
+.like_button:hover {
+    cursor: pointer;
+    background: #7CB302;
+}

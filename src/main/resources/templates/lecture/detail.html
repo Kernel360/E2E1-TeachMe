@@ -5,14 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Teach Me : 내가 고르는 강의 - 강의 상세</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/style/lecture/list.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/style/lecture/detail.css}">
 </head>
 <body>
     <div class="content" layout:fragment="content">
-        <h3>🐹hi</h3>
         <div class="parent-div">
-            <div>
-                <h5 th:text="${lecture.get().lectureId}"></h5>
+            <img class="thumbnail" th:src="${lecture.img}"/>
+            <h2 class="title" th:text="${lecture.title}"></h2>
+            <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
+                <a th:href="@{${lecture.url}}" class="homepageUrl">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    &nbsp;&nbsp;
+                    홈페이지 바로가기
+                </a>
+                <button class="like_button">
+                    <i class="fa-regular fa-heart"></i>
+                    &nbsp;&nbsp;
+                    찜
+                </button>
             </div>
         </div>
     </div>
