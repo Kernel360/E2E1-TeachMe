@@ -56,6 +56,15 @@
     box-shadow: 0 0 10px #007F48;
 }
 
+.lecture_title {
+    color: black;
+    text-decoration: none;
+}
+
+.lecture_title:hover {
+    text-decoration-line: underline;
+}
+
 .search_check {
     border: 0;
 }
