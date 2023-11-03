@@ -3,11 +3,16 @@ package kr.kernel.teachme.member.controller;
 import kr.kernel.teachme.member.dto.MemberRegisterDto;
 import kr.kernel.teachme.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.Errors;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * 회원가입 Controller
@@ -29,9 +34,19 @@ public class SignUpController {
 
     @PostMapping
     public String signup(
-            @ModelAttribute MemberRegisterDto userDto
+            @Valid MemberRegisterDto memberDto, Errors errors, Model model
     ) {
-        memberService.signup(userDto.getUsername(), userDto.getPassword(), userDto.getName());
+        if (errors.hasErrors()) {
+            /* 회원가입 실패시 입력 데이터 값을 유지 */
+            model.addAttribute("MemberDto", memberDto);
+            /* 유효성 통과 못한 필드와 메시지를 핸들링 */
+            Map<String, String> validatorResult = memberService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
+            return "/member/signup";
+        }
+        memberService.signup(memberDto.getUsername(), memberDto.getPassword(), memberDto.getName());
         return "redirect:../login";
     }
 }
