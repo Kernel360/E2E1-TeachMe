@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/defaultLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Teach Me : 내가 고르는 강의 - 강의 상세</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style/lecture/list.css}">
 </head>
 <body>
-
+    <div class="content" layout:fragment="content">
+        <h3>🐹hi</h3>
+        <div class="parent-div">
+            <div>
+                <h5 th:text="${lecture.get().lectureId}"></h5>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
