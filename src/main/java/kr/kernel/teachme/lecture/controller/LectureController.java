@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -35,7 +35,9 @@ public class LectureController {
 
     @ApiOperation(value="강의 상세 정보 사이트", notes="강의 상세 정보 출력")
     @GetMapping("/{lectureId}")
-    public String getLectureDetailForm(@PathVariable Long lectureId) {
+    public String getLectureDetailForm(@PathVariable Long lectureId, Model model) {
+        Optional<Lecture> lecture = lectureService.getLectureDetail(lectureId);
+        model.addAttribute("lecture", lecture);
         return "lecture/detail";
     }
 

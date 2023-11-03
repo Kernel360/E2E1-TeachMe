@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -42,5 +43,7 @@ public class LectureService {
 
         return response;
     }
-
+    public Optional<Lecture> getLectureDetail(Long lectureId) {
+        return lectureRepository.findById(lectureId);
+    }
 }
