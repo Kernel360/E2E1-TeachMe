@@ -1,16 +1,15 @@
 package kr.kernel.teachme.config;
 
-import kr.kernel.teachme.member.entity.Member;
-import kr.kernel.teachme.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import kr.kernel.teachme.jwt.JwtAuthenticationFilter;
 import kr.kernel.teachme.jwt.JwtAuthorizationFilter;
 import kr.kernel.teachme.jwt.JwtProperties;
+import kr.kernel.teachme.member.entity.Member;
+import kr.kernel.teachme.member.repository.MemberRepository;
 import kr.kernel.teachme.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -56,6 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // /와 /home은 모두에게 허용
                 .antMatchers("/", "/home", "/member/**","/img/**","/style/**","/js/**","/lecture/**","/fragments/**").permitAll()
+                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**").permitAll()
                 .antMatchers("/crawler/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
         // login

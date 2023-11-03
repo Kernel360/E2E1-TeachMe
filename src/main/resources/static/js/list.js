@@ -26,7 +26,6 @@ const searchFilter = params.get("searchFilter");
 
 function setSelectedValue(id, valueToSet) {
     if(valueToSet !== null && valueToSet.trim().length !== 0) {
-        alert(valueToSet);
         const selectElement = document.getElementById(id);
         selectElement.value = valueToSet;
     }
