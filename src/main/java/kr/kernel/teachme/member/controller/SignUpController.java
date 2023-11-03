@@ -31,7 +31,7 @@ public class SignUpController {
     public String signup(
             @ModelAttribute MemberRegisterDto userDto
     ) {
-        memberService.signup(userDto.getUsername(), userDto.getPassword());
-        return "redirect:login";
+        memberService.signup(userDto.getUsername(), userDto.getPassword(), userDto.getName());
+        return "redirect:../login";
     }
 }

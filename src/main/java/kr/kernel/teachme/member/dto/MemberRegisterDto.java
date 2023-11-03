@@ -13,4 +13,5 @@ public class MemberRegisterDto {
 
     private String username;
     private String password;
+    private String name;
 }

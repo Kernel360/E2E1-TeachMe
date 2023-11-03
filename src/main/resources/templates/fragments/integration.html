@@ -3,7 +3,7 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+        xmlns="http://www.w3.org/1999/html">
 
 <!-- fragment : advertise -->
 <body>
@@ -71,10 +71,17 @@
              sec:authorize="isAuthenticated()"
              href="/logout"> 로그아웃 </a>
         </li>
-
+        <li class="nav-item">
+          <p
+                  class="nav-link active"
+                  sec:authorize="isAuthenticated()">
+            <span th:text="${#authentication.principal.name + '님 환영합니다. '}"></span>
+          </p>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+
 
 </body>

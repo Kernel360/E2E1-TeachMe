@@ -21,16 +21,18 @@ public class MemberService {
      *
      * @param username username
      * @param password password
+     * @param name name
      * @return 유저 권한을 가지고 있는 유저
      */
     public Member signup(
             String username,
-            String password
+            String password,
+            String name
     ) {
         if (memberRepository.findByUsername(username) != null) {
             throw new AlreadyRegisteredMemberException();
         }
-        return memberRepository.save(new Member(username, passwordEncoder.encode(password), "ROLE_USER"));
+        return memberRepository.save(new Member(username, passwordEncoder.encode(password), "ROLE_USER", name));
     }
 
     /**
@@ -38,16 +40,18 @@ public class MemberService {
      *
      * @param username username
      * @param password password
+     * @param name name
      * @return 관리자 권한을 가지고 있는 유저
      */
     public Member signupAdmin(
             String username,
-            String password
+            String password,
+            String name
     ) {
         if (memberRepository.findByUsername(username) != null) {
             throw new AlreadyRegisteredMemberException();
         }
-        return memberRepository.save(new Member(username, passwordEncoder.encode(password), "ROLE_ADMIN"));
+        return memberRepository.save(new Member(username, passwordEncoder.encode(password), "ROLE_ADMIN", name));
     }
 
     public Member findByUsername(String username) {
