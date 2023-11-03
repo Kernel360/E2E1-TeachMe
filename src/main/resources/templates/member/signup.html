@@ -12,17 +12,17 @@
     <h2 class="form-signin-heading">회원가입</h2>
     <p>
       <label for="username" class="sr-only">Id</label>
-      <input type="text" id="username" name="username" class="form-control" th:value="${memberDto != null} ? ${memberDto.username} : ''" placeholder="Id" required autofocus>
+      <input type="text" id="username" name="username" class="form-control" th:value="${memberDto != null} ? ${memberDto.username} : ''" placeholder="사용할 id를 입력해주세요." required autofocus>
       <span th:if="${valid_username}" id="valid_username" th:text="${valid_username}"></span>
     </p>
     <p>
       <label for="name" class="sr-only">Name</label>
-      <input type="text" id="name" name="name" class="form-control" th:value="${memberDto != null} ? ${memberDto.name} : ''" placeholder="Name" required autofocus>
+      <input type="text" id="name" name="name" class="form-control" th:value="${memberDto != null} ? ${memberDto.name} : ''" placeholder="이름을 입력해주세요." required autofocus>
       <span th:if="${valid_name}" id="valid_name" th:text="${valid_username}"></span>
     </p>
     <p>
       <label for="password" class="sr-only">Password</label>
-      <input type="password" id="password" name="password" class="form-control" th:value="${memberDto != null} ? ${memberDto.password} : ''" placeholder="Password" required>
+      <input type="password" id="password" name="password" class="form-control" th:value="${memberDto != null} ? ${memberDto.password} : ''" placeholder="비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요." required>
       <span th:if="${valid_password}" id="valid_password" th:text="${valid_password}"></span>
     </p>
     <p>
