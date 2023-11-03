@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/signup")
+@RequestMapping("/member/signup")
 public class SignUpController {
 
     private final MemberService memberService;
@@ -24,7 +24,7 @@ public class SignUpController {
      */
     @GetMapping
     public String signup() {
-        return "signup";
+        return "/member/signup";
     }
 
     @PostMapping
