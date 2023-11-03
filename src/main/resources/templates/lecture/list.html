@@ -36,13 +36,13 @@
             <label>
                 <input id="search_input" name="searchInput" class="search_input" type="text" placeholder="검색어 입력" th:value="${param.searchInput}"/>
             </label>
-            <button type="submit" class="search_btn">🔍&nbsp;&nbsp;&nbsp;검색</button>
+            <button type="submit" class="search_btn">🔍&nbsp;&nbsp;&nbsp;&nbsp;검색</button>
         </form>
         <table class="lecture_table">
             <thead>
                 <tr>
                     <th></th>
-                    <th>강의명 <span>상세정보 👉이름클릭</span></th>
+                    <th>강의명 <span style="color: grey">상세정보 👉이름클릭</span></th>
                     <th>강사</th>
                     <th>총 가격</th>
                     <th>플랫폼</th>
@@ -53,7 +53,7 @@
             <tbody>
                 <tr th:each="lecture : ${lecturePage.body}">
                     <td><img th:src="${lecture.img}" style="width: 150px; height: 90px; border-radius: 10px;" alt="..."></td>
-                    <td style="max-width: 200px;"><a th:text="${lecture.title}" style="font-weight: bolder; font-size: 13px;"></a></td>
+                    <td style="max-width: 200px;"><a class="lecture_title" th:text="${lecture.title}" style="font-weight: bolder; font-size: 13px;"></a></td>
                     <td style="max-width: 130px;">
                         <span th:each="item : ${#strings.arraySplit(lecture.instructor, ',')}">
                             <span class="instructor_name" th:text="${#strings.trim(item)}"></span>
