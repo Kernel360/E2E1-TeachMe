@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/signup")
+@RequestMapping("member/signup")
 public class SignUpController {
 
     private final MemberService memberService;
@@ -24,7 +24,7 @@ public class SignUpController {
      */
     @GetMapping
     public String signup() {
-        return "signup";
+        return "member/signup";
     }
 
     @PostMapping
@@ -32,7 +32,6 @@ public class SignUpController {
             @ModelAttribute MemberRegisterDto userDto
     ) {
         memberService.signup(userDto.getUsername(), userDto.getPassword());
-        // 회원가입 후 로그인 페이지로 이동
         return "redirect:login";
     }
 }
