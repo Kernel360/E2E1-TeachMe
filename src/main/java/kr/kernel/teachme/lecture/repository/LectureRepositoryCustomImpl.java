@@ -1,8 +1,6 @@
 package kr.kernel.teachme.lecture.repository;
 
 
-import java.util.List;
-
 import com.querydsl.core.QueryResults;
 import kr.kernel.teachme.lecture.dto.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +18,11 @@ import kr.kernel.teachme.lecture.entity.Lecture;
 
 public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport implements LectureRepositoryCustom{
 	@Autowired
-	private JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-	public LectureRepositoryCustomImpl() {
+	public LectureRepositoryCustomImpl(JPAQueryFactory queryFactory) {
 		super(Lecture.class);
+		this.queryFactory = queryFactory;
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 	}
 
 	private BooleanExpression eqFilter(String filter) {
-		if (filter == null || filter.isEmpty()) {
+		if (filter == null || filter.isEmpty() || filter.equals("all")) {
 			return null;
 		}
 		return lecture.platform.eq(filter);
@@ -51,7 +50,7 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
             case "keywords":
                 return lecture.keywords.containsIgnoreCase(keyword);
 			default:
-				throw new IllegalStateException("Unexpected value: " + type);
+				return lecture.title.containsIgnoreCase(keyword);
 		}
 
 	}

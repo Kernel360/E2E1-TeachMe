@@ -56,6 +56,15 @@
     box-shadow: 0 0 10px #007F48;
 }
 
+.lecture_title {
+    color: black;
+    text-decoration: none;
+}
+
+.lecture_title:hover {
+    text-decoration-line: underline;
+}
+
 .search_check {
     border: 0;
 }
@@ -66,4 +75,105 @@
 
 input, progress {
     accent-color: #007F48;
+}
+
+.pagination {
+    color: #007F48;
+}
+
+.active > .page-link {
+    background: #007F48;
+}
+
+.lecture_table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 10px auto;
+    border: 1px solid #dddddd;
+}
+
+.lecture_table th, td {
+    border: 1px solid #dddddd;
+    padding: 8px 12px;
+}
+
+.lecture_table td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+th {
+    background: #f2f2f2;
+    font-weight: bold;
+}
+
+td {
+    background: #ffffff;
+}
+
+.lecture_table tbody td {
+    border-left: none;
+    border-right: none;
+}
+
+.instructor_name {
+    color: rgb(34, 143, 228);
+    font-size: 12px;
+    margin-right: 3px;
+    line-height: 16px;
+    background: #F1F1F3;
+    font-weight: bold;
+    padding:2px;
+    border-radius: 5px;
+}
+
+.sale_notice {
+    font-size: 12px;
+    line-height: 16px;
+    color: #FF4D4E;
+    background: #FFEE5C;
+    font-weight: bolder;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+.price_notice {
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.fastcampus_notice {
+    font-size: 12px;
+    line-height: 16px;
+    background: #FFF0EF;
+    color: #CF1321;
+    font-weight: bolder;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+.inflearn_notice {
+    font-size: 12px;
+    line-height: 16px;
+    background: #FCFFE5;
+    color: #7CB302;
+    font-weight: bolder;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+.time_notice {
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.keyword_notice {
+    color: #888888;
+    font-size: 12px;
+    margin-right: 3px;
+    line-height: 16px;
+    background: #F1F1F3;
+    font-weight: bold;
+    padding:2px;
+    border-radius: 5px;
 }
