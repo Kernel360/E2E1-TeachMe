@@ -55,7 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // authorization
         http.authorizeRequests()
                 // /와 /home은 모두에게 허용
-                .antMatchers("/", "/home", "/member/**","/img/**","/style/**","/js/**","/lecture/**","/fragments/**").permitAll()
+                .antMatchers("/", "/home", "/member/**","/lecture/**","/fragments/**").permitAll()
                 .antMatchers("/crawler/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
         // login
@@ -74,7 +74,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         // 정적 리소스 spring security 대상에서 제외
-//        web.ignoring().antMatchers("/images/**", "/css/**"); // 아래 코드와 같은 코드입니다.
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
