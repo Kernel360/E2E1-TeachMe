@@ -39,6 +39,8 @@ out/
 ### VS Code ###
 .vscode/
 
-/kr/kernel/teachme/config/InitializeDefaultConfig.java
+kr/kernel/teachme/config/InitializeDefaultConfig.java
+kr/kernel/teachme/jwt/JwtKey.java
+
 
 

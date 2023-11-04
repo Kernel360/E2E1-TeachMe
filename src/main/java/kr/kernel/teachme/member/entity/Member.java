@@ -25,15 +25,18 @@ public class Member implements UserDetails {
     private String username;
     private String password;
     private String authority;
+    private String name;
 
     public Member(
             String username,
             String password,
-            String authority
+            String authority,
+            String name
     ) {
         this.username = username;
         this.password = password;
         this.authority = authority;
+        this.name = name;
     }
 
     @Override
