@@ -125,6 +125,7 @@ td {
     font-weight: bold;
     padding:2px;
     border-radius: 5px;
+    white-space: nowrap;
 }
 
 .sale_notice {
@@ -176,4 +177,5 @@ td {
     font-weight: bold;
     padding:2px;
     border-radius: 5px;
+    white-space: nowrap;
 }

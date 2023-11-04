@@ -51,6 +51,9 @@
                 </tr>
             </thead>
             <tbody>
+                <tr th:if="${#lists.size(lecturePage.body) == 0}">
+                    <td colspan="7">검색된 강의가 없습니다.🥲</td>
+                </tr>
                 <tr th:each="lecture : ${lecturePage.body}">
                     <td><img th:src="${lecture.img}" style="width: 150px; height: 90px; border-radius: 10px;" alt="..."></td>
                     <td style="max-width: 200px;"><a class="lecture_title" th:href="@{|/lecture/${lecture.id}|}" th:text="${lecture.title}" style="font-weight: bolder; font-size: 13px;"></a></td>
