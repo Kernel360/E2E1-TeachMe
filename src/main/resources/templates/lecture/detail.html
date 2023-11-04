@@ -5,14 +5,132 @@
 <head>
     <meta charset="UTF-8">
     <title>Teach Me : 내가 고르는 강의 - 강의 상세</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/style/lecture/list.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/style/lecture/detail.css}">
 </head>
 <body>
     <div class="content" layout:fragment="content">
-        <h3>🐹hi</h3>
         <div class="parent-div">
-            <div>
-                <h5 th:text="${lecture.get().lectureId}"></h5>
+            <img class="thumbnail" th:src="${lecture.img}"/>
+            <h2 style="width: 100%;" class="title" th:text="${lecture.title}"></h2>
+            <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
+                <a th:href="@{${lecture.url}}" class="homepageUrl">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    &nbsp;&nbsp;
+                    홈페이지 바로가기
+                </a>
+                <button class="like_button">
+                    <i class="fa-regular fa-heart"></i>
+                    &nbsp;&nbsp;
+                    찜
+                </button>
+            </div>
+            <div th:if="${#strings.equals(lecture.platform, 'fastcampus')}" class="platform_box">
+                <div class="fastcampus_image"></div>
+                <span class="platform_name">&nbsp;패스트캠퍼스</span>
+                <span class="platform_description"> 에서 제공합니다.</span>
+                <a href="https://fastcampus.co.kr/" class="platform_link">
+                    바로가기
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+            <div th:if="${#strings.equals(lecture.platform, 'inflearn')}" class="platform_box">
+                <div class="inflearn_image"></div>
+                <span class="platform_name">&nbsp;인프런</span>
+                <span class="platform_description"> 에서 제공합니다.</span>
+                <a href="https://www.inflearn.com/" class="platform_link">
+                    바로가기
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+            <div style="width: 80%; margin-top: 50px;">
+                <h3 style="font-weight: bolder; color:#555555;">
+                    <i class="fa-solid fa-tags"></i>
+                    키워드
+                </h3>
+                <p style="text-align: left; color: #585858; font-size: 15px;">강의 내용을 나타내는 키워드들 입니다.</p>
+                <div style="width: 100%">
+                    <span th:each="keyword : ${#strings.arraySplit(lecture.keywords, ',')}">
+                        <span class="keywords" th:text="${#strings.trim(keyword)}"></span>
+                    </span>
+                </div>
+            </div>
+            <div style="width: 80%; color: #666; background-color: #f5f5f7; margin-top: 36px; padding: 24px; border-radius: 8px; font-size: 14px;">
+                <span style="font-size: 15px; font-weight: bolder; color: black;">🎒더 많은 인터넷 강의가 궁금하세요? 👀</span>
+                <br>
+                <br>
+                <span>본인의 스킬을 레벨업 하기 위해선 성장을 위한 시간 투자와 몰입이 필요해요.</span>
+                <br>
+                <span>다양한 강의 리스트는 <a href="/lecture/list" style="color: #007F48; text-decoration: none;">[여기]</a>에서 확인해보세요.</span>
+            </div>
+            <div style="width: 80%; margin-top: 50px;">
+                <h3 style="font-weight: bolder; color:#555555;">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    수업 정보
+                </h3>
+                <p style="text-align: left; color: #585858; font-size: 15px;">변경가능성이 있으므로, 정확한 정보는 홈페이지에서 확인해주세요.</p>
+                <div class="class_box">
+                    <div class="class_box_option">
+                        <span class="tag">강사정보</span>
+                        <span th:each="instructor, iterStat : ${#strings.arraySplit(lecture.instructor, ',')}">
+                            <span style="white-space: nowrap; margin-left: 5px;" th:text="${#strings.trim(instructor)}"></span>
+                        </span>
+                        <span th:if="${#strings.isEmpty(lecture.instructor)}">없음</span>
+                    </div>
+                    <div class="class_box_option">
+                        <span class="tag">수업시간</span>
+                        <span th:with="hours=${lecture.duration / 60}, minutes=${lecture.duration % 60}">
+                            <span style="margin-right: 5px;" th:if="${hours > 0}" th:text="${hours} + '시간 '"></span>
+                            <span th:if="${minutes > 0}" th:text="${minutes} + '분'"></span>
+                        </span>
+                    </div>
+                    <div class="class_box_option">
+                        <span class="tag">플랫폼</span>
+                        <span th:if="${#strings.equals(lecture.platform, 'fastcampus')}">패스트캠퍼스</span>
+                        <span th:if="${#strings.equals(lecture.platform, 'inflearn')}">인프런</span>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 80%; margin-top: 50px;">
+                <h3 style="font-weight: bolder; color:#555555;">
+                    <i class="fa-solid fa-coins"></i>
+                    수강료 및 정보
+                </h3>
+                <div class="money_box">
+                    <div class="money_box_option">
+                        <span class="tag">수강료</span>
+                        <span th:if="${lecture.discountPrice < lecture.price}">
+                            <span class="before_price" th:text="${#numbers.formatInteger(lecture.price, 3, 'COMMA')}"></span>
+                            <span style="margin-right: 5px;">👉</span>
+                        </span>
+                        <span th:if="${lecture.discountPrice == 0}">
+                            <span class="free_price">무료</span>
+                        </span>
+                        <span th:if="${lecture.discountPrice != 0}">
+                            <span class="price" th:text="${#numbers.formatInteger(lecture.discountPrice, 3, 'COMMA') + '원'}"></span>
+                        </span>
+                        <span th:if="${lecture.discountPrice < lecture.price}">
+                            <span th:if="${lecture.discountPrice == 0}" class="discount_rate">100% 할인</span>
+                            <span th:if="${lecture.discountPrice != 0}" class="discount_rate" th:text="${#numbers.formatDecimal((1 - ((lecture.discountPrice * 1.0) / lecture.price)) * 100, 2, 0) + '% 할인'}"></span>
+                        </span>
+                    </div>
+                    <div class="money_box_option">
+                        <span class="tag">1분당 가격</span>
+                        <span th:text="${#numbers.formatDecimal((lecture.discountPrice * 1.0) / lecture.duration, 2, 0, 'COMMA') + '원'}"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 80%; margin-top: 50px;">
+                <h3 style="font-weight: bolder; color:#555555;">
+                    <i class="fa-solid fa-thumbtack"></i>
+                    추가설명
+                </h3>
+                <p style="text-align: left; color: #585858; font-size: 15px;">플랫폼에서 제공하는 추가 설명이에요.</p>
+                <div style="color: #666; background-color: #f5f5f7; margin-top: 10px; margin-bottom: 30px; padding: 24px; border-radius: 8px; font-size: 14px;">
+                    <span style="font-size: 15px; font-weight: bolder; color: black;">소개 문구</span>
+                    <br>
+                    <br>
+                    <span th:text="${lecture.description}"></span>
+                </div>
             </div>
         </div>
     </div>
