@@ -72,11 +72,11 @@
              href="/logout"> 로그아웃 </a>
         </li>
         <li class="nav-item">
-          <p
+          <a
                   class="nav-link active"
                   sec:authorize="isAuthenticated()">
             <span th:text="${#authentication.principal.name + '님 환영합니다. '}"></span>
-          </p>
+          </a>
         </li>
       </ul>
     </div>

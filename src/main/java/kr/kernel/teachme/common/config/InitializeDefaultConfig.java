@@ -1,6 +1,5 @@
 package kr.kernel.teachme.common.config;
 
-import kr.kernel.teachme.member.entity.Member;
 import kr.kernel.teachme.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
