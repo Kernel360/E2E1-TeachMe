@@ -1,0 +1,45 @@
+[2023-11-06 12:33:55.050] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 6.2.5.Final
+[2023-11-06 12:33:55.053] [INFO ] [main] kr.kernel.teachme.TeachmeApplication Starting TeachmeApplication using Java 17.0.8.1 on song-yejin-ui-MacBookAir.local with PID 2883 (/Users/song-yejin/IdeaProjects/E2E1-TeachMe/build/classes/java/main started by song-yejin in /Users/song-yejin/IdeaProjects/E2E1-TeachMe)
+[2023-11-06 12:33:55.053] [INFO ] [main] kr.kernel.teachme.TeachmeApplication No active profile set, falling back to 1 default profile: "default"
+[2023-11-06 12:33:55.713] [INFO ] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-11-06 12:33:55.740] [INFO ] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 22 ms. Found 2 JPA repository interfaces.
+[2023-11-06 12:33:56.038] [INFO ] [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-11-06 12:33:56.041] [INFO ] [main] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8080"]
+[2023-11-06 12:33:56.042] [INFO ] [main] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-11-06 12:33:56.042] [INFO ] [main] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.82]
+[2023-11-06 12:33:56.094] [INFO ] [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-11-06 12:33:56.094] [INFO ] [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 928 ms
+[2023-11-06 12:33:56.162] [INFO ] [main] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-11-06 12:33:56.182] [INFO ] [main] org.hibernate.Version HHH000412: Hibernate ORM core version 5.6.15.Final
+[2023-11-06 12:33:56.243] [INFO ] [main] org.hibernate.annotations.common.Version HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[2023-11-06 12:33:56.284] [INFO ] [main] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-11-06 12:33:56.350] [INFO ] [main] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-11-06 12:33:56.363] [INFO ] [main] org.hibernate.dialect.Dialect HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+[2023-11-06 12:33:56.745] [INFO ] [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-11-06 12:33:56.749] [INFO ] [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-11-06 12:33:56.917] [WARN ] [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-11-06 12:33:57.166] [WARN ] [main] org.springframework.security.config.annotation.web.builders.WebSecurity You are asking Spring Security to ignore org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@1ffe7c42. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+[2023-11-06 12:33:57.167] [INFO ] [main] org.springframework.security.web.DefaultSecurityFilterChain Will not secure org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@1ffe7c42
+[2023-11-06 12:33:57.185] [INFO ] [main] org.springframework.security.web.DefaultSecurityFilterChain Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@a8ef0c2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@46c5747f, org.springframework.security.web.context.SecurityContextPersistenceFilter@17fbbf0a, org.springframework.security.web.header.HeaderWriterFilter@16ecdb6d, org.springframework.security.web.authentication.logout.LogoutFilter@17616c07, kr.kernel.teachme.common.jwt.JwtAuthenticationFilter@6eaa8abf, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4f1072ee, kr.kernel.teachme.common.jwt.JwtAuthorizationFilter@4fe91eed, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6a28d987, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@724e82d9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@329cef32, org.springframework.security.web.session.SessionManagementFilter@3eed0375, org.springframework.security.web.access.ExceptionTranslationFilter@22dddb13, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7c52df60]
+[2023-11-06 12:33:57.404] [INFO ] [main] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8080"]
+[2023-11-06 12:33:57.411] [INFO ] [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-11-06 12:33:57.429] [INFO ] [main] kr.kernel.teachme.TeachmeApplication Started TeachmeApplication in 2.597 seconds (JVM running for 2.862)
+[2023-11-06 12:34:04.006] [INFO ] [http-nio-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-11-06 12:34:04.006] [INFO ] [http-nio-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-11-06 12:34:04.008] [INFO ] [http-nio-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 1 ms
+[2023-11-06 12:34:04.035] [INFO ] [http-nio-8080-exec-1] kr.kernel.teachme.common.aop.LogAspect 	{}
+[2023-11-06 12:34:04.088] [INFO ] [http-nio-8080-exec-1] kr.kernel.teachme.common.aop.LogAspect ###End request HomeController.getHomePage(..)
+[2023-11-06 12:34:04.088] [INFO ] [http-nio-8080-exec-1] kr.kernel.teachme.common.aop.LogAspect 	home
+[2023-11-06 12:34:04.798] [INFO ] [http-nio-8080-exec-8] kr.kernel.teachme.common.aop.LogAspect ###End request LoginController.login()
+[2023-11-06 12:34:04.799] [INFO ] [http-nio-8080-exec-8] kr.kernel.teachme.common.aop.LogAspect 	/member/login
+[2023-11-06 12:34:08.752] [INFO ] [http-nio-8080-exec-9] kr.kernel.teachme.common.aop.LogAspect ###End request LoginController.login()
+[2023-11-06 12:34:08.752] [INFO ] [http-nio-8080-exec-9] kr.kernel.teachme.common.aop.LogAspect 	/member/login
+[2023-11-06 12:34:08.833] [INFO ] [http-nio-8080-exec-6] kr.kernel.teachme.common.aop.LogAspect ###End request LoginController.login()
+[2023-11-06 12:34:08.833] [INFO ] [http-nio-8080-exec-6] kr.kernel.teachme.common.aop.LogAspect 	/member/login
+[2023-11-06 12:34:14.936] [INFO ] [http-nio-8080-exec-8] kr.kernel.teachme.common.aop.LogAspect ###End request LoginController.login()
+[2023-11-06 12:34:14.936] [INFO ] [http-nio-8080-exec-8] kr.kernel.teachme.common.aop.LogAspect 	/member/login
+[2023-11-06 12:34:14.973] [INFO ] [http-nio-8080-exec-5] kr.kernel.teachme.common.aop.LogAspect ###End request LoginController.login()
+[2023-11-06 12:34:14.973] [INFO ] [http-nio-8080-exec-5] kr.kernel.teachme.common.aop.LogAspect 	/member/login
+[2023-11-06 12:36:39.059] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-11-06 12:36:39.060] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-11-06 12:36:39.064] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.

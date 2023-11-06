@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <property name="moduleId" value="around_hub_spring_boot"/>
+    <property name="type" value="around_hub"/>
+    <property name="logback" value="logback"/>
+    <property name="logdir" value="src/main/resources/log"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%thread] %logger %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 파일 앱렌더 추가 -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>${logdir}/application.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%thread] %logger %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <!-- 파일 앱렌더 추가를 root에 설정 -->
+        <appender-ref ref="file"/>
+    </root>
+</configuration>
