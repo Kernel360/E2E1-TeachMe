@@ -23,11 +23,12 @@
 }
 
 .title {
-    max-width: 50%;
     word-wrap: break-word;
     overflow-wrap: break-word;
     text-align: center;
     font-weight: bolder;
+    padding-left: 25%;
+    padding-right: 25%;
 }
 
 .homepageUrl {

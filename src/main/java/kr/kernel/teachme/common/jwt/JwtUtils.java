@@ -1,8 +1,6 @@
 package kr.kernel.teachme.common.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwsHeader;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import kr.kernel.teachme.domain.member.entity.Member;
 import org.springframework.data.util.Pair;
 
@@ -47,5 +45,52 @@ public class JwtUtils {
                 .setHeaderParam(JwsHeader.KEY_ID, key.getFirst()) // kid
                 .signWith(key.getSecond()) // signature
                 .compact(); //compact 통해 토큰 생성
+    }
+
+    public static boolean validateToken(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKeyResolver(new SigningKeyResolverAdapter() {
+                        @Override
+                        public Key resolveSigningKey(JwsHeader header, Claims claims) {
+                            String kid = header.getKeyId();
+                            return JwtKey.getKey(kid);
+                        }
+                    })
+                    .build()
+                    .parseClaimsJws(token);
+
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public static String createRefreshToken(Member member) {
+        Date now = new Date();
+        Pair<String, Key> key = JwtKey.getRandomKey();
+
+        long refreshTokenExpirationTime = 604800000;
+
+        return Jwts.builder()
+                .setSubject(member.getUsername())
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + refreshTokenExpirationTime))
+                .setHeaderParam(JwsHeader.KEY_ID, key.getFirst())
+                .signWith(key.getSecond(), SignatureAlgorithm.HS512)
+                .compact();
+
+    }
+
+    public static boolean validateRefreshToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKeyResolver(SigningKeyResolver.instance)
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
