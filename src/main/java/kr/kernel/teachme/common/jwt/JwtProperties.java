@@ -6,4 +6,6 @@ package kr.kernel.teachme.common.jwt;
 public class JwtProperties {
     public static final int EXPIRATION_TIME = 600000; // 10분
     public static final String COOKIE_NAME = "JWT-AUTHENTICATION";
+    public static final int REFRESH_EXPIRATION_TIME = 600000 * 6 * 24 * 7;
+    public static final String REFRESH_COOKIE_NAME = "JWT-REFRESH-AUTHENTICATION";
 }
