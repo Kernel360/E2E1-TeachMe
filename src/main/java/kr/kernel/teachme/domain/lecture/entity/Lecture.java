@@ -47,6 +47,8 @@ public class Lecture {
 
     private Date updateDate;
 
+    private Date lastCrawlDate;
+
     @ColumnDefault("false")
     private boolean detailUploadFlag;
 
@@ -72,6 +74,7 @@ public class Lecture {
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.detailUploadFlag = true;
+        this.lastCrawlDate = new Date();
     }
 
     public void updateFastcampusDetailInfo(int price, int discountPrice, String instructor, int duration) {
@@ -80,6 +83,7 @@ public class Lecture {
         this.instructor = instructor;
         this.duration = duration;
         this.detailUploadFlag = true;
+        this.lastCrawlDate = new Date();
     }
 
 }
