@@ -21,7 +21,7 @@ public class LogAspect {
 
     @Before("controller()")
     public void beforeRequest(JoinPoint joinPoint) {
-        log.trace("###Start request {}", joinPoint.getSignature().toShortString());
+        log.info("###Start request {}", joinPoint.getSignature().toShortString());
         Arrays.stream(joinPoint.getArgs())
                 .map(Object::toString)
                 .map(str -> "\t" + str)

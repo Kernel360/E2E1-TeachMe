@@ -16,4 +16,6 @@ public interface LectureRepository extends JpaRepository<Lecture, Long>, Lecture
     List<Lecture> findAllByDetailUploadFlagIsFalseAndPlatform(String platform);
     int countByPlatform(String platform);
     boolean existsByDetailUploadFlagIsFalseAndPlatform(String platform);
+
+    List<Lecture> findTop10ByPlatformOrderByLastCrawlDateAsc(String platform);
 }
