@@ -1,12 +1,16 @@
 package kr.kernel.teachme.domain.lecture.entity;
 
+import kr.kernel.teachme.domain.crawler.dto.FastcampusLectureUpdateResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
+
+import static kr.kernel.teachme.common.util.DateUtil.convertLocalDateTimeToDate;
 
 @NoArgsConstructor
 @Entity
@@ -66,6 +70,7 @@ public class Lecture {
         this.instructor = instructor;
         this.createDate = createDate;
         this.updateDate = updateDate;
+        this.lastCrawlDate = new Date(1900, Calendar.JANUARY, 1);
     }
 
     public void updateInflearnDetailInfo(int duration, String img, Date createDate, Date updateDate) {
@@ -77,13 +82,17 @@ public class Lecture {
         this.lastCrawlDate = new Date();
     }
 
-    public void updateFastcampusDetailInfo(int price, int discountPrice, String instructor, int duration) {
-        this.price = price;
-        this.discountPrice = discountPrice;
-        this.instructor = instructor;
-        this.duration = duration;
+    public void updateFastcampusDetailInfo(FastcampusLectureUpdateResponse fastcampusLectureUpdateResponse) {
+        this.price = fastcampusLectureUpdateResponse.getPrice();
+        this.discountPrice = fastcampusLectureUpdateResponse.getDiscountPrice();
+        this.instructor = fastcampusLectureUpdateResponse.getInstructor();
+        this.duration = fastcampusLectureUpdateResponse.getTotalClassHours() * 60;
         this.detailUploadFlag = true;
         this.lastCrawlDate = new Date();
+        this.createDate = (null == fastcampusLectureUpdateResponse.getCreatedAt()) ? createDate : convertLocalDateTimeToDate(fastcampusLectureUpdateResponse.getCreatedAt());
+        this.updateDate = (null == fastcampusLectureUpdateResponse.getUpdatedAt()) ? updateDate : convertLocalDateTimeToDate(fastcampusLectureUpdateResponse.getUpdatedAt());
+        this.description = fastcampusLectureUpdateResponse.getPublicDescription();
+        this.keywords = fastcampusLectureUpdateResponse.getKeywords();
     }
 
 }

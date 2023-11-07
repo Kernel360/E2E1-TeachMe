@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 @Data
 @NoArgsConstructor
 public class InflearnLectureDetailResponse {
+	private String title;
 	private boolean deletedFlag = false;
 	private int videoCnt;
 	private int duration;

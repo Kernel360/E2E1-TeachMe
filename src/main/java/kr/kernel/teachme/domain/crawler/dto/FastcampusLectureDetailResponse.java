@@ -29,6 +29,10 @@ public class FastcampusLectureDetailResponse {
     public static class Course{
         private String instructor;
         private int totalClassHours;
+        private String createdAt;
+        private String updatedAt;
+        private String publicDescription;
+        private String keywords;
     }
 
 
