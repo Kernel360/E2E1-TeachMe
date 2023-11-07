@@ -18,8 +18,13 @@
                     &nbsp;&nbsp;
                     홈페이지 바로가기
                 </a>
-                <button class="like_button">
+                <button id="favor_button" class="like_button" th:unless="${isFavor}" onclick="addFavorList();">
                     <i class="fa-regular fa-heart"></i>
+                    &nbsp;&nbsp;
+                    찜
+                </button>
+                <button id="cancel_favor_button" class="like_button" th:if="${isFavor}" onclick="removeFavorList();">
+                    <i class="fa-solid fa-heart"></i>
                     &nbsp;&nbsp;
                     찜
                 </button>
@@ -141,6 +146,7 @@
                 </div>
             </div>
         </div>
+        <script src="/js/lecture/detail.js"></script>
     </div>
 </body>
 </html>

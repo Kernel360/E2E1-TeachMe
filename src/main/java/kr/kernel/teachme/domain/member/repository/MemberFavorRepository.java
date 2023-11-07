@@ -1,15 +1,14 @@
 package kr.kernel.teachme.domain.member.repository;
 
-import java.util.List;
-
+import kr.kernel.teachme.domain.member.entity.MemberFavorLecture;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import kr.kernel.teachme.common.jwt.JwtUtils;
-import kr.kernel.teachme.domain.member.entity.MemberFavor;
+import java.util.List;
 @Repository
-public interface MemberFavorRepository extends JpaRepository<MemberFavor, Long>{
+public interface MemberFavorRepository extends JpaRepository<MemberFavorLecture, Long>{
 
-	List<MemberFavor> findAllByMemberId(Long id);
-	MemberFavor findByMemberIdAndLectureId(Long memberId, Long LectureId);
+	List<MemberFavorLecture> findAllByMemberId(Long id);
+	MemberFavorLecture findByMemberIdAndLectureId(Long memberId, Long lectureId);
+	boolean existsByMemberIdAndLectureId(Long memberId, Long lectureId);
 }
