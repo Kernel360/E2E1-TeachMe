@@ -2,11 +2,13 @@ package kr.kernel.teachme.common.jwt;
 
 import io.jsonwebtoken.*;
 import kr.kernel.teachme.domain.member.entity.Member;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Pair;
 
 import java.security.Key;
 import java.util.Date;
 
+@Slf4j
 public class JwtUtils {
     /**
      * 토큰에서 username 찾기
@@ -15,13 +17,27 @@ public class JwtUtils {
      * @return username
      */
     public static String getUsername(String token) {
-        // jwtToken에서 username을 찾습니다.
-        return Jwts.parserBuilder()
-                .setSigningKeyResolver(SigningKeyResolver.instance)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject(); // subject에 username 있음.
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKeyResolver(SigningKeyResolver.instance)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return claims.getSubject();
+        } catch (ExpiredJwtException e) {
+            log.debug("jwt 토큰 만료");
+            return null;
+        } catch (Exception e) {
+            log.error("jwt 토큰 처리중 Error 발생!: " + e.getMessage());
+            return null;
+        }
+//        return Jwts.parserBuilder()
+//                .setSigningKeyResolver(SigningKeyResolver.instance)
+//                .build()
+//                .parseClaimsJws(token)
+//                .getBody()
+//                .getSubject(); // subject에 username 있음.
     }
 
     /**
