@@ -2,15 +2,20 @@ package kr.kernel.teachme.domain.crawler.service;
 
 import kr.kernel.teachme.common.exception.CrawlerException;
 import kr.kernel.teachme.domain.crawler.dto.FastcampusLectureDetailResponse;
+import kr.kernel.teachme.domain.crawler.dto.FastcampusLectureUpdateResponse;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 import kr.kernel.teachme.domain.lecture.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
-
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,34 +27,25 @@ public class FastcampusLectureDetailCrawlingService {
 
     private static final String platform = "fastcampus";
 
+    @Value("${url.fastcampus.detail}")
+    String BASE_URL;
+
     private List<Lecture> getFastcampusDetailResponse(List<Lecture> fastcampusLectures) throws InterruptedException {
         List<Lecture> fastcampusLectureList = new ArrayList<>();
         List<Lecture> deleteLectureList = new ArrayList<>();
-        String baseUrl = "https://fastcampus.co.kr/.api/www/courses/";
 
         for (Lecture lecture : fastcampusLectures){
-            String detailUrl = baseUrl + lecture.getLectureId() + "/products";
+            String detailUrl = BASE_URL + lecture.getLectureId() + "/products";
             FastcampusLectureDetailResponse response = getDetailResponse(detailUrl);
 
-            List<FastcampusLectureDetailResponse.Products> productsList = response.getData().getProducts();
-
-            if(productsList.isEmpty()) {
+            if(response.getData().getProducts().isEmpty()) {
                 deleteLectureList.add(lecture);
                 continue;
             }
 
-            FastcampusLectureDetailResponse.Products products = productsList.get(0);
+            FastcampusLectureUpdateResponse updateResponse = convertToLectureUpdateResponse(response);
 
-
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.addMappings();
-
-            int listPrice = products.getListPrice();
-            int salePrice = products.getSalePrice();
-            String instructor = response.getData().getCourse().getInstructor();
-            int totalClassHours = response.getData().getCourse().getTotalClassHours();
-
-            lecture.updateFastcampusDetailInfo(listPrice, salePrice, instructor, totalClassHours * 60);
+            lecture.updateFastcampusDetailInfo(updateResponse);
             fastcampusLectureList.add(lecture);
 
             Thread.sleep(1000);
@@ -78,6 +74,28 @@ public class FastcampusLectureDetailCrawlingService {
         }catch (InterruptedException e){
             throw new CrawlerException("크롤링 중 에러 발생", e);
         }
+    }
+
+    private FastcampusLectureUpdateResponse convertToLectureUpdateResponse(FastcampusLectureDetailResponse response) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        Converter<String, LocalDateTime> toLocalDateTime = context -> ZonedDateTime.parse(context.getSource(), DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
+
+        modelMapper.addConverter(toLocalDateTime);
+
+        return getFastcampusLectureUpdateResponse(response, modelMapper);
+    }
+
+    private static FastcampusLectureUpdateResponse getFastcampusLectureUpdateResponse(FastcampusLectureDetailResponse response, ModelMapper modelMapper) {
+        FastcampusLectureUpdateResponse updateResponse = modelMapper.map(response.getData().getCourse(), FastcampusLectureUpdateResponse.class);
+
+        if (!response.getData().getProducts().isEmpty()) {
+            FastcampusLectureDetailResponse.Products product = response.getData().getProducts().get(0);
+            updateResponse.setPrice(product.getListPrice());
+            updateResponse.setDiscountPrice(product.getSalePrice());
+        }
+
+        return updateResponse;
     }
 
 }
