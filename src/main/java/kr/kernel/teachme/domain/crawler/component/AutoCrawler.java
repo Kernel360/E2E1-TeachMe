@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AutoCrawler {
 
-    void crawlLectureAutomatically() throws InterruptedException;
+    void crawlLectureAutomatically() throws InterruptedException, IOException, ParseException;
 
     List<Lecture> getLectureToUpdate();
 

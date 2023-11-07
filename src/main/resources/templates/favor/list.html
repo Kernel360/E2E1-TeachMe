@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/defaultLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Teach Me : 내가 고르는 강의 - 강의 리스트</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/lecture/list.css}">
+</head>
+<body>
+    <div class="content" layout:fragment="content">
+    <div class="parent-div">
+        <div class="lecture_table">
+            <table class="lecture_table">
+                <tbody>
+                <tr th:each="lecture : ${favorLectures}">
+                    <td style="max-width: 200px;"><a class="lecture_title" th:href="@{|/lecture/${lecture.id}|}" th:text="${lecture.title}" style="font-weight: bolder; font-size: 13px;"></a></td>
+                        <span th:each="item : ${#strings.arraySplit(lecture.instructor, ',')}">
+                            <span class="instructor_name" th:text="${#strings.trim(item)}"></span>
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
