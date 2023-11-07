@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+import static kr.kernel.teachme.common.util.DateUtil.convertLocalDateTimeToDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,10 +48,6 @@ public class FastcampusLectureResponse {
                 .build();
     }
 
-    private Date convertLocalDateTimeToDate(LocalDateTime dttm) {
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        return Date.from(dttm.atZone(defaultZoneId).toInstant());
-    }
 
     private String trimFirstAndLastCharacter(String keywords) {
         if(keywords.length() <= 2) {

@@ -1,30 +1,43 @@
-package kr.kernel.teachme.domain.crawler.service;
+package kr.kernel.teachme.domain.crawler.component;
 
 import kr.kernel.teachme.common.exception.CrawlerException;
 import kr.kernel.teachme.domain.crawler.dto.FastcampusLectureDetailResponse;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 import kr.kernel.teachme.domain.lecture.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import javax.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
-@Service
+@Slf4j
+@Component
 @RequiredArgsConstructor
-public class FastcampusLectureDetailCrawlingService {
+public class FastcampusAutoCrawler implements AutoCrawler{
+
     private final LectureRepository lectureRepository;
+    private static final String PLATFORM = "fastcampus";
 
-    private static final String platform = "fastcampus";
+    @Override
+    @Scheduled(cron = "0 0 0/1 * * *")
+    public void crawlLectureAutomatically() throws InterruptedException {
+        log.info("패캠 크론잡 실행");
+        List<Lecture> fastcampusLectures = getLectureToUpdate();
+        List<Lecture> fastcampusLectureList = getDetailResponse(fastcampusLectures);
+        lectureRepository.saveAll(fastcampusLectureList);
+    }
 
-    private List<Lecture> getFastcampusDetailResponse(List<Lecture> fastcampusLectures) throws InterruptedException {
+    @Override
+    public List<Lecture> getLectureToUpdate() {
+        return lectureRepository.findTop10ByPlatformOrderByLastCrawlDateAsc(PLATFORM);
+    }
+
+    @Override
+    public List<Lecture> getDetailResponse(List<Lecture> fastcampusLectures) throws InterruptedException {
         List<Lecture> fastcampusLectureList = new ArrayList<>();
-        List<Lecture> deleteLectureList = new ArrayList<>();
         String baseUrl = "https://fastcampus.co.kr/.api/www/courses/";
 
         for (Lecture lecture : fastcampusLectures){
@@ -33,16 +46,7 @@ public class FastcampusLectureDetailCrawlingService {
 
             List<FastcampusLectureDetailResponse.Products> productsList = response.getData().getProducts();
 
-            if(productsList.isEmpty()) {
-                deleteLectureList.add(lecture);
-                continue;
-            }
-
             FastcampusLectureDetailResponse.Products products = productsList.get(0);
-
-
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.addMappings();
 
             int listPrice = products.getListPrice();
             int salePrice = products.getSalePrice();
@@ -53,14 +57,9 @@ public class FastcampusLectureDetailCrawlingService {
             fastcampusLectureList.add(lecture);
 
             Thread.sleep(1000);
-            if(fastcampusLectureList.size() > 10) break;
-        }
-        deleteNoLectureList(deleteLectureList);
-        return fastcampusLectureList;
-    }
 
-    private void deleteNoLectureList(List<Lecture> lectureList) {
-        lectureRepository.deleteAll(lectureList);
+        }
+        return fastcampusLectureList;
     }
 
     private FastcampusLectureDetailResponse getDetailResponse(String url) {
@@ -69,15 +68,6 @@ public class FastcampusLectureDetailCrawlingService {
     }
 
 
-    public void update(){
-        if (!lectureRepository.existsByDetailUploadFlagIsFalseAndPlatform(platform)) throw new CrawlerException("업데이트 할 데이터가 없습니다.");
-        List<Lecture> fastcampusLectures = lectureRepository.findAllByDetailUploadFlagIsFalseAndPlatform(platform);
-        try {
-            List<Lecture> fastcampusLectureList = getFastcampusDetailResponse(fastcampusLectures);
-            lectureRepository.saveAll(fastcampusLectureList);
-        }catch (InterruptedException e){
-            throw new CrawlerException("크롤링 중 에러 발생", e);
-        }
-    }
+
 
 }
