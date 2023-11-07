@@ -1,23 +1,18 @@
 package kr.kernel.teachme.domain.member.controller;
 
-import java.util.List;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
-
 import io.swagger.annotations.ApiOperation;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
-import kr.kernel.teachme.domain.member.entity.MemberFavor;
+import kr.kernel.teachme.domain.member.dto.FavorRequest;
+import kr.kernel.teachme.domain.member.dto.FavorResponse;
 import kr.kernel.teachme.domain.member.service.MemberFavorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -26,35 +21,32 @@ public class FavorController {
 	private final MemberFavorService memberFavorService;
 	@ApiOperation(value="개인 페이지", notes="개인 페이지 찜 목록 출력")
 	@GetMapping("/list")
-	public String getFavorList(Model model, HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		String token = null;
-		for (Cookie ck : cookies) {
-			if (ck.getName().equals("JWT-AUTHENTICATION")) {
-				token = ck.getValue();
-			}
-		}
-		if (token == null) {
-			System.out.println("token is null");
-		}
+	public String getFavorList(Model model,
+							   @CookieValue(name = "JWT-AUTHENTICATION", required = false) String token) {
+		if(token.isEmpty()) return "redirect:/login";
 		List<Lecture> favorLectures = memberFavorService.getFavorLectureList(token);
 		model.addAttribute("favorLectures", favorLectures);
 		return "favor/list";
 	}
 
+	@ApiOperation(value="찜 목록 추가", notes="member_favor_lecture 테이블에 데이터 추가")
+	@PostMapping("/add")
+	public ResponseEntity<FavorResponse> addFavorLecture(@RequestBody FavorRequest request, @CookieValue(name = "JWT-AUTHENTICATION", required = true) String token) {
+		FavorResponse response = new FavorResponse();
+		try {
+			memberFavorService.addFavorLecture(token, request.getLectureId());
+			response.setMessage("찜 목록 추가 성공");
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			response.setMessage("찜 목록 추가 중 오류 발생");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+	}
+
 	@ApiOperation(value="개인 페이지", notes="찜한 강의 삭제하기")
 	@DeleteMapping("/delete")
-	public void deleteFavorLecture(Long lectureId, HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		String token = null;
-		for (Cookie ck : cookies) {
-			if (ck.getName().equals("JWT-AUTHENTICATION")) {
-				token = ck.getValue();
-			}
-		}
-		if (token == null) {
-			System.out.println("token is null");
-		}
+	public void deleteFavorLecture(Long lectureId,
+								   @CookieValue(name = "JWT-AUTHENTICATION", required = false) String token) {
 		memberFavorService.deleteFavorLecture(token, lectureId);
 	}
 }
