@@ -28,8 +28,7 @@ public class InflearnAutoCrawler implements AutoCrawler{
     @Override
     @Scheduled(cron = "0 0 0/1 * * *")
     public void crawlLectureAutomatically() {
-
-
+        List<Lecture> updateList = getLectureToUpdate();
     }
 
     @Override
