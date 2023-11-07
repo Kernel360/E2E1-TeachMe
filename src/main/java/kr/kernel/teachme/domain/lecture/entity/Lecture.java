@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 import static kr.kernel.teachme.common.util.DateUtil.convertLocalDateTimeToDate;
@@ -69,7 +70,7 @@ public class Lecture {
         this.instructor = instructor;
         this.createDate = createDate;
         this.updateDate = updateDate;
-        this.lastCrawlDate = new Date();
+        this.lastCrawlDate = new Date(1900, Calendar.JANUARY, 1);
     }
 
     public void updateInflearnDetailInfo(int duration, String img, Date createDate, Date updateDate) {
@@ -88,8 +89,8 @@ public class Lecture {
         this.duration = fastcampusLectureUpdateResponse.getTotalClassHours() * 60;
         this.detailUploadFlag = true;
         this.lastCrawlDate = new Date();
-        this.createDate = convertLocalDateTimeToDate(fastcampusLectureUpdateResponse.getCreatedAt());
-        this.updateDate = convertLocalDateTimeToDate(fastcampusLectureUpdateResponse.getUpdatedAt());
+        this.createDate = (null == fastcampusLectureUpdateResponse.getCreatedAt()) ? createDate : convertLocalDateTimeToDate(fastcampusLectureUpdateResponse.getCreatedAt());
+        this.updateDate = (null == fastcampusLectureUpdateResponse.getUpdatedAt()) ? updateDate : convertLocalDateTimeToDate(fastcampusLectureUpdateResponse.getUpdatedAt());
         this.description = fastcampusLectureUpdateResponse.getPublicDescription();
         this.keywords = fastcampusLectureUpdateResponse.getKeywords();
     }
