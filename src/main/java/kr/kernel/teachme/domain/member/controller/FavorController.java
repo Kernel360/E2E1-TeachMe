@@ -45,8 +45,17 @@ public class FavorController {
 
 	@ApiOperation(value="개인 페이지", notes="찜한 강의 삭제하기")
 	@DeleteMapping("/delete")
-	public void deleteFavorLecture(Long lectureId,
-								   @CookieValue(name = "JWT-AUTHENTICATION", required = false) String token) {
-		memberFavorService.deleteFavorLecture(token, lectureId);
+	public ResponseEntity<FavorResponse> deleteFavorLecture(@RequestBody FavorRequest request,
+								   @CookieValue(name = "JWT-AUTHENTICATION", required = true) String token) {
+		FavorResponse response = new FavorResponse();
+		try {
+			memberFavorService.deleteFavorLecture(token, request.getLectureId());
+			response.setMessage("찜 목록 삭제 성공");
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			response.setMessage("찜 목록 삭제 중 오류 발생");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+
 	}
 }
