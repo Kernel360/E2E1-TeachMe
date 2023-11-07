@@ -1,23 +1,21 @@
 package kr.kernel.teachme.domain.crawler.service;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-
+import kr.kernel.teachme.common.exception.CrawlerException;
+import kr.kernel.teachme.domain.crawler.dto.InflearnLectureDetailResponse;
+import kr.kernel.teachme.domain.lecture.entity.Lecture;
+import kr.kernel.teachme.domain.lecture.repository.LectureRepository;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-
-import kr.kernel.teachme.domain.lecture.entity.Lecture;
-import kr.kernel.teachme.domain.lecture.repository.LectureRepository;
-import lombok.RequiredArgsConstructor;
-
-import kr.kernel.teachme.common.exception.CrawlerException;
-import kr.kernel.teachme.domain.crawler.dto.InflearnLectureDetailResponse;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -72,7 +70,7 @@ public class InflearnLectureDetailCrawlingService {
 		String imageSource = imageElements.select("img").attr("src");
 
 		String postDateString = postElements.select("span.cd-date__published-date").text();
-		String updateDateString = postElements.select("span.cd-date__updated-at").text();
+		String updateDateString = postElements.select("span.cd-date__last-updated-at").text();
 
 		response.setInflearnInfoToData(info);
 		response.setImageSource(imageSource);

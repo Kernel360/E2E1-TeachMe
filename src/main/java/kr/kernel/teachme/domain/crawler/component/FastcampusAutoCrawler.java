@@ -48,7 +48,6 @@ public class FastcampusAutoCrawler implements AutoCrawler{
     public List<Lecture> getDetailResponse(List<Lecture> fastcampusLectures) throws InterruptedException {
         List<Lecture> fastcampusLectureList = new ArrayList<>();
 
-
         for (Lecture lecture : fastcampusLectures){
             String detailUrl = BASE_URL + lecture.getLectureId() + "/products";
             FastcampusLectureDetailResponse response = getResponseObject(detailUrl);
