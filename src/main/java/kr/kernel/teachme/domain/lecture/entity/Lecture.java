@@ -81,24 +81,11 @@ public class Lecture {
         this.lastCrawlDate = new Date();
     }
 
-    public void updateFastcampusDetailInfo(int price, int discountPrice, String instructor, int duration, Date createDate, Date updateDate, String description, String keywords) {
-        this.price = price;
-        this.discountPrice = discountPrice;
-        this.instructor = instructor;
-        this.duration = duration;
-        this.detailUploadFlag = true;
-        this.lastCrawlDate = new Date();
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.description = description;
-        this.keywords = keywords;
-    }
-
     public void updateFastcampusDetailInfo(FastcampusLectureUpdateResponse fastcampusLectureUpdateResponse) {
         this.price = fastcampusLectureUpdateResponse.getPrice();
         this.discountPrice = fastcampusLectureUpdateResponse.getDiscountPrice();
         this.instructor = fastcampusLectureUpdateResponse.getInstructor();
-        this.duration = fastcampusLectureUpdateResponse.getTotalClassHours();
+        this.duration = fastcampusLectureUpdateResponse.getTotalClassHours() * 60;
         this.detailUploadFlag = true;
         this.lastCrawlDate = new Date();
         this.createDate = convertLocalDateTimeToDate(fastcampusLectureUpdateResponse.getCreatedAt());

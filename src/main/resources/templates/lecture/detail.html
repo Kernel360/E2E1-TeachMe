@@ -88,6 +88,14 @@
                         <span th:if="${#strings.equals(lecture.platform, 'fastcampus')}">패스트캠퍼스</span>
                         <span th:if="${#strings.equals(lecture.platform, 'inflearn')}">인프런</span>
                     </div>
+                    <div class="class_box_option">
+                        <span class="tag">강의 등록일</span>
+                        <span th:text="${#dates.format(lecture.createDate, 'yyyy년 MM월 dd일')}"></span>
+                    </div>
+                    <div class="class_box_option">
+                        <span class="tag">최근 업데이트</span>
+                        <span th:text="${#dates.format(lecture.updateDate, 'yyyy년 MM월 dd일')}"></span>
+                    </div>
                 </div>
             </div>
             <div style="width: 80%; margin-top: 50px;">
