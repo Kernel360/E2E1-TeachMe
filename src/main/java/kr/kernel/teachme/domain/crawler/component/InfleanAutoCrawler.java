@@ -9,6 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -25,7 +26,9 @@ public class InfleanAutoCrawler implements AutoCrawler{
     private LectureRepository lectureRepository;
 
     @Override
+    @Scheduled(cron = "0 0 0/1 * * *")
     public void crawlLectureAutomatically() {
+
 
     }
 
@@ -34,7 +37,8 @@ public class InfleanAutoCrawler implements AutoCrawler{
         return lectureRepository.findTop10ByPlatformOrderByLastCrawlDateAsc(PLATFORM);
     }
 
-    private List<Lecture> updateLectureDetail(List<Lecture> targetList) throws Exception {
+    @Override
+    public List<Lecture> getDetailResponse(List<Lecture> lectures) throws InterruptedException {
         List<Lecture> updatedList = new ArrayList<>();
         int crawlLimit = 0;
         for (Lecture lecture : targetList) {
@@ -42,10 +46,10 @@ public class InfleanAutoCrawler implements AutoCrawler{
             InflearnLectureDetailResponse detailResponse = crawlInflearnLectureDetail(lecture);
             lecture.updateInflearnDetailInfo(detailResponse.getDuration(), detailResponse.getImageSource(), detailResponse.getPostDate(), detailResponse.getUpdateDate());
             updatedList.add(lecture);
-            if(crawlLimit == 10) break;
         }
         return updatedList;
     }
+
 
     private InflearnLectureDetailResponse crawlInflearnLectureDetail(Lecture lecture) throws IOException, ParseException {
         String pageUrl = lecture.getUrl();

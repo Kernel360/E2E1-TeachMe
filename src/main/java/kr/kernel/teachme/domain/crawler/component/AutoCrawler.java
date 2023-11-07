@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface AutoCrawler {
 
-    void crawlLectureAutomatically();
+    void crawlLectureAutomatically() throws InterruptedException;
 
     List<Lecture> getLectureToUpdate();
+
+    List<Lecture> getDetailResponse(List<Lecture> lectures) throws InterruptedException;
 
 }
