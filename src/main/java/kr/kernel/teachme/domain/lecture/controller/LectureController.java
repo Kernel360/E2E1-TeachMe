@@ -6,7 +6,6 @@ import kr.kernel.teachme.domain.lecture.dto.SearchRequest;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 import kr.kernel.teachme.domain.lecture.service.LectureService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -40,5 +39,6 @@ public class LectureController {
         model.addAttribute("lecture", lecture.orElse(null));
         return "lecture/detail";
     }
+
 
 }

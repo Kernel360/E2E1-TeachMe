@@ -19,7 +19,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class InfleanAutoCrawler implements AutoCrawler{
+public class InflearnAutoCrawler implements AutoCrawler{
 
     private final String PLATFORM = "inflearn";
     @Autowired
@@ -38,10 +38,10 @@ public class InfleanAutoCrawler implements AutoCrawler{
     }
 
     @Override
-    public List<Lecture> getDetailResponse(List<Lecture> lectures) throws InterruptedException {
+    public List<Lecture> getDetailResponse(List<Lecture> lectures) throws InterruptedException, IOException, ParseException {
         List<Lecture> updatedList = new ArrayList<>();
         int crawlLimit = 0;
-        for (Lecture lecture : targetList) {
+        for (Lecture lecture : lectures) {
             crawlLimit++;
             InflearnLectureDetailResponse detailResponse = crawlInflearnLectureDetail(lecture);
             lecture.updateInflearnDetailInfo(detailResponse.getDuration(), detailResponse.getImageSource(), detailResponse.getPostDate(), detailResponse.getUpdateDate());

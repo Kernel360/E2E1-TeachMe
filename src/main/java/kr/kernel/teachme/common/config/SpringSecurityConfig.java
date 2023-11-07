@@ -21,9 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-/**
- * Security 설정 Config
- */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor

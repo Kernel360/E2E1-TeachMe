@@ -63,7 +63,7 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 		if (sort.equals("title")) {
 			return QLecture.lecture.title.asc();
 		} else if (sort.equals("updateDate")) {
-			return QLecture.lecture.updateDate.desc();
+			return QLecture.lecture.createDate.desc();
 		} else if (sort.equals("salePrice")) {
 			return QLecture.lecture.discountPrice.asc();
 		}
