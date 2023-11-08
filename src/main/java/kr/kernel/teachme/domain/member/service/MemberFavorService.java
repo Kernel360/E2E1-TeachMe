@@ -21,9 +21,9 @@ public class MemberFavorService {
 	private final MemberRepository memberRepository;
 	private final LectureRepository lectureRepository;
 	JwtUtils jwtUtils;
-	public List<Lecture> getFavorLectureList(String token) {
-		String userName = jwtUtils.getUsername(token);
-		Member member = memberRepository.findByUsername(userName);
+	public List<Lecture> getFavorLectureList(Member member) {
+//		String userName = jwtUtils.getUsername(token);
+//		Member member = memberRepository.findByUsername(userName);
 		List<MemberFavorLecture> favors = memberFavorRepository.findAllByMemberId(member.getId());
 		List<Lecture> favoritedLectures = favors.stream()
 			.map(MemberFavorLecture::getLecture)
