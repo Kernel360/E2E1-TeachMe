@@ -1,4 +1,4 @@
-package kr.kernel.teachme.domain.member;
+package kr.kernel.teachme.common.exception;
 
 /**
  * 유저를 찾을 수 없을 때 발생하는 Exception

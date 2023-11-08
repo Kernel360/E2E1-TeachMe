@@ -1,6 +1,7 @@
 package kr.kernel.teachme.domain.member.service;
 
-import kr.kernel.teachme.domain.member.AlreadyRegisteredMemberException;
+import kr.kernel.teachme.common.exception.AlreadyRegisteredMemberException;
+import kr.kernel.teachme.common.exception.MemberNotFoundException;
 import kr.kernel.teachme.domain.member.entity.Member;
 import kr.kernel.teachme.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +61,13 @@ public class MemberService {
         return memberRepository.save(new Member(username, passwordEncoder.encode(password), "ROLE_ADMIN", name));
     }
 
-    public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username);
+    public Member findByUsername(String username) throws MemberNotFoundException {
+        Member member = memberRepository.findByUsername(username);
+
+        if (member == null){
+            throw new MemberNotFoundException();
+        }
+        return member;
     } //유저 정보 조회
 
    @Transactional(readOnly = true)
