@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PasswordEncoderConfigTest {
+class PasswordEncoderConfigTest {
 
     private final PasswordEncoderConfig passwordEncoderConfig = new PasswordEncoderConfig();
 
