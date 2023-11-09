@@ -10,7 +10,6 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -25,74 +24,101 @@ import java.util.List;
 public class InflearnAutoCrawler implements AutoCrawler{
 
     private final String PLATFORM = "inflearn";
-    @Autowired
-    private LectureRepository lectureRepository;
+
+    private final LectureRepository lectureRepository;
 
     @Override
     @Scheduled(cron = "0 0 0/1 * * *")
     public void crawlLectureAutomatically() throws IOException, ParseException, InterruptedException {
         log.info("인프런 크론잡 실행");
-        List<Lecture> updateList = getLectureToUpdate();
         try {
-            updateList = getDetailResponse(updateList);
-            lectureRepository.saveAll(updateList);
+            List<Lecture> lecturesToUpdate = fetchLecturesToUpdate();
+            List<Lecture> updatedLectures = updateLectureDetails(lecturesToUpdate);
+            saveUpdatedLectures(updatedLectures);
         } catch (Exception e) {
+            log.error("크롤링 중 에러 발생", e);
             throw new CrawlerException("크롤링 중 에러 발생", e);
         }
     }
 
     @Override
-    public List<Lecture> getLectureToUpdate() {
+    public List<Lecture> fetchLecturesToUpdate() {
         return lectureRepository.findTop10ByPlatformOrderByLastCrawlDateAsc(PLATFORM);
     }
 
     @Override
-    public List<Lecture> getDetailResponse(List<Lecture> lectures) throws InterruptedException, IOException, ParseException {
+    public List<Lecture> updateLectureDetails(List<Lecture> lectures) throws InterruptedException, IOException, ParseException {
         List<Lecture> updatedList = new ArrayList<>();
         for (Lecture lecture : lectures) {
-            InflearnLectureDetailResponse detailResponse = crawlInflearnLectureDetail(lecture);
-            lecture.updateInflearnDetailInfo(detailResponse.getDuration(), detailResponse.getImageSource(), detailResponse.getPostDate(), detailResponse.getUpdateDate());
-            updatedList.add(lecture);
+            try {
+                InflearnLectureDetailResponse detailResponse = crawlInflearnLectureDetail(lecture);
+                updateLectureInformation(lecture, detailResponse);
+                updatedList.add(lecture);
+            } catch (IOException | ParseException e) {
+                log.error("강의 상세 정보 크롤링 중 에러 발생", e);
+            }
         }
         return updatedList;
     }
 
+    @Override
+    public void saveUpdatedLectures(List<Lecture> lectures) {
+        lectureRepository.saveAll(lectures);
+    }
+
+    private void updateLectureInformation(Lecture lecture, InflearnLectureDetailResponse detailResponse) {
+        lecture.updateInflearnDetailInfo(
+                detailResponse.getDuration(),
+                detailResponse.getImageSource(),
+                detailResponse.getPostDate(),
+                detailResponse.getUpdateDate()
+        );
+    }
 
     private InflearnLectureDetailResponse crawlInflearnLectureDetail(Lecture lecture) throws IOException, ParseException {
-        String pageUrl = lecture.getUrl();
+        Document doc = connectToLecturePage(lecture.getUrl());
+        return parseLecturePage(doc);
+    }
+
+    private Document connectToLecturePage(String pageUrl) throws IOException {
+        Connection conn = Jsoup.connect(pageUrl);
+        return conn.get();
+    }
+
+    private InflearnLectureDetailResponse parseLecturePage(Document doc) throws ParseException {
         InflearnLectureDetailResponse response = new InflearnLectureDetailResponse();
 
-        Connection conn = Jsoup.connect(pageUrl);
-        Document doc = conn.get();
-        Elements pageElements = doc.select("div.cd-header__title-container");
+        extractTitle(doc, response);
+        extractInfo(doc, response);
+        extractImageSource(doc, response);
+        extractDates(doc, response);
 
-        String title = pageElements.select("h1").text();
-
-        Elements elements = doc.select("div.cd-floating__info > div:nth-child(2)");
-        Elements imageElements = doc.select("div.cd-header__thumbnail");
-        Elements postElements = doc.select("div.cd-date__content");
-
-        String info = "총 0개 수업 (0시간 0분)";
-        if(!elements.isEmpty()) {
-            info = elements.get(0).text();
-        } else {
-            response.setDeletedFlag(true);
-        }
-
-        String imageSource = imageElements.select("img").attr("src");
-
-        String postDateString = postElements.select("span.cd-date__published-date").text();
-        String updateDateString = postElements.select("span.cd-date__last-updated-at").text();
-
-        response.setInflearnInfoToData(info);
-        response.setTitle(title);
-        response.setImageSource(imageSource);
-        response.setDateFromString(postDateString, updateDateString);
         return response;
     }
 
+    private void extractTitle(Document doc, InflearnLectureDetailResponse response) {
+        Elements pageElements = doc.select("div.cd-header__title-container");
+        String title = pageElements.select("h1").text();
+        response.setTitle(title);
+    }
 
+    private void extractInfo(Document doc, InflearnLectureDetailResponse response) {
+        Elements elements = doc.select("div.cd-floating__info > div:nth-child(2)");
+        String info = elements.isEmpty() ? "총 0개 수업 (0시간 0분)" : elements.get(0).text();
+        response.setInflearnInfoToData(info);
+    }
 
+    private void extractImageSource(Document doc, InflearnLectureDetailResponse response) {
+        Elements imageElements = doc.select("div.cd-header__thumbnail");
+        String imageSource = imageElements.select("img").attr("src");
+        response.setImageSource(imageSource);
+    }
 
+    private void extractDates(Document doc, InflearnLectureDetailResponse response) throws ParseException {
+        Elements postElements = doc.select("div.cd-date__content");
+        String postDateString = postElements.select("span.cd-date__published-date").text();
+        String updateDateString = postElements.select("span.cd-date__last-updated-at").text();
+        response.setDateFromString(postDateString, updateDateString);
+    }
 
 }
