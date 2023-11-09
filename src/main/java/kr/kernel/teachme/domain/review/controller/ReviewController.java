@@ -1,5 +1,7 @@
 package kr.kernel.teachme.domain.review.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,21 +27,18 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/review")
 public class ReviewController {
 	private final ReviewService reviewService;
 
 	@ApiOperation(value="리뷰", notes="자신이 작성한 강의 리뷰 출력")
-	@GetMapping("/review")
-	public String getReviewList(Model model,
+	@GetMapping
+	public void getReviewList(Model model,
 		@AuthenticationPrincipal Member member,
 		@RequestParam(value = "page", defaultValue = "0") int page) {
-		if (member == null) return "redirect:/login";
-
 		Pageable pageable = PageRequest.of(page, 5);
 		Page<Review> reviews = reviewService.getMemberReviewList(pageable, member);
 		model.addAttribute("reviews", reviews);
-		return "member/review";
 	}
 
 	@ApiOperation(value="리뷰 등록", notes="강의 리뷰 등록")

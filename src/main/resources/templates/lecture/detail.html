@@ -145,6 +145,37 @@
                     <span th:text="${lecture.description}"></span>
                 </div>
             </div>
+            <div style="width: 80%; margin-top: 50px;">
+                <form class="form-review" method="post" action="/review/add">
+                    <h2 class="form-review-heading">리뷰</h2>
+                    <p>
+                        <label for="content" class="sr-only">리뷰 작성</label>
+                        <input type="text" id="content" name="content" class="form-review" placeholder="리뷰 작성" required autofocus>
+                    </p>
+                    <p>
+                        <label for="score" class="sr-only">별점</label><br>
+                        <input type="text" id="score" name="score" class="form-review" placeholder="별점" required autofocus>
+                    </p>
+                    <input type="hidden" name="lectureId" th:value="${lectureId}">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">저장</button>
+                </form>
+            </div>
+            <div style="width: 80%; margin-top: 50px;">
+                <br>
+                <span th:each="review : ${reviews}">
+                    <br>
+                    <span th:text="${review.getMember().getName()}">userName</span>
+                    <br>
+                    <span th:text="${review.getScore()}">score</span>
+                    <br>
+                    <span th:text="${review.getContent()}">content</span>
+                    <br>
+                    <span th:text="${review.getCreateDate()}">createDate</span>
+                    <br>
+                    <span th:text="${review.getUpdateDate()}">updateDate</span>
+                    <br>
+                </span>
+            </div>
         </div>
         <script src="/js/lecture/detail.js"></script>
     </div>
