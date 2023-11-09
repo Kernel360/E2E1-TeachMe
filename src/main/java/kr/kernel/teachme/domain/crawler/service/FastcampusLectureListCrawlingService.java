@@ -32,7 +32,6 @@ public class FastcampusLectureListCrawlingService {
     }
     public static List<FastcampusLectureResponse> convertLectureListToLecture(FastcampusLectureListResponse lectureList) {
         ModelMapper modelMapper = new ModelMapper();
-
         modelMapper.addMappings(new PropertyMap<FastcampusLectureListResponse.Course, FastcampusLectureResponse>() {
             @Override
             protected void configure() {

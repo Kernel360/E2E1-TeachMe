@@ -17,10 +17,6 @@ import java.io.IOException;
 import java.security.Key;
 import java.util.function.Function;
 
-/**
- * JWT를 이용한 인증
- * -> jwtAuthenticationFilter에서 만든 쿠키 속 토큰을 가져와서 파싱하여 유저 구하고, 유저의 authentication을 만들어서 SecurityContext에 넣는다.
- */
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private MemberRepository memberRepository;
@@ -51,12 +47,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     }
                 }
             }
-//            token = Arrays.stream(request.getCookies())
-//                    .filter(cookie -> cookie.getName().equals(JwtProperties.COOKIE_NAME)).findFirst()
-//                    .map(Cookie::getValue)
-//                    .orElse(null);
         } catch (Exception ignored) {
-            // 아무 것도 하지 않음
+
         }
 
         try {
@@ -88,37 +80,20 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 return;
             }
         }
-
-//        if (token != null) {
-//            try {
-//                // authentication을 만들어서 SecurityContext에 넣는다.
-//                Authentication authentication = getUsernamePasswordAuthenticationToken(token);
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//            } catch (Exception e) {
-//                // 실패하는 경우에는 쿠키를 초기화합니다.
-//                Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
-//                cookie.setMaxAge(0);
-//                response.addCookie(cookie);
-//            }
-//        }
       chain.doFilter(request, response);
     }
 
-    /**
-     * JWT 토큰으로 User를 찾아서 UsernamePasswordAuthenticationToken를 만들어서 반환한다.
-     * User가 없다면 null
-     */
     private Authentication getUsernamePasswordAuthenticationToken(String token) {
         String userName = JwtUtils.getUsername(token);
         if (userName != null) {
-            Member member = memberRepository.findByUsername(userName); // 유저를 유저명으로 찾습니다.
+            Member member = memberRepository.findByUsername(userName);
             return new UsernamePasswordAuthenticationToken(
-                    member, // principal
+                    member,
                     null,
                     member.getAuthorities()
             );
         }
-        return null; // 유저가 없으면 NULL
+        return null;
     }
 
     private String getUsernameFromRefreshToken(String token) {

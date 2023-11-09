@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * JWT를 이용한 로그인 인증
- */
-public class                  JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
@@ -26,15 +23,11 @@ public class                  JwtAuthenticationFilter extends UsernamePasswordAu
         this.authenticationManager = authenticationManager;
     }
 
-    /**
-     * 로그인 인증 시도
-     */
     @Override
     public Authentication attemptAuthentication(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws AuthenticationException {
-        // 로그인할 때 입력한 username과 password를 가지고 authenticationToken를 생성한다.
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 request.getParameter("username"),
                 request.getParameter("password"),
@@ -43,10 +36,6 @@ public class                  JwtAuthenticationFilter extends UsernamePasswordAu
         return authenticationManager.authenticate(authenticationToken);
     }
 
-    /**
-     * 인증에 성공했을 때 사용
-     * JWT Token을 생성해서 쿠키에 넣는다.
-     */
     @Override
     protected void successfulAuthentication(
             HttpServletRequest request,

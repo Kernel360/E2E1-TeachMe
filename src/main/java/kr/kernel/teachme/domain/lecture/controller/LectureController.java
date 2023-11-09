@@ -45,6 +45,7 @@ public class LectureController {
         }
 
         Optional<Lecture> lecture = lectureService.getLectureDetail(lectureId);
+
         model.addAttribute("lecture", lecture.orElse(null));
         return "lecture/detail";
     }
