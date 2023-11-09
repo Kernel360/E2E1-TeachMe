@@ -21,8 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.Optional;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -47,7 +45,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 new JwtAuthenticationFilter(authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class
         ).addFilterBefore(
-                new JwtAuthorizationFilter(memberRepository),
+                new JwtAuthorizationFilter(memberService),
                 BasicAuthenticationFilter.class
         );
         // authorization
@@ -67,7 +65,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
-                .deleteCookies(JwtProperties.COOKIE_NAME);
+                .deleteCookies(JwtProperties.COOKIE_NAME)
+                .deleteCookies(JwtProperties.REFRESH_COOKIE_NAME);
     }
 
     @Override
