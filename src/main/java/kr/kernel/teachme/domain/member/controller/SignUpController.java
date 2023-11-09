@@ -1,13 +1,12 @@
 package kr.kernel.teachme.domain.member.controller;
 
-import kr.kernel.teachme.domain.member.service.MemberService;
 import kr.kernel.teachme.domain.member.dto.MemberRegisterDto;
+import kr.kernel.teachme.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.Errors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,7 +28,7 @@ public class SignUpController {
      */
     @GetMapping
     public String signup() {
-        return "/member/signup";
+        return "member/signup";
     }
 
     @PostMapping
@@ -44,7 +43,7 @@ public class SignUpController {
             for (String key : validatorResult.keySet()) {
                 model.addAttribute(key, validatorResult.get(key));
             }
-            return "/member/signup";
+            return "member/signup";
         }
         memberService.signup(memberDto.getUsername(), memberDto.getPassword(), memberDto.getName());
         return "redirect:../login";

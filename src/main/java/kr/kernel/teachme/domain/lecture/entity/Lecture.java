@@ -57,7 +57,7 @@ public class Lecture {
     private boolean detailUploadFlag;
 
     @Builder
-    protected Lecture(Long lectureId, String platform, String title, String description, String keywords, String url, String img, int price, int discountPrice, String instructor, Date createDate, Date updateDate){
+    public Lecture(Long lectureId, String platform, String title, String description, String keywords, String url, String img, int price, int discountPrice, String instructor, Date createDate, Date updateDate){
         this.platform = platform;
         this.lectureId = lectureId;
         this.title = title;

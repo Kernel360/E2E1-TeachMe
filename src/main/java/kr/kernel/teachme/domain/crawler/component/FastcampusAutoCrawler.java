@@ -34,59 +34,58 @@ public class FastcampusAutoCrawler implements AutoCrawler{
     @Scheduled(cron = "0 0 0/1 * * *")
     public void crawlLectureAutomatically() throws InterruptedException {
         log.info("패캠 크론잡 실행");
-        List<Lecture> fastcampusLectures = getLectureToUpdate();
-        List<Lecture> fastcampusLectureList = getDetailResponse(fastcampusLectures);
-        lectureRepository.saveAll(fastcampusLectureList);
+        List<Lecture> lecturesToUpdate = fetchLecturesToUpdate();
+        List<Lecture> updatedLectures = updateLectureDetails(lecturesToUpdate);
+        saveUpdatedLectures(updatedLectures);
     }
 
     @Override
-    public List<Lecture> getLectureToUpdate() {
+    public List<Lecture> fetchLecturesToUpdate() {
         return lectureRepository.findTop10ByPlatformOrderByLastCrawlDateAsc(PLATFORM);
     }
 
     @Override
-    public List<Lecture> getDetailResponse(List<Lecture> fastcampusLectures) throws InterruptedException {
-        List<Lecture> fastcampusLectureList = new ArrayList<>();
+    public List<Lecture> updateLectureDetails(List<Lecture> lectures) throws InterruptedException {
+        List<Lecture> updatedLectures = new ArrayList<>();
 
-        for (Lecture lecture : fastcampusLectures){
-            String detailUrl = BASE_URL + lecture.getLectureId() + "/products";
-            FastcampusLectureDetailResponse response = getResponseObject(detailUrl);
-
-            FastcampusLectureUpdateResponse updateResponse = convertToLectureUpdateResponse(response);
-
+        for (Lecture lecture : lectures){
+            FastcampusLectureDetailResponse detailResponse = fetchLectureDetail(lecture);
+            FastcampusLectureUpdateResponse updateResponse = mapToLectureUpdateResponse(detailResponse);
             lecture.updateFastcampusDetailInfo(updateResponse);
-            fastcampusLectureList.add(lecture);
-
+            updatedLectures.add(lecture);
             Thread.sleep(1000);
         }
-        return fastcampusLectureList;
+        return updatedLectures;
     }
 
-    private FastcampusLectureDetailResponse getResponseObject(String url) {
+    @Override
+    public void saveUpdatedLectures(List<Lecture> lectures) {
+        lectureRepository.saveAll(lectures);
+    }
+
+    private FastcampusLectureDetailResponse fetchLectureDetail(Lecture lecture) {
+        String detailUrl = BASE_URL + lecture.getLectureId() + "/products";
+        return getResponseObject(detailUrl, FastcampusLectureDetailResponse.class);
+    }
+
+    private <T> T getResponseObject(String url, Class<T> responseType) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url,FastcampusLectureDetailResponse.class);
+        return restTemplate.getForObject(url, responseType);
     }
 
-    private FastcampusLectureUpdateResponse convertToLectureUpdateResponse(FastcampusLectureDetailResponse response) {
+    private FastcampusLectureUpdateResponse mapToLectureUpdateResponse(FastcampusLectureDetailResponse response) {
+        ModelMapper modelMapper = configureModelMapper();
+        return modelMapper.map(response.getData().getCourse(), FastcampusLectureUpdateResponse.class);
+    }
+
+    private ModelMapper configureModelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-
-        Converter<String, LocalDateTime> toLocalDateTime = context -> ZonedDateTime.parse(context.getSource(), DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
-
-        modelMapper.addConverter(toLocalDateTime);
-
-        return getFastcampusLectureUpdateResponse(response, modelMapper);
+        Converter<String, LocalDateTime> stringToLocalDateTime = context ->
+                ZonedDateTime.parse(context.getSource(), DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
+        modelMapper.addConverter(stringToLocalDateTime);
+        return modelMapper;
     }
 
-    private static FastcampusLectureUpdateResponse getFastcampusLectureUpdateResponse(FastcampusLectureDetailResponse response, ModelMapper modelMapper) {
-        FastcampusLectureUpdateResponse updateResponse = modelMapper.map(response.getData().getCourse(), FastcampusLectureUpdateResponse.class);
 
-        if (!response.getData().getProducts().isEmpty()) {
-            FastcampusLectureDetailResponse.Products product = response.getData().getProducts().get(0);
-            updateResponse.setPrice(product.getListPrice());
-            updateResponse.setDiscountPrice(product.getSalePrice());
-        }
-
-        return updateResponse;
-    }
 
 }
