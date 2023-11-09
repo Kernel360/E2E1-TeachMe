@@ -72,13 +72,6 @@ public class MemberServiceTest {
         String username = "abcd123";
 
         //then
-        assertThrows(MemberNotFoundException.class, () -> memberRepository.findByUsername(username));
-
-
+        assertThrows(MemberNotFoundException.class, () -> memberService.findByUsername(username));
     }
-
-
-
-
-
 }

@@ -3,6 +3,7 @@ package kr.kernel.teachme.common.jwt;
 import io.jsonwebtoken.*;
 import kr.kernel.teachme.domain.member.entity.Member;
 import kr.kernel.teachme.domain.member.repository.MemberRepository;
+import kr.kernel.teachme.domain.member.service.MemberService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +25,7 @@ import java.util.function.Function;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private MemberRepository memberRepository;
+    private MemberService memberService;
 
     public JwtAuthorizationFilter(
             MemberRepository memberRepository
@@ -67,7 +69,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             if (refreshToken != null && JwtUtils.validateRefreshToken(refreshToken)) {
                 String userName = getUsernameFromRefreshToken(refreshToken);
-                Member member = memberRepository.findByUsername(userName);
+                Member member = memberService.findByUsername(userName);
                 String newAccessToken = JwtUtils.createToken(member);
 
                 Authentication newAuth = new UsernamePasswordAuthenticationToken(
@@ -101,7 +103,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 //                response.addCookie(cookie);
 //            }
 //        }
-      chain.doFilter(request, response);
+        chain.doFilter(request, response);
     }
 
     /**
@@ -111,7 +113,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private Authentication getUsernamePasswordAuthenticationToken(String token) {
         String userName = JwtUtils.getUsername(token);
         if (userName != null) {
-            Member member = memberRepository.findByUsername(userName); // 유저를 유저명으로 찾습니다.
+            Member member = memberService.findByUsername(userName); // 유저를 유저명으로 찾습니다.
             return new UsernamePasswordAuthenticationToken(
                     member, // principal
                     null,

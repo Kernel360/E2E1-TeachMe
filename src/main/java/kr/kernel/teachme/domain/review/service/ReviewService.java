@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import kr.kernel.teachme.domain.member.service.MemberService;
 import org.springframework.stereotype.Service;
 
 import kr.kernel.teachme.common.jwt.JwtUtils;
@@ -22,16 +23,17 @@ public class ReviewService {
 	private final MemberRepository memberRepository;
 	private final LectureRepository lectureRepository;
 	private final ReviewRepository reviewRepository;
+	private MemberService memberService;
+
 
 	JwtUtils jwtUtils;
-
 	public List<Review> getLectureReviewList(Long lectureId) {
 		return reviewRepository.findByLectureId(lectureId);
 	}
 
 	public void addLectureReiview(String token, Long lectureId, String content, double score) {
 		String userName = jwtUtils.getUsername(token);
-		Member member = memberRepository.findByUsername(userName);
+		Member member = memberService.findByUsername(userName);
 		Optional<Lecture> lectureInfo = lectureRepository.findById(lectureId);
 		Lecture lecture = lectureInfo.get();
 		Review lectureReview = Review.builder()
@@ -47,7 +49,7 @@ public class ReviewService {
 
 	public void deleteLectureReview(String token, Long lectureId) {
 		String userName = jwtUtils.getUsername(token);
-		Member member = memberRepository.findByUsername(userName);
+		Member member = memberService.findByUsername(userName);
 		Review deleteReview = reviewRepository.findByLectureIdAndMemberId(lectureId, member.getId());
 		reviewRepository.delete(deleteReview);
 	}
