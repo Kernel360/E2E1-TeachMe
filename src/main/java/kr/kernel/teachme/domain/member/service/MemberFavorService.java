@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberFavorService {
 	private final MemberFavorRepository memberFavorRepository;
-	private final MemberRepository memberRepository;
 	private final LectureRepository lectureRepository;
 	public Page<Lecture> getFavorLectureList(Member member, Pageable pageable) {
 		Page<MemberFavorLecture> favorsPage = memberFavorRepository.findAllByMemberId(member.getId(), pageable);
