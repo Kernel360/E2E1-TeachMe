@@ -2,7 +2,7 @@ package kr.kernel.teachme.common.jwt;
 
 import io.jsonwebtoken.*;
 import kr.kernel.teachme.domain.member.entity.Member;
-import kr.kernel.teachme.domain.member.repository.MemberRepository;
+import kr.kernel.teachme.domain.member.service.MemberService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,12 +19,10 @@ import java.util.function.Function;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
-    public JwtAuthorizationFilter(
-            MemberRepository memberRepository
-    ) {
-        this.memberRepository = memberRepository;
+    public JwtAuthorizationFilter(MemberService memberService) {
+        this.memberService = memberService;
     }
 
     @Override
@@ -48,45 +46,78 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception ignored) {
-
         }
 
-        try {
-            if (accessToken != null && JwtUtils.validateToken(accessToken)) {
-                Authentication authentication = getUsernamePasswordAuthenticationToken(accessToken);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+        boolean validAccessToken = false;
+        if(accessToken != null) {
+            try {
+                validAccessToken = JwtUtils.validateToken(accessToken);
+                if(validAccessToken) {
+                    Authentication authentication = getUsernamePasswordAuthenticationToken(accessToken);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (Exception ignored) {
             }
-        } catch (Exception e) {
-            if (refreshToken != null && JwtUtils.validateRefreshToken(refreshToken)) {
-                String userName = getUsernameFromRefreshToken(refreshToken);
-                Member member = memberRepository.findByUsername(userName);
-                String newAccessToken = JwtUtils.createToken(member);
+        }
 
-                Authentication newAuth = new UsernamePasswordAuthenticationToken(
-                        member,
-                        null,
-                        member.getAuthorities()
-                );
+        if(!validAccessToken && refreshToken != null && JwtUtils.validateRefreshToken(refreshToken)) {
+            String userName = getUsernameFromRefreshToken(refreshToken);
+            try {
+                Member member = memberService.findByUsername(userName);
+                String newAccessToken = JwtUtils.createToken(member);
+                Authentication newAuth = new UsernamePasswordAuthenticationToken(member, null, member.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(newAuth);
 
                 Cookie newAccessTokenCookie = new Cookie(JwtProperties.COOKIE_NAME, newAccessToken);
                 newAccessTokenCookie.setPath("/");
                 newAccessTokenCookie.setMaxAge(JwtProperties.EXPIRATION_TIME);
                 response.addCookie(newAccessTokenCookie);
-            } else {
-                Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-                return;
+            } catch(Exception ignored) {
             }
+        } else if (!validAccessToken) {
+            Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
+            cookie.setPath("/");
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
         }
+
+//        try {
+//            if (accessToken != null && JwtUtils.validateToken(accessToken)) {
+//                Authentication authentication = getUsernamePasswordAuthenticationToken(accessToken);
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//            }
+//        } catch (Exception e) {
+//            if (refreshToken != null && JwtUtils.validateRefreshToken(refreshToken)) {
+//                String userName = getUsernameFromRefreshToken(refreshToken);
+//                Member member = memberService.findByUsername(userName);
+//                String newAccessToken = JwtUtils.createToken(member);
+//
+//                Authentication newAuth = new UsernamePasswordAuthenticationToken(
+//                        member,
+//                        null,
+//                        member.getAuthorities()
+//                );
+//                SecurityContextHolder.getContext().setAuthentication(newAuth);
+//
+//                Cookie newAccessTokenCookie = new Cookie(JwtProperties.COOKIE_NAME, newAccessToken);
+//                newAccessTokenCookie.setPath("/");
+//                newAccessTokenCookie.setMaxAge(JwtProperties.EXPIRATION_TIME);
+//                System.out.println("쿠키 추가!");
+//                response.addCookie(newAccessTokenCookie);
+//            } else {
+//                Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
+//                cookie.setMaxAge(0);
+//                response.addCookie(cookie);
+//                return;
+//            }
+//        }
       chain.doFilter(request, response);
     }
 
     private Authentication getUsernamePasswordAuthenticationToken(String token) {
         String userName = JwtUtils.getUsername(token);
         if (userName != null) {
-            Member member = memberRepository.findByUsername(userName);
+            Member member = memberService.findByUsername(userName);
             return new UsernamePasswordAuthenticationToken(
                     member,
                     null,

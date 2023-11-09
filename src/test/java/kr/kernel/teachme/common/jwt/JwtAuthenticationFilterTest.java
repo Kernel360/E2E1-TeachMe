@@ -45,7 +45,7 @@ class JwtAuthenticationFilterTest {
     private static MockedStatic<JwtUtils> jwtUtils;
 
     @BeforeAll
-    public static void berforeAll() {
+    public static void beforeAll() {
         jwtUtils = mockStatic(JwtUtils.class);
     }
 

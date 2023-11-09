@@ -1,11 +1,8 @@
 package kr.kernel.teachme.common.jwt;
 
 import kr.kernel.teachme.domain.member.entity.Member;
-import kr.kernel.teachme.domain.member.repository.MemberRepository;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import kr.kernel.teachme.domain.member.service.MemberService;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
@@ -29,7 +26,7 @@ public class JwtAuthorizationFilterTest {
     private JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Mock
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
     @Mock
     private HttpServletRequest request;
@@ -43,13 +40,14 @@ public class JwtAuthorizationFilterTest {
     private static MockedStatic<JwtUtils> jwtUtils;
 
     @BeforeAll
-    public static void berforeAll() {
+    public static void beforeAll() {
         jwtUtils = mockStatic(JwtUtils.class);
     }
 
     @BeforeEach
     void setUp() {
         openMocks(this);
+        jwtAuthorizationFilter = new JwtAuthorizationFilter(memberService);
     }
 
     @DisplayName("doFilterInternel 메서드가 쿠기가 없을 때 잘 동작하는지")
@@ -69,7 +67,7 @@ public class JwtAuthorizationFilterTest {
         when(JwtUtils.getUsername("validAccessToken")).thenReturn("user");
 
         Member mockMember = new Member("user", "password", "ROLE_USER", "User");
-        when(memberRepository.findByUsername("user")).thenReturn(mockMember);
+        when(memberService.findByUsername("user")).thenReturn(mockMember);
 
         jwtAuthorizationFilter.doFilterInternal(request, response, chain);
 
@@ -89,7 +87,7 @@ public class JwtAuthorizationFilterTest {
         when(JwtUtils.getUsername(validRefreshToken)).thenReturn("user");
 
         Member mockMember = new Member("user", "password", "ROLE_USER", "User");
-        when(memberRepository.findByUsername("user")).thenReturn(mockMember);
+        when(memberService.findByUsername("user")).thenReturn(mockMember);
 
         String newAccessToken = "newAccessToken";
         when(JwtUtils.createToken(mockMember)).thenReturn(newAccessToken);
@@ -99,6 +97,12 @@ public class JwtAuthorizationFilterTest {
         verify(response).addCookie(argThat(cookie ->
                 cookie.getName().equals(JwtProperties.COOKIE_NAME) && cookie.getValue().equals(newAccessToken)
         ));
+
         verify(chain).doFilter(request, response);
+    }
+
+    @AfterEach
+    public void afterEach() {
+        SecurityContextHolder.clearContext();
     }
 }
