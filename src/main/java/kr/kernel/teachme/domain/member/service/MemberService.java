@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 // user, admin 등록, 이름으로 정보 조회
 // 로그인 정보에 따라서
@@ -62,12 +63,9 @@ public class MemberService {
     }
 
     public Member findByUsername(String username) throws MemberNotFoundException {
-        Member member = memberRepository.findByUsername(username);
+        Optional<Member> member = memberRepository.findByUsername(username);
 
-        if (member == null){
-            throw new MemberNotFoundException();
-        }
-        return member;
+        return member.orElseThrow(MemberNotFoundException::new);
     } //유저 정보 조회
 
    @Transactional(readOnly = true)

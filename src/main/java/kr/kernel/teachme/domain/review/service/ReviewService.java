@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import kr.kernel.teachme.domain.member.service.MemberService;
 import org.springframework.stereotype.Service;
 
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class ReviewService {
 	private final LectureRepository lectureRepository;
 	private final ReviewRepository reviewRepository;
+	private MemberService memberService;
+  private JwtUtils jwtUtils;
 
 	public Page<Review> getLectureReviewList(Pageable pageable,Long lectureId) {
 		return reviewRepository.findByLectureId(lectureId, pageable);
@@ -29,6 +32,7 @@ public class ReviewService {
 	}
 
 	public void addLectureReview(Member member, Long lectureId, String content, double score) {
+
 		Optional<Lecture> lectureInfo = lectureRepository.findById(lectureId);
 		Lecture lecture = lectureInfo.get();
 		Date date = new Date();
