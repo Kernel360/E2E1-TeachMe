@@ -80,37 +80,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             cookie.setMaxAge(0);
             response.addCookie(cookie);
         }
-
-//        try {
-//            if (accessToken != null && JwtUtils.validateToken(accessToken)) {
-//                Authentication authentication = getUsernamePasswordAuthenticationToken(accessToken);
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//            }
-//        } catch (Exception e) {
-//            if (refreshToken != null && JwtUtils.validateRefreshToken(refreshToken)) {
-//                String userName = getUsernameFromRefreshToken(refreshToken);
-//                Member member = memberService.findByUsername(userName);
-//                String newAccessToken = JwtUtils.createToken(member);
-//
-//                Authentication newAuth = new UsernamePasswordAuthenticationToken(
-//                        member,
-//                        null,
-//                        member.getAuthorities()
-//                );
-//                SecurityContextHolder.getContext().setAuthentication(newAuth);
-//
-//                Cookie newAccessTokenCookie = new Cookie(JwtProperties.COOKIE_NAME, newAccessToken);
-//                newAccessTokenCookie.setPath("/");
-//                newAccessTokenCookie.setMaxAge(JwtProperties.EXPIRATION_TIME);
-//                System.out.println("쿠키 추가!");
-//                response.addCookie(newAccessTokenCookie);
-//            } else {
-//                Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
-//                cookie.setMaxAge(0);
-//                response.addCookie(cookie);
-//                return;
-//            }
-//        }
       chain.doFilter(request, response);
     }
 
