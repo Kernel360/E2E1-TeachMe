@@ -43,6 +43,12 @@
              aria-current="page"
              href="/lecture/list"> 강의 리스트 </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             sec:authorize="isAuthenticated()"
+             href="/favor/list">내가 찜한 강의</a>
+        </li>
         <!-- 크롤링: 관리자만 -->
         <li class="nav-item">
           <a class="nav-link active"

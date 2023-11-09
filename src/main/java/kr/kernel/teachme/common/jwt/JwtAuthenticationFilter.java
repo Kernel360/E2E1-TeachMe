@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * JWT를 이용한 로그인 인증
  */
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class                  JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 

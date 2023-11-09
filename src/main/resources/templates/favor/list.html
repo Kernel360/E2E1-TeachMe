@@ -9,21 +9,71 @@
 </head>
 <body>
     <div class="content" layout:fragment="content">
-    <div class="parent-div">
-        <div class="lecture_table">
-            <table class="lecture_table">
-                <tbody>
-                <tr th:each="lecture : ${favorLectures}">
-                    <td style="max-width: 200px;"><a class="lecture_title" th:href="@{|/lecture/${lecture.id}|}" th:text="${lecture.title}" style="font-weight: bolder; font-size: 13px;"></a></td>
+        <table class="lecture_table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>강의명 <span style="color: grey">상세정보 👉이름클릭</span></th>
+                <th>강사</th>
+                <th>총 가격</th>
+                <th>플랫폼</th>
+                <th>총 시간</th>
+                <th>키워드</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.size(favorLectures) == 0}">
+                <td colspan="7">검색된 강의가 없습니다.🥲</td>
+            </tr>
+            <tr th:each="lecture : ${favorLectures}">
+                <td><img th:src="${lecture.img}" style="width: 150px; height: 90px; border-radius: 10px;" alt="..."></td>
+                <td style="max-width: 200px;"><a class="lecture_title" th:href="@{|/lecture/${lecture.id}|}" th:text="${lecture.title}" style="font-weight: bolder; font-size: 13px;"></a></td>
+                <td style="max-width: 130px;">
                         <span th:each="item : ${#strings.arraySplit(lecture.instructor, ',')}">
                             <span class="instructor_name" th:text="${#strings.trim(item)}"></span>
                         </span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                </td>
+                <td style="max-width: 100px;">
+                        <span class="sale_notice" th:if="${lecture.discountPrice < lecture.price}">
+                            할인중🎁
+                            <br>
+                        </span>
+                    <span class="price_notice" th:text="${lecture.discountPrice == 0 ? '무료' : #numbers.formatInteger(lecture.discountPrice, 3, 'COMMA') + '&#8361;'}"></span>
+                </td>
+                <td>
+                    <span class="fastcampus_notice" th:if="${#strings.equals(lecture.platform, 'fastcampus')}">패스트캠퍼스</span>
+                    <span class="inflearn_notice" th:if="${#strings.equals(lecture.platform, 'inflearn')}">인프런</span>
+                </td>
+                <td th:with="hours=${lecture.duration / 60}, minutes=${lecture.duration % 60}">
+                    <span class="time_notice" th:if="${hours > 0}" th:text="${hours} + '시간 '"></span>
+                    <span class="time_notice" th:if="${minutes > 0}" th:text="${minutes} + '분'"></span>
+                </td>
+                <td style="max-width: 130px;">
+                        <span th:each="keyword, iterStat : ${#strings.arraySplit(lecture.keywords, ',')}">
+                            <span th:if="${iterStat.count <= 3}" class="keyword_notice" th:text="${#strings.trim(keyword)}"></span>
+                            <span th:if="${iterStat.count == 3 and iterStat.size > 3}" class="keyword_notice">...</span>
+                        </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example" style="width: 80%; margin: 0 auto; margin-top:50px; ">
+            <ul class="pagination" style="justify-content: center;">
+                <li class="page-item" th:classappend="${favorLectures.hasPrevious() ? '': 'disabled'}">
+                        <a class="page-link" th:href="@{/favor/list(page=${favorLectures.number - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" th:href="@{/favor/list(page=${favorLectures.number})}" th:text="${favorLectures.number + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${favorLectures.hasNext() ? '': 'disabled'}">
+                    <a class="page-link" th:href="@{/favor/list(page=${favorLectures.number + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </body>
 </html>
