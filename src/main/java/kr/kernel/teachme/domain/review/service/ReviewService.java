@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
@@ -29,6 +30,7 @@ public class ReviewService {
 	}
 
 	public void addLectureReview(Member member, Long lectureId, String content, double score) {
+
 		Optional<Lecture> lectureInfo = lectureRepository.findById(lectureId);
 		Lecture lecture = lectureInfo.get();
 		Date date = new Date();
@@ -42,6 +44,7 @@ public class ReviewService {
 			.build();
 		reviewRepository.save(lectureReview);
 	}
+
 	public void updateLectureReview(Member member, Long lectureId, String content, double score) {
 		Review reviewInfo = reviewRepository.findByLectureIdAndMemberId(member.getId(), lectureId);
 		Optional<Lecture> lectureInfo = lectureRepository.findById(lectureId);
