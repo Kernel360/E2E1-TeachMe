@@ -10,12 +10,6 @@ import java.util.Date;
 
 @Slf4j
 public class JwtUtils {
-    /**
-     * 토큰에서 username 찾기
-     *
-     * @param token 토큰
-     * @return username
-     */
     public static String getUsername(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
@@ -32,23 +26,8 @@ public class JwtUtils {
             log.error("jwt 토큰 처리중 Error 발생!: " + e.getMessage());
             return null;
         }
-//        return Jwts.parserBuilder()
-//                .setSigningKeyResolver(SigningKeyResolver.instance)
-//                .build()
-//                .parseClaimsJws(token)
-//                .getBody()
-//                .getSubject(); // subject에 username 있음.
     }
 
-    /**
-     * member로 토큰 생성
-     * HEADER : alg, kid(알고리즘, 키 아이디)
-     * PAYLOAD : sub, iat, exp (subject->  유저 이름, 토큰 발행 시간, 토큰 만료 시간)
-     * SIGNATURE : JwtKey.getRandomKey로 구한 Secret Key로 HS512 해시 (암호화)
-     *
-     * @param member 유저
-     * @return jwt token
-     */
     public static String createToken(Member member) { //유저 가져와서 유저에 맞는 토큰을 생성해줌.
         Claims claims = Jwts.claims().setSubject(member.getUsername()); // subject
         Date now = new Date(); // 현재 시간

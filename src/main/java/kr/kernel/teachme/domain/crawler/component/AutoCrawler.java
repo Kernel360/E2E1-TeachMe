@@ -10,8 +10,9 @@ public interface AutoCrawler {
 
     void crawlLectureAutomatically() throws InterruptedException, IOException, ParseException;
 
-    List<Lecture> getLectureToUpdate();
+    List<Lecture> fetchLecturesToUpdate();
 
-    List<Lecture> getDetailResponse(List<Lecture> lectures) throws InterruptedException, IOException, ParseException;
+    List<Lecture> updateLectureDetails(List<Lecture> lectures) throws InterruptedException, IOException, ParseException;
 
+    void saveUpdatedLectures(List<Lecture> lectures);
 }
