@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/review")
 public class ReviewController {
 	private final ReviewService reviewService;
 
