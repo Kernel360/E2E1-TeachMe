@@ -9,7 +9,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Slf4j
-public class                                               JwtUtils {
+public class JwtUtils {
     /**
      * 토큰에서 username 찾기
      *
