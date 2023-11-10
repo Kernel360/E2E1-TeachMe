@@ -20,7 +20,7 @@ public class HomeController {
 
     @ApiOperation(value="홈 화면", notes="홈 화면에 인기 강의 목록 출력")
     @GetMapping("/")
-    public String getHomePage(Model model) {
+    public String showHomePage(Model model) {
         List<Lecture> lectures = lectureService.getLatestLectures();
         model.addAttribute("lectures", lectures);
         return "home";
