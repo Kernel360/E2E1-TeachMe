@@ -65,7 +65,9 @@ public class FastcampusAutoCrawler implements AutoCrawler{
 
     private FastcampusLectureDetailResponse fetchLectureDetail(Lecture lecture) {
         String detailUrl = BASE_URL + lecture.getLectureId() + "/products";
-        return getResponseObject(detailUrl, FastcampusLectureDetailResponse.class);
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(detailUrl,FastcampusLectureDetailResponse.class);
+//        return getResponseObject(detailUrl, FastcampusLectureDetailResponse.class);
     }
 
     private <T> T getResponseObject(String url, Class<T> responseType) {
