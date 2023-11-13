@@ -83,8 +83,6 @@ public class Lecture {
     }
 
     public void updateFastcampusDetailInfo(FastcampusLectureUpdateResponse fastcampusLectureUpdateResponse) {
-        this.price = fastcampusLectureUpdateResponse.getPrice();
-        this.discountPrice = fastcampusLectureUpdateResponse.getDiscountPrice();
         this.instructor = fastcampusLectureUpdateResponse.getInstructor();
         this.duration = fastcampusLectureUpdateResponse.getTotalClassHours() * 60;
         this.detailUploadFlag = true;

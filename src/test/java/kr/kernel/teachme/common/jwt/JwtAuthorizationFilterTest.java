@@ -106,8 +106,4 @@ public class JwtAuthorizationFilterTest {
         SecurityContextHolder.clearContext();
     }
 
-    @AfterAll
-    public static void afterAll() {
-        jwtUtils.close();
-    }
 }

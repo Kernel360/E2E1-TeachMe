@@ -96,5 +96,8 @@ class JwtAuthenticationFilterTest {
         verify(response).sendRedirect("/login");
     }
 
-
+    @AfterAll
+    public static void afterAll() {
+        jwtUtils.close();
+    }
 }

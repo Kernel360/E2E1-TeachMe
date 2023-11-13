@@ -9,7 +9,7 @@ import kr.kernel.teachme.common.exception.CrawlerException;
 import kr.kernel.teachme.domain.crawler.dto.InflearnLectureListResponse;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 import kr.kernel.teachme.domain.lecture.repository.LectureRepository;
-import kr.kernel.teachme.domain.lecture.util.StringUtil;
+import kr.kernel.teachme.common.util.StringUtil;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

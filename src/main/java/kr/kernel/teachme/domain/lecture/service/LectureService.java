@@ -26,23 +26,32 @@ public class LectureService {
     }
 
     public PaginationResponse<List<Lecture>> searchList(Pageable pageable, SearchRequest search) {
-        Page<Lecture> page = lectureRepository.findBySearchOption(pageable, search);
-        Pagination pagination = Pagination.builder()
-            .page(page.getNumber())
-            .size(page.getSize())
-            .currentElements(page.getNumberOfElements())
-            .totalElements(page.getTotalElements())
-            .totalPage(page.getTotalPages())
-            .build()
-            ;
+        Page<Lecture> page = findLectures(pageable, search);
+        Pagination pagination = createPagination(page);
+        return buildPaginationResponse(page, pagination);
+    }
 
-        PaginationResponse<List<Lecture>> response = PaginationResponse.<List<Lecture>>builder()
+    private Page<Lecture> findLectures(Pageable pageable, SearchRequest searchRequest) {
+        return lectureRepository.findBySearchOption(pageable, searchRequest);
+    }
+
+    private Pagination createPagination(Page<Lecture> page) {
+        return Pagination.builder()
+                .page(page.getNumber())
+                .size(page.getSize())
+                .currentElements(page.getNumberOfElements())
+                .totalElements(page.getTotalElements())
+                .totalPage(page.getTotalPages())
+                .build();
+    }
+
+    private PaginationResponse<List<Lecture>> buildPaginationResponse(Page<Lecture> page, Pagination pagination) {
+        return PaginationResponse.<List<Lecture>>builder()
                 .body(page.getContent())
                 .pagination(pagination)
                 .build();
-
-        return response;
     }
+
     public Optional<Lecture> getLectureDetail(Long lectureId) {
         return lectureRepository.findById(lectureId);
     }

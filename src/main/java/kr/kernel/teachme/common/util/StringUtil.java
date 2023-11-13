@@ -1,4 +1,4 @@
-package kr.kernel.teachme.domain.lecture.util;
+package kr.kernel.teachme.common.util;
 
 public class StringUtil {
     public static boolean isNumeric(String s) {
