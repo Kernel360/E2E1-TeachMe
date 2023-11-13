@@ -86,7 +86,7 @@ class CrawlerControllerTest {
     @Test
     void testCrawlLectureDetailForInflearn() {
         crawlingRequest.setPlatform("inflearn");
-        doNothing().when(inflearnLectureDetailCrawlingService).runInflearnLectureDetailCrawler();
+        doNothing().when(inflearnLectureDetailCrawlingService).runCrawler();
 
         ResponseEntity<CrawlingResponse> response = crawlerController.crawlLectureDetail(crawlingRequest);
 
@@ -96,9 +96,9 @@ class CrawlerControllerTest {
 
     @DisplayName("crawlLectureDetail이 fastcampus에 대해 잘 작동하는지")
     @Test
-    void testCrawlLectureDetailForFastcampus() {
+    void testCrawlLectureDetailForFastcampus() throws InterruptedException {
         crawlingRequest.setPlatform("fastcampus");
-        doNothing().when(fastcampusLectureDetailCrawlingService).update();
+        doNothing().when(fastcampusLectureDetailCrawlingService).runCrawler();
 
         ResponseEntity<CrawlingResponse> response = crawlerController.crawlLectureDetail(crawlingRequest);
 
@@ -108,9 +108,9 @@ class CrawlerControllerTest {
 
     @DisplayName("crawlLectureDetail에서 오류 발생시 예외가 잘 발생하는지")
     @Test
-    void crawlLectureDetailWithCrawlerException() {
+    void crawlLectureDetailWithCrawlerException() throws InterruptedException {
         crawlingRequest.setPlatform("fastcampus");
-        doThrow(new CrawlerException("Test Exception")).when(fastcampusLectureDetailCrawlingService).update();
+        doThrow(new CrawlerException("Test Exception")).when(fastcampusLectureDetailCrawlingService).runCrawler();
 
         ResponseEntity<CrawlingResponse> response = crawlerController.crawlLectureDetail(crawlingRequest);
 
