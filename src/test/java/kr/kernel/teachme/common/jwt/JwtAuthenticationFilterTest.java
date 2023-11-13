@@ -1,10 +1,7 @@
 package kr.kernel.teachme.common.jwt;
 
 import kr.kernel.teachme.domain.member.entity.Member;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
@@ -97,5 +94,10 @@ class JwtAuthenticationFilterTest {
         jwtAuthenticationFilter.unsuccessfulAuthentication(request, response, mock(AuthenticationException.class));
 
         verify(response).sendRedirect("/login");
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        jwtUtils.close();
     }
 }
