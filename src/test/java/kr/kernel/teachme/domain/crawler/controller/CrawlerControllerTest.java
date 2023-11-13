@@ -50,7 +50,7 @@ class CrawlerControllerTest {
     @Test
     void testCrawlLectureDataForFastcampus() {
         crawlingRequest.setPlatform("fastcampus");
-        doNothing().when(fastcampusLectureListCrawlingService).create();
+        doNothing().when(fastcampusLectureListCrawlingService).runCrawler();
 
         ResponseEntity<CrawlingResponse> response = crawlerController.crawlLectureData(crawlingRequest);
 
@@ -62,7 +62,7 @@ class CrawlerControllerTest {
     @Test
     void testCrawlLectureDataForInflearn() {
         crawlingRequest.setPlatform("inflearn");
-        doNothing().when(inflearnLectureListCrawlingService).runInflearnLectureCrawler();
+        doNothing().when(inflearnLectureListCrawlingService).runCrawler();
 
         ResponseEntity<CrawlingResponse> response = crawlerController.crawlLectureData(crawlingRequest);
 
@@ -74,7 +74,7 @@ class CrawlerControllerTest {
     @Test
     void testCrawlLectureDataWithCrawlerException() {
         crawlingRequest.setPlatform("inflearn");
-        doThrow(new CrawlerException("Test Exception")).when(inflearnLectureListCrawlingService).runInflearnLectureCrawler();
+        doThrow(new CrawlerException("Test Exception")).when(inflearnLectureListCrawlingService).runCrawler();
 
         ResponseEntity<CrawlingResponse> response = crawlerController.crawlLectureData(crawlingRequest);
 

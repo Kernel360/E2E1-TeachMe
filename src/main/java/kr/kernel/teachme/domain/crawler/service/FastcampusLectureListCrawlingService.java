@@ -18,13 +18,23 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class FastcampusLectureListCrawlingService {
+public class FastcampusLectureListCrawlingService implements LectureListCrawlingService<FastcampusLectureResponse>{
 
     private final LectureRepository lectureRepository;
     private static final String PLATFORM = "fastcampus";
 
     @Value("${url.fastcampus.list}")
     private static String BASE_URL;
+
+    @Override
+    public List<FastcampusLectureResponse> crawlData() {
+        FastcampusLectureListResponse crawledData = fetchFastcampusData();
+        try {
+            return mapCoursesToLectures(crawledData);
+        } catch (NullPointerException e) {
+            throw new CrawlerException("크롤링 중 오류 발생 : 크롤링 된 데이터가 없습니다.", e);
+        }
+    }
 
     private FastcampusLectureListResponse fetchFastcampusData() {
         RestTemplate restTemplate = new RestTemplate();
@@ -49,10 +59,17 @@ public class FastcampusLectureListCrawlingService {
                 .collect(Collectors.toList());
     }
 
-    private void checkRowExistence() {
-        if (lectureRepository.countByPlatform(PLATFORM) > 0) {
-            throw new CrawlerException("크롤링 불가 상태");
-        }
+    @Override
+    public boolean isAtLeastOneRowExists() {
+        return lectureRepository.countByPlatform(PLATFORM) > 0;
+    }
+
+    @Override
+    public void saveCrawledData(List<FastcampusLectureResponse> crawledData) {
+        List<Lecture> fastcampusLectureList = crawledData.stream()
+                .map(FastcampusLectureResponse::toEntity)
+                .collect(Collectors.toList());
+        lectureRepository.saveAll(fastcampusLectureList);
     }
 
     private void saveFastcampusLectures() {
@@ -74,8 +91,15 @@ public class FastcampusLectureListCrawlingService {
         return lectures;
     }
 
-    public void create() {
+    @Override
+    public void runCrawler() {
         checkRowExistence();
-        saveFastcampusLectures();
+        saveCrawledData(crawlData());
+    }
+
+    private void checkRowExistence() {
+        if (lectureRepository.countByPlatform(PLATFORM) > 0) {
+            throw new CrawlerException("크롤링 불가 상태");
+        }
     }
 }
