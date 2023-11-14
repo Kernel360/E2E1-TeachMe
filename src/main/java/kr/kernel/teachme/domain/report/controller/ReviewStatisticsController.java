@@ -50,4 +50,16 @@ public class ReviewStatisticsController {
                         Collectors.averagingDouble(Report::getAverageScore)
                 ));
     }
+
+    @ApiOperation(value="강의별 리뷰 수 통계 요청 반환", notes="리뷰 레포트 데이터 반환")
+    @GetMapping("/api/report/review-count")
+    public Map<String, Integer> getReviewCountPerLecture(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        List<Report> reports = reportRepository.findByDateBetween(date, date);
+
+        return reports.stream()
+                .collect(Collectors.groupingBy(
+                        report -> report.getLecture().getTitle(),
+                        Collectors.summingInt(Report::getReviewCount)
+                ));
+    }
 }
