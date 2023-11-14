@@ -1,26 +1,64 @@
-/* 부모 요소 스타일 */
-.parent-div {
+#main-img-wrapper {
+    text-align: center;
+}
+
+#intro-main {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    flex-direction: column;
     align-items: center;
-    background-color: white;
-    padding-top: 50px;
-    width: 80%;
+    margin: 20px auto 10px auto;
+    width: 300px;
+    color: black;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+#intro-main p {
+    text-align: center;
+}
+
+#go-list-text {
+    margin-top: 30px;
+    opacity: 0.6;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+
+@keyframes upAndDown {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+#down-arrow-icon {
+    margin-top: 15px;
+    opacity: 0.6;
+    animation: upAndDown 1s infinite;
+    font-size: 15px;
+}
+
+#list-item-wrapper {
+    width: 383px;
     margin: 0 auto;
-    border-radius: 15px;
+    margin-bottom: 200px;
 }
 
-.card {
-    width: calc(33.3333% - 20px);
+.list-item {
+    display: inline;
+    font-size: 35px;
+    font-weight: 600;
+    color: #dddddd;
 }
 
-.ellipsis {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    -webkit-line-clamp: 3; /* 표시할 줄의 수 */
-    line-height: 1.2em; /* 라인 높이, em 단위 */
-    max-height: 3.6em; /* 라인 높이 x 라인 수 */
+.list-item#on {
+    color: black;
 }

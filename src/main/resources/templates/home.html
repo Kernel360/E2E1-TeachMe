@@ -5,27 +5,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Teach Me : 내가 고르는 강의</title>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{css/home.css}">
  </head>
 <body>
     <div class="content" layout:fragment="content">
-        <div style="display: flex; justify-content: center; gap: 20px; flex-direction: column; align-items: center; background-color: white; padding-top: 50px; width: 80%; margin: 0 auto; border-radius: 15px; margin-bottom: 100px;">
-            <h3>✨최근 추가된 강의</h3>
-            <div class="parent-div">
-                <div th:if="${#lists.size(lectures) == 0}" style="text-align: center">
-                    <p style="color: grey">최근 추가된 강의가 없습니다.😢</p>
-                </div>
-                <div th:each="lecture : ${lectures}" class="card" style="width: 18rem;">
-                    <img th:src="${lecture.img}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${lecture.title}">Card title</h5>
-                        <p class="card-text ellipsis" th:text="${lecture.description}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a th:href="${lecture.url}" class="btn btn-primary">자세히 보기</a>
-                    </div>
-                </div>
-            </div>
+        <div id="main-img-wrapper">
+            <img width="480" th:src="@{../images/main1.png}" alt="coding image">
         </div>
+        <div id="intro-main">
+            <p>너무 많은 인터넷 강의</p>
+            <p>무얼 들을지<br>고민되시나요?</p>
+            <a href="/lecture/list" id="go-list-text">찾아보기!</a>
+            <i id="down-arrow-icon" class="fa-solid fa-angle-down"></i>
+        </div>
+        <ul id="list-item-wrapper">
+            <li class="list-item">💻프로그래밍</li>
+            <li class="list-item">🏴󠁧󠁢󠁥󠁮󠁧󠁿토익</li>
+            <li class="list-item">🧑‍🎨디자인</li>
+            <li class="list-item">🧑‍💻UI/UX</li>
+            <li class="list-item">👩‍💻웹 개발</li>
+            <li class="list-item">🏞️HTML</li>
+            <li class="list-item">🪮CSS</li>
+            <li class="list-item">🍦소프트스킬</li>
+            <li class="list-item">🏡부동산</li>
+            <li class="list-item">☕️Java</li>
+            <li class="list-item">🐍Python</li>
+            <li class="list-item">䷴AWS</li>
+            <li class="list-item">🍃Spring</li>
+            <li class="list-item">🥬SpringBoot</li>
+            <li class="list-item">🐱Django</li>
+            <li class="list-item">💎ruby</li>
+            <li class="list-item">👀javascript</li>
+            <li class="list-item">🚊rails</li>
+            <li class="list-item">🏃fastapi</li>
+            <li class="list-item">✅node.js</li>
+            <li class="list-item">⏭️next.js</li>
+            <li class="list-item">🪺nest.js</li>
+            <li class="list-item">📱Mysql</li>
+            <li class="list-item">🇲🇳MongoDB</li>
+            <li class="list-item">🧔Jenkins</li>
+            <li class="list-item">🐈‍⬛Github</li>
+            <li class="list-item">🐳Docker</li>
+            <li class="list-item">🙀Github actions</li>
+            <li class="list-item">🕸️kubernatis</li>
+        </ul>
+        <main>
+            <section>
+
+            </section>
+        </main>
         <script th:src="@{/js/home.js}"></script>
     </div>
 </body>
