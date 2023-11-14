@@ -29,12 +29,14 @@ public class ReviewStatisticsScheduler {
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void calculateDailyReviewStatistics() {
+        log.info("레포트 생성 시작");
         LocalDate yesterday = getYesterdayDate();
         List<Review> yesterdayReviews = getReviewsByDate(yesterday);
 
         Map<Long, List<Review>> reviewByLecture = groupReviewsByLecture(yesterdayReviews);
 
         reviewByLecture.forEach(this::generateAndSaveReport);
+        log.info("레포트 생성 완료");
     }
 
     private LocalDate getYesterdayDate() {
