@@ -31,16 +31,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // basic authentication
-        http.httpBasic().disable(); // basic authentication filter 비활성화
-        // csrf
+        http.httpBasic().disable();
         http.csrf().disable();
-        // remember-me
         http.rememberMe().disable();
-        // stateless -> 토큰 사용하기 때문. (세션 x)
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // jwt filter
         http.addFilterBefore(
                 new JwtAuthenticationFilter(authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class
@@ -48,19 +43,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 new JwtAuthorizationFilter(memberService),
                 BasicAuthenticationFilter.class
         );
-        // authorization
         http.authorizeRequests()
-                // /와 /home은 모두에게 허용
-                .antMatchers("/", "/home", "/member/**","/img/**","/style/**","/js/**","/lecture/**","/fragments/**").permitAll()
+                .antMatchers("/", "/home", "/member/**","/img/**","/style/**","/js/**","/lecture/**","/fragments/**", "/api/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**").permitAll()
-                .antMatchers("/crawler/**").hasRole("ADMIN")
+                .antMatchers("/crawler/**", "/report/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
-        // login
         http.formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
-                .permitAll(); // 모두 허용
-        // logout
+                .permitAll();
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
@@ -71,15 +62,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        // 정적 리소스 spring security 대상에서 제외
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
-    /**
-     * UserDetailsService 구현
-     *
-     * @return UserDetailsService
-     */
     @Bean
     @Override
     public UserDetailsService userDetailsService() {

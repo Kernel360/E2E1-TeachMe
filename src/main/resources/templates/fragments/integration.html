@@ -24,7 +24,7 @@
 <!-- fragment : header -->
 
 <nav th:fragment="headerFragment" class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid" style="margin-left: 200px;">
+  <div class="container-fluid" style="margin-left: 200px; margin-right: 200px;">
     <a class="navbar-brand" href="/">
       <img th:src="@{../images/logo.png}" style="position: relative; bottom:6px;">
     </a>
@@ -32,7 +32,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: flex; width: 100%;">
         <!-- home 화면: 모두 -->
         <li class="nav-item">
           <a class="nav-link active"
@@ -56,6 +56,12 @@
              sec:authorize="hasAnyRole('ROLE_ADMIN')"
              href="/crawler"> 크롤링 </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             sec:authorize="hasAnyRole('ROLE_ADMIN')"
+             href="/report"> 통계 </a>
+        </li>
         <!-- 로그인: 로그인 안한 사람만 -->
         <li class="nav-item">
           <a class="nav-link active"
@@ -77,7 +83,7 @@
              sec:authorize="isAuthenticated()"
              href="/logout"> 로그아웃 </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" style="margin-left: auto;">
           <a
                   class="nav-link active"
                   sec:authorize="isAuthenticated()">
