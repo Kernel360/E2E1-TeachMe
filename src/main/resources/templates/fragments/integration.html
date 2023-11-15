@@ -45,7 +45,7 @@
              href="/lecture/list"> 강의 리스트 </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page"
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page"
              sec:authorize="isAuthenticated()">
             마이페이지
           </a>
@@ -64,7 +64,7 @@
 <!--        </li>-->
         <!-- 크롤링: 관리자만 -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page"
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page"
              sec:authorize="hasAnyRole('ROLE_ADMIN')">
             관리자메뉴
           </a>
