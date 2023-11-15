@@ -145,6 +145,34 @@
                     <span th:text="${lecture.description}"></span>
                 </div>
             </div>
+            <div style="width: 80%; margin-top: 50px;">
+                <h3 style="font-weight: bolder; color:#555555;">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    리뷰
+                </h3>
+                <p style="text-align: left; color: #585858; font-size: 15px;">수강자들의 생생한 리뷰를 확인하세요 🧐</p>
+                <div style="color: #666; background-color: #f5f5f7; margin-top: 10px; margin-bottom: 30px; padding: 24px; border-radius: 8px; font-size: 14px;" th:each="review : ${reviews}">
+                    <span style="font-size: 15px; font-weight: bolder; color: black;" th:text="${'🧍' + review.member.name}">소개 문구 </span>
+                    <span th:text="${'(' + review.score + ')'}"></span>
+                    <br>
+
+                    <br>
+                    <span th:text="${review.content}"></span>
+                </div>
+                <div class="rating_box">
+                    <div class="rating">
+                        ★★★★★
+                        <span class="rating_star">★★★★★</span>
+                        <input id="review_score" type="range" value="0" step="1" min="0" max="10">
+                    </div>
+                </div>
+                <label style="width: 100%; margin-bottom: 30px; display: flex;">
+                    <textarea id="review_text" placeholder="당신의 리뷰를 남겨주세요 ✏️" class="review_area"></textarea>
+                    <button id="review_button" class="review_button">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </label>
+            </div>
         </div>
         <script src="/js/lecture/detail.js"></script>
     </div>

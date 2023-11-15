@@ -40,7 +40,7 @@ public class CrawlerController {
         CrawlingResponse response = new CrawlingResponse();
         if(crawling.getPlatform().equals("fastcampus")) {
             try {
-                fastcampusLectureListCrawlingService.create();
+                fastcampusLectureListCrawlingService.runCrawler();
                 response.setMessage(CRAWLING_SUCEED_MESSAGE);
                 return ResponseEntity.ok(response);
             } catch (CrawlerException e) {
@@ -49,7 +49,7 @@ public class CrawlerController {
             }
         } else {
             try {
-                inflearnLectureListCrawlingService.runInflearnLectureCrawler();
+                inflearnLectureListCrawlingService.runCrawler();
                 response.setMessage(CRAWLING_SUCEED_MESSAGE);
                 return ResponseEntity.ok(response);
             } catch (CrawlerException e) {
@@ -65,7 +65,7 @@ public class CrawlerController {
         CrawlingResponse response = new CrawlingResponse();
         if (crawling.getPlatform().equals("inflearn")) {
             try {
-                inflearnLectureDetailCrawlingService.runInflearnLectureDetailCrawler();
+                inflearnLectureDetailCrawlingService.runCrawler();
                 response.setMessage(CRAWLING_SUCEED_MESSAGE);
                 return ResponseEntity.ok(response);
             } catch (CrawlerException e) {
@@ -74,12 +74,14 @@ public class CrawlerController {
             }
         } else {
             try {
-                fastcampusLectureDetailCrawlingService.update();
+                fastcampusLectureDetailCrawlingService.runCrawler();
                 response.setMessage(CRAWLING_SUCEED_MESSAGE);
                 return ResponseEntity.ok(response);
             } catch (CrawlerException e){
                 response.setMessage(CRAWLING_FAILURE_MESSAGE + e.getMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            } catch (InterruptedException e) {
+                throw new CrawlerException("크롤링 실패: ", e);
             }
         }
     }

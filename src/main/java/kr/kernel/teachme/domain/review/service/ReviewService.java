@@ -1,20 +1,18 @@
 package kr.kernel.teachme.domain.review.service;
 
-import java.util.Date;
-import java.util.Optional;
-
-import kr.kernel.teachme.common.jwt.JwtUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import kr.kernel.teachme.domain.member.service.MemberService;
-import org.springframework.stereotype.Service;
-
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 import kr.kernel.teachme.domain.lecture.repository.LectureRepository;
 import kr.kernel.teachme.domain.member.entity.Member;
+import kr.kernel.teachme.domain.member.service.MemberService;
 import kr.kernel.teachme.domain.review.entity.Review;
 import kr.kernel.teachme.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +20,6 @@ public class ReviewService {
 	private final LectureRepository lectureRepository;
 	private final ReviewRepository reviewRepository;
 	private MemberService memberService;
-	private JwtUtils jwtUtils;
 
 	public Page<Review> getLectureReviewList(Pageable pageable,Long lectureId) {
 		return reviewRepository.findByLectureId(lectureId, pageable);
