@@ -29,7 +29,7 @@ public class InflearnLectureListCrawlingService implements LectureListCrawlingSe
 	private static final String PLATFORM = "inflearn";
 	@Value("${url.inflearn.courses}")
 	String TARGET_URL;
-	@Value("${url.inflearn.page")
+	@Value("${url.inflearn.page}")
 	String PAGE_URL;
 
 
