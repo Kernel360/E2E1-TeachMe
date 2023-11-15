@@ -3,6 +3,7 @@ package kr.kernel.teachme.domain.review.service;
 import java.util.Date;
 import java.util.Optional;
 
+import kr.kernel.teachme.common.jwt.JwtUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import kr.kernel.teachme.domain.member.service.MemberService;
@@ -21,7 +22,7 @@ public class ReviewService {
 	private final LectureRepository lectureRepository;
 	private final ReviewRepository reviewRepository;
 	private MemberService memberService;
-  private JwtUtils jwtUtils;
+	private JwtUtils jwtUtils;
 
 	public Page<Review> getLectureReviewList(Pageable pageable,Long lectureId) {
 		return reviewRepository.findByLectureId(lectureId, pageable);
