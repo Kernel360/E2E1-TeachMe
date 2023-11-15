@@ -1,5 +1,5 @@
-const listStyleChangeStartY = 550;
-const listStyleChangeEndY = 1385;
+const listStyleChangeStartY = 1300;
+const listStyleChangeEndY = 2085;
 
 const listItems = document.querySelectorAll(".list-item");
 
@@ -13,5 +13,4 @@ window.addEventListener("scroll", () => {
 
         if(listItems[targetIndex]) listItems[targetIndex].id = "on";
     }
-
 })
