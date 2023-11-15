@@ -34,34 +34,59 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: flex; width: 100%;">
         <!-- home 화면: 모두 -->
-        <li class="nav-item">
-          <a class="nav-link active"
-             href="/"> 홈 </a>
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link active"-->
+<!--             href="/"> 홈 </a>-->
+<!--        </li>  -->
         <!-- 강의 리스트: 로그인한 사용자만 -->
         <li class="nav-item">
           <a class="nav-link active"
              aria-current="page"
              href="/lecture/list"> 강의 리스트 </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active"
-             aria-current="page"
-             sec:authorize="isAuthenticated()"
-             href="/favor/list">내가 찜한 강의</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page"
+             sec:authorize="isAuthenticated()">
+            마이페이지
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/favor/list">내가 찜한 강의</a></li>
+            <li><a class="dropdown-item" href="#">내가 작성한 리뷰</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">마이페이지</a></li>
+          </ul>
         </li>
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link active"-->
+<!--             aria-current="page"-->
+<!--             sec:authorize="isAuthenticated()"-->
+<!--             href="/favor/list">내가 찜한 강의</a>-->
+<!--        </li>-->
         <!-- 크롤링: 관리자만 -->
-        <li class="nav-item">
-          <a class="nav-link active"
-             aria-current="page"
-             sec:authorize="hasAnyRole('ROLE_ADMIN')"
-             href="/crawler"> 크롤링 </a>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page"
+             sec:authorize="hasAnyRole('ROLE_ADMIN')">
+            관리자메뉴
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/crawler">데이터 관리</a></li>
+            <li><a class="dropdown-item" href="/report">통계</a></li>
+<!--            <li><hr class="dropdown-divider"></li>-->
+<!--            <li><a class="dropdown-item" href="#">마이페이지</a></li>-->
+          </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active"
-             aria-current="page"
-             sec:authorize="hasAnyRole('ROLE_ADMIN')"
-             href="/report"> 통계 </a>
-        </li>
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link active"-->
+<!--             aria-current="page"-->
+<!--             sec:authorize="hasAnyRole('ROLE_ADMIN')"-->
+<!--             href="/crawler"> 크롤링 </a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link active"-->
+<!--             aria-current="page"-->
+<!--             sec:authorize="hasAnyRole('ROLE_ADMIN')"-->
+<!--             href="/report"> 통계 </a>-->
+<!--        </li>-->
         <!-- 로그인: 로그인 안한 사람만 -->
         <li class="nav-item">
           <a class="nav-link active"

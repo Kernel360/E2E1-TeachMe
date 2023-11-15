@@ -24,7 +24,7 @@ public class FastcampusLectureListCrawlingService implements LectureListCrawling
     private static final String PLATFORM = "fastcampus";
 
     @Value("${url.fastcampus.list}")
-    private static String BASE_URL;
+    private String BASE_URL;
 
     @Override
     public List<FastcampusLectureResponse> crawlData() {

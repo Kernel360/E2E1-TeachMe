@@ -1,18 +1,14 @@
 package kr.kernel.teachme.domain.review.entity;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 import kr.kernel.teachme.domain.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @NoArgsConstructor
 @Entity
@@ -37,7 +33,10 @@ public class Review {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Temporal(TemporalType.DATE)
     private Date createDate;
+
+    @Temporal(TemporalType.DATE)
     private Date updateDate;
 
     @Builder
