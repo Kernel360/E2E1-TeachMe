@@ -11,6 +11,6 @@ public class StringUtil {
     }
 
     public static String removeNotNumeric(final String str) {
-        return str.replaceAll("\\W", "");
+        return str.replaceAll("\\D", "");
     }
 }

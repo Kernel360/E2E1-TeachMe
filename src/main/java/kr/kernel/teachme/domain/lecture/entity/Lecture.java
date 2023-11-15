@@ -91,6 +91,8 @@ public class Lecture {
         this.updateDate = (null == fastcampusLectureUpdateResponse.getUpdatedAt()) ? updateDate : convertLocalDateTimeToDate(fastcampusLectureUpdateResponse.getUpdatedAt());
         this.description = fastcampusLectureUpdateResponse.getPublicDescription();
         this.keywords = fastcampusLectureUpdateResponse.getKeywords();
+        this.price = fastcampusLectureUpdateResponse.getPrice();
+        this.discountPrice = fastcampusLectureUpdateResponse.getDiscountPrice();
     }
 
 }
