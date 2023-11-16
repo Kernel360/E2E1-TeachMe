@@ -1,5 +1,6 @@
 package kr.kernel.teachme.domain.crawler.service;
 
+import kr.kernel.teachme.common.annotation.LogExecutionTime;
 import kr.kernel.teachme.common.exception.CrawlerException;
 import kr.kernel.teachme.domain.crawler.dto.InflearnLectureDetailResponse;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
@@ -28,6 +29,7 @@ public class InflearnLectureDetailCrawlingService implements LectureDetailCrawli
 	private static final String PLATFORM = "inflearn";
 
 	@Override
+	@LogExecutionTime("인프런 상세 크롤링 실행")
 	public void runCrawler() {
 		try {
 			List<Lecture> lecturesToUpdate = fetchLecturesToUpdate();
