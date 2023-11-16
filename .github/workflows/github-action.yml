@@ -16,8 +16,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: self-hosted
-    container: amazonlinux:2023  # Amazon Linux 2023 이미지 사용
+    runs-on: ubuntu-latest
 
     steps:
 
