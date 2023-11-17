@@ -5,6 +5,7 @@ import kr.kernel.teachme.common.exception.ReviewNotFoundException;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 import kr.kernel.teachme.domain.lecture.repository.LectureRepository;
 import kr.kernel.teachme.domain.member.entity.Member;
+import kr.kernel.teachme.domain.review.dto.ReviewRequest;
 import kr.kernel.teachme.domain.review.entity.Review;
 import kr.kernel.teachme.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,25 +47,16 @@ public class ReviewService {
 		reviewRepository.save(lectureReview);
 	}
 
-	public void updateLectureReview(Member member, Long lectureId, String content, double score) {
-		Review reviewInfo = reviewRepository.findByLectureIdAndMemberId(member.getId(), lectureId);
-		Optional<Lecture> lectureInfo = lectureRepository.findById(lectureId);
-		Lecture lecture = lectureInfo.get();
-		Date date = new Date();
-		Review lectureReview = Review.builder()
-			.member(member)
-			.lecture(lecture)
-			.score(score)
-			.content(content)
-			.createDate(reviewInfo.getCreateDate())
-			.updateDate(date)
-			.build();
-		reviewRepository.save(lectureReview);
-
+	public void updateLectureReview(Member member, ReviewRequest request) {
+		Optional<Review> reviewInfo = reviewRepository.findById(request.getReviewId());
+		Review review = reviewInfo.orElseThrow(ReviewNotFoundException::new);
+		if(!Objects.equals(review.getMember().getId(), member.getId())) throw new NotOwnerForReviewException();
+		review.updateReview(request.getScore(), request.getContent());
+		reviewRepository.save(review);
 	}
 
-	public void deleteLectureReview(Member member, Long lectureId) {
-		Optional<Review> deleteReview = reviewRepository.findById(lectureId);
+	public void deleteLectureReview(Member member, Long reviewId) {
+		Optional<Review> deleteReview = reviewRepository.findById(reviewId);
 		Review review = deleteReview.orElseThrow(ReviewNotFoundException::new);
 		if(!Objects.equals(review.getMember().getId(), member.getId())) throw new NotOwnerForReviewException();
 		reviewRepository.delete(review);
