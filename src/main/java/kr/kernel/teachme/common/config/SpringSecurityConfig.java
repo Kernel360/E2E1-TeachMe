@@ -1,5 +1,6 @@
 package kr.kernel.teachme.common.config;
 
+import kr.kernel.teachme.common.exception.CustomAuthenticationFailureHandler;
 import kr.kernel.teachme.common.jwt.JwtAuthenticationFilter;
 import kr.kernel.teachme.common.jwt.JwtAuthorizationFilter;
 import kr.kernel.teachme.common.jwt.JwtProperties;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -28,6 +30,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -50,6 +57,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/login")
+                .failureHandler(authenticationFailureHandler())
                 .defaultSuccessUrl("/")
                 .permitAll();
         http.logout()
