@@ -1,5 +1,6 @@
 package kr.kernel.teachme.domain.crawler.component;
 
+import kr.kernel.teachme.common.annotation.LogExecutionTime;
 import kr.kernel.teachme.domain.crawler.dto.FastcampusLectureDetailResponse;
 import kr.kernel.teachme.domain.crawler.dto.FastcampusLectureUpdateResponse;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
@@ -34,8 +35,8 @@ public class FastcampusAutoCrawler implements AutoCrawler{
 
     @Override
     @Scheduled(cron = "0 0 0/1 * * *")
+    @LogExecutionTime("패스트캠퍼스 상시 크롤링 실행")
     public void crawlLectureAutomatically() throws InterruptedException {
-        log.info("패캠 크론잡 실행");
         List<Lecture> lecturesToUpdate = fetchLecturesToUpdate();
         List<Lecture> updatedLectures = updateLectureDetails(lecturesToUpdate);
         saveUpdatedLectures(updatedLectures);
