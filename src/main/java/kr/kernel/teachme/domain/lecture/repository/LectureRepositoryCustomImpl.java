@@ -16,6 +16,7 @@ import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 
+
 public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport implements LectureRepositoryCustom{
 	@Autowired
 	private final JPAQueryFactory queryFactory;
@@ -28,7 +29,7 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 	@Override
 	public Page<Lecture> findBySearchOption(Pageable pageable, SearchRequest search) {
 		JPQLQuery<Lecture> query = queryFactory.selectFrom(QLecture.lecture)
-			.where(eqFilter(search.getSearchFilter()), eqOption(search.getSearchSelect(), search.getSearchInput()), isUpdated())
+					.where(eqFilter(search.getSearchFilter()), eqOption(search.getSearchSelect(), search.getSearchInput()), isUpdated())
 			.orderBy(sortList(search.getSearchSort()));
 		QueryResults<Lecture> results = this.getQuerydsl().applyPagination(pageable, query).fetchResults();
 		return new PageImpl<>(results.getResults(), pageable, results.getTotal());

@@ -55,9 +55,7 @@ public class LectureController {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Review> reviewApiList = reviewService.getLectureReviewList(pageable, lectureId);
         model.addAttribute("reviews", reviewApiList);
-        model.addAttribute("lecture", lecture.orElse(null));
+        model.addAttribute("lecture", lecture.orElseThrow(IllegalArgumentException::new));
         return "lecture/detail";
     }
-
-
 }
