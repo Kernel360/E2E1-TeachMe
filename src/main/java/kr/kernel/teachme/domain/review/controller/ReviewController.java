@@ -58,7 +58,7 @@ public class ReviewController {
 		@AuthenticationPrincipal Member member) {
 		ReviewResponse response = new ReviewResponse();
 		try {
-			reviewService.updateLectureReview(member, request.getLectureId(), request.getContent(), request.getScore());
+			reviewService.updateLectureReview(member, request);
 			response.setMessage("리뷰 수정 성공");
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
