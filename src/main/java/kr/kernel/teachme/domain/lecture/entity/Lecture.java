@@ -70,7 +70,7 @@ public class Lecture {
         this.instructor = instructor;
         this.createDate = createDate;
         this.updateDate = updateDate;
-        this.lastCrawlDate = new Date(1900, Calendar.JANUARY, 1);
+        this.lastCrawlDate = new Date(0, Calendar.JANUARY, 1);
     }
 
     public void updateInflearnDetailInfo(int duration, String img, Date createDate, Date updateDate) {

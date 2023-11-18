@@ -10,6 +10,7 @@
 <div class="container" layout:fragment="content">
   <form class="form-signin" method="post" th:action="@{/login}">
     <h2 class="form-signin-heading">로그인</h2>
+    <span th:if="${errorMessage}" th:text="${errorMessage}" style="color: red; font-size: 13px; font-weight: bolder"></span>
     <p>
       <label for="username" class="sr-only">Id</label>
       <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>

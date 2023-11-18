@@ -159,6 +159,26 @@
                     <br>
                     <span th:text="${review.content}"></span>
                 </div>
+                <div th:if="${#lists.size(reviews.content) == 0}" style="color: #666; background-color: #f5f5f7; margin-top: 10px; margin-bottom: 30px; padding: 24px; border-radius: 8px; font-size: 14px; display: flex; align-items: center; justify-content: center">
+                    <p>아직 작성된 후기가 없습니다😭</p>
+                </div>
+                <nav th:if="${#lists.size(reviews.content) != 0}" aria-label="Page navigation example" style="width: 80%; margin: 0 auto; margin-top:50px;">
+                    <ul class="pagination" style="justify-content: center;">
+                        <li class="page-item" th:classappend="${reviews.hasPrevious() ? '': 'disabled'}">
+                            <a class="page-link" th:href="@{/lecture/{id}(id=${lecture.id}, page=${reviews.number - 1})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" th:href="@{/lecture/{id}(id=${lecture.id}, page=${reviews.number})}" th:text="${reviews.number + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${reviews.hasNext() ? '': 'disabled'}">
+                            <a class="page-link" th:href="@{/lecture/{id}(id=${lecture.id}, page=${reviews.number + 1})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
                 <div class="rating_box">
                     <div class="rating">
                         ★★★★★
