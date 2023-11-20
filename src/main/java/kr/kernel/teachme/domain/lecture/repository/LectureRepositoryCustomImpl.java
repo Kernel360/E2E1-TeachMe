@@ -61,13 +61,15 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 	}
 
 	private OrderSpecifier<?> sortList(String sort) {
-		if (sort.equals("title")) {
-			return QLecture.lecture.title.asc();
-		} else if (sort.equals("updateDate")) {
-			return QLecture.lecture.createDate.desc();
-		} else if (sort.equals("salePrice")) {
-			return QLecture.lecture.discountPrice.asc();
+        switch (sort) {
+            case "title":
+                return QLecture.lecture.title.asc();
+            case "updateDate":
+                return QLecture.lecture.updateDate.desc();
+            case "salePrice":
+                return QLecture.lecture.discountPrice.asc();
+			default:
+				return null;
 		}
-		return null;
 	}
 }
