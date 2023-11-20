@@ -1,5 +1,6 @@
 package kr.kernel.teachme.domain.crawler.service;
 
+import kr.kernel.teachme.common.annotation.LogExecutionTime;
 import kr.kernel.teachme.common.exception.CrawlerException;
 import kr.kernel.teachme.domain.crawler.dto.FastcampusLectureListResponse;
 import kr.kernel.teachme.domain.crawler.dto.FastcampusLectureResponse;
@@ -27,6 +28,7 @@ public class FastcampusLectureListCrawlingService implements LectureListCrawling
     private String BASE_URL;
 
     @Override
+    @LogExecutionTime("패스트캠퍼스 목록 크롤링 실행")
     public List<FastcampusLectureResponse> crawlData() {
         FastcampusLectureListResponse crawledData = fetchFastcampusData();
         try {

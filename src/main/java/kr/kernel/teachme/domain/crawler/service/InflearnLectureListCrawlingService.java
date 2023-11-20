@@ -1,5 +1,6 @@
 package kr.kernel.teachme.domain.crawler.service;
 
+import kr.kernel.teachme.common.annotation.LogExecutionTime;
 import kr.kernel.teachme.common.exception.CrawlerException;
 import kr.kernel.teachme.common.util.StringUtil;
 import kr.kernel.teachme.domain.crawler.dto.InflearnLectureListResponse;
@@ -34,6 +35,7 @@ public class InflearnLectureListCrawlingService implements LectureListCrawlingSe
 
 
 	@Override
+	@LogExecutionTime("인프런 목록 크롤링 실행")
 	public List<InflearnLectureListResponse> crawlData() throws IOException {
 		Document doc = getDocument(TARGET_URL);
 		int pageNum = getPageNumFromInflearn(doc);

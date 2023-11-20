@@ -51,4 +51,10 @@ public class Review {
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
+
+    public void updateReview(double score, String content) {
+        this.score = score;
+        this.content = content;
+        this.updateDate = new Date();
+    }
 }
