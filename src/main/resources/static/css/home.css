@@ -48,8 +48,7 @@
 
 #list-item-wrapper {
     width: 383px;
-    margin: 0 auto;
-    margin-bottom: 200px;
+    margin: 0 auto 100px;
 }
 
 .list-item {
@@ -63,3 +62,59 @@
     color: black;
     font-size: 42px;
 }
+
+.emoji_area {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.emoji_title {
+    display: inline-block;
+}
+
+.emoji_box {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.title_span {
+    font-weight: 900;
+    letter-spacing: -.05em;
+    line-height: 36px;
+    font-size: 21px;
+    text-decoration-line: underline;
+    position: relative;
+    bottom: 7px;
+}
+
+.mimoji_img {
+    width: 90px;
+    height: 90px;
+}
+
+.teach_me {
+    color: #007F48;
+}
+
+.mimoji_comment {
+    display: inline-block;
+    position: relative;
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    width: 400px;
+    text-align: center;
+    margin-left: 5px;
+}
+
+.mimoji_comment .tail {
+    position: absolute;
+    left: -20px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 20px solid white;
+}
+
