@@ -12,6 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -68,6 +70,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             AuthenticationException failed
     ) throws IOException {
-        response.sendRedirect("/login"); // 실패할 시 로그인 페이지로 redirect
+        String errorMessage = "로그인 정보가 맞지 않습니다";
+        String encodedErrorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
+        response.sendRedirect("/login?errorMessage=" + encodedErrorMessage); // 실패할 시 로그인 페이지로 redirect
     }
 }

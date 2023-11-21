@@ -51,7 +51,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 BasicAuthenticationFilter.class
         );
         http.authorizeRequests()
-                .antMatchers("/", "/home", "/member/**","/img/**","/style/**","/js/**","/lecture/**","/fragments/**", "/api/**").permitAll()
+                .antMatchers("/", "/home", "/login", "/member/**","/img/**","/style/**","/js/**","/lecture/**","/fragments/**", "/api/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**").permitAll()
                 .antMatchers("/crawler/**", "/report/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
@@ -84,4 +84,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             return member;
         };
     }
+
 }
