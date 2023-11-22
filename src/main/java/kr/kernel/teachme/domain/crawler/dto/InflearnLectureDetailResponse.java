@@ -21,7 +21,7 @@ public class InflearnLectureDetailResponse {
 	private Date updateDate;
 
 	public void setInflearnInfoToData(String info) {
-		Pattern pattern = Pattern.compile("총 (\\d+)개 수업(?: \\((\\d+)시간(?: (\\d+)분)?\\))?");
+		Pattern pattern = Pattern.compile("총 (\\d+)개 수업(?: \\((?:(\\d+)시간)? ?(?:(\\d+)분)?\\))?");
 		Matcher matcher = pattern.matcher(info);
 		int video = 0;
 		int hours = 0;
