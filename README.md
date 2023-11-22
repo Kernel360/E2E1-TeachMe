@@ -52,11 +52,14 @@
 - Docker
 
 ## 시스템 아키텍처
-![image](https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/4feb42ec-f7f9-4219-a328-a60c87130eff)
+![image](https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/215c2b75-8c79-4bf0-82e6-2af8beefd96c)
 
 ## DB ERD
 ![image](https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/14c529b3-51f0-4d97-8804-dbdeb00dfa8a)
 ## 프로젝트 구조
+
 ## 프로젝트 기능
+
 ## 시연
+
 ## 가이드라인
