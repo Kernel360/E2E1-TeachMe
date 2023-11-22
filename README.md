@@ -52,10 +52,12 @@
 - Docker
 
 ## 시스템 아키텍처
-![image](https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/215c2b75-8c79-4bf0-82e6-2af8beefd96c)
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/215c2b75-8c79-4bf0-82e6-2af8beefd96c" width="800">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/69861207/75c68093-e892-403b-adc2-034159920d13" width="500">
 
 ## DB ERD
-![image](https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/14c529b3-51f0-4d97-8804-dbdeb00dfa8a)
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/14c529b3-51f0-4d97-8804-dbdeb00dfa8a" width="800">
+
 ## 프로젝트 구조
 
 ## 프로젝트 기능
