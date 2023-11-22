@@ -17,6 +17,26 @@ document.getElementById("confirmPassword").addEventListener("input", function() 
     }
 });
 
+document.getElementById("username").addEventListener("input", function() {
+    let username = this.value;
+    let usernameMatchMessage = document.getElementById("usernameMatchMessage");
+    let submit = document.querySelector("button[type='submit']");
+
+    let regex = /^[a-zA-Z0-9@_-]+$/;
+
+    if(!regex.test(username)) {
+        usernameMatchMessage.textContent = "ID는 영문, 숫자, @, _, - 만 포함할 수 있습니다.";
+        usernameMatchMessage.classList.remove("text-success");
+        usernameMatchMessage.classList.add("text-danger");
+        submit.setAttribute("disabled", "disabled");
+    } else {
+        usernameMatchMessage.textContent = "ID가 조건을 만족합니다";
+        usernameMatchMessage.classList.remove("text-danger");
+        usernameMatchMessage.classList.add("text-success");
+        submit.removeAttribute("disabled");
+    }
+})
+
 const submitButton = document.getElementById("submit_button");
 
 document.getElementById("join-form").addEventListener("submit", function() {
