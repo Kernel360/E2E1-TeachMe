@@ -17,3 +17,8 @@ document.getElementById("confirmPassword").addEventListener("input", function() 
     }
 });
 
+const submitButton = document.getElementById("submit_button");
+
+document.getElementById("join-form").addEventListener("submit", function() {
+    submitButton.disabled = true;
+});

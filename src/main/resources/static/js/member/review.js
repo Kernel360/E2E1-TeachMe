@@ -14,7 +14,7 @@ function showEditForm(reviewId) {
     reviewLabel.style.marginBottom = "30px";
     reviewLabel.style.display = "flex";
 
-    reviewLabel.innerHTML = "<textarea id=\"review_text\" placeholder=\"당신의 리뷰를 남겨주세요 ✏️\" class=\"review_area\"></textarea>\n" +
+    reviewLabel.innerHTML = "<textarea id=\"review_text\" placeholder=\"당신의 리뷰를 남겨주세요 ✏️\" class=\"review_area\" maxlength=\"500\"></textarea>\n" +
         "                    <button id=\"review_button\" class=\"review_button\" onclick=\"edit(" + reviewId + ")\">\n" +
         "                        <i class=\"fa-solid fa-pen-to-square\"></i>\n" +
         "                    </button>"

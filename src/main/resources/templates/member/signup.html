@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container" layout:fragment="content">
-  <form class="form-signin" method="post" th:action="@{/member/signup}" style="max-width: 850px;">
+  <form id="join-form" class="form-signin" method="post" th:action="@{/member/signup}" style="max-width: 850px;">
     <img th:src="@{../images/logo_big.png}" style="width: 70%;" alt="로고 이미지"/>
     <p style="width: 60%;">
       <label for="username" class="sr-only">Id</label>
@@ -35,7 +35,7 @@
       <br th:if="${errorMessage}">
       <span th:if="${errorMessage}" th:text="${errorMessage}" class="text-danger"></span>
     </p>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" onmouseover="this.style.background='#002A11'" onmouseout="this.style.background='#027F48'" style="width: 60%; background-color: #027F48; margin-bottom: 10px; border-color: #002A11; transition: all 0.3s; font-size: 20px;">회원가입</button>
+    <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit" onmouseover="this.style.background='#002A11'" onmouseout="this.style.background='#027F48'" style="width: 60%; background-color: #027F48; margin-bottom: 10px; border-color: #002A11; transition: all 0.3s; font-size: 20px;">회원가입</button>
   </form>
   <script src="/js/member/passwordMatch.js"></script>
 </div>
