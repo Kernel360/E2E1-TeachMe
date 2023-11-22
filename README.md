@@ -56,7 +56,7 @@
 <img src="https://github.com/Kernel360/E2E1-TeachMe/assets/69861207/75c68093-e892-403b-adc2-034159920d13" width="500">
 
 ## DB ERD
-<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/14c529b3-51f0-4d97-8804-dbdeb00dfa8a" width="800">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/7dd7c9f6-9e8b-4b8b-8934-b7c8bf242f9f" width="800">
 
 ## 프로젝트 구조
 
