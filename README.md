@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=rounded&color=CDE4AD&height=300&section=header&text=TeachMe!&fontSize=90" />
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/69861207/e4536173-ba9a-4c97-9a03-165a2e21ddbe" width="800"/>
 
 ## Teach Me! 📚
 
@@ -57,6 +57,9 @@ Teach Me를 통해 여러 플랫폼의 강의를 한 곳에 모아 비교할 수
 
 ## DB ERD
 <img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/7dd7c9f6-9e8b-4b8b-8934-b7c8bf242f9f" width="800">
+
+## API 명세서
+https://teach-me.live/swagger-ui/
 
 ## 프로젝트 구조
 
