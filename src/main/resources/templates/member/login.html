@@ -14,13 +14,13 @@
     <img th:src="@{../images/logo_big.png}" style="width: 70%;" alt="로고 이미지"/>
     <p style="width: 60%;">
       <label for="username" class="sr-only">Id</label>
-      <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+      <input type="text" id="username" name="username" class="form-control" placeholder="Username" maxlength="250" required autofocus>
     </p>
     <p style="width: 60%;">
       <label for="password" class="sr-only">Password</label>
-      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Password" maxlength="250" required>
       <button class="btn btn-lg btn-primary btn-block" type="submit" onmouseover="this.style.background='#002A11'" onmouseout="this.style.background='#027F48'" style="width: 100%; background-color: #027F48; margin-bottom: 10px; border-color: #002A11; transition: all 0.3s; font-size: 20px;">로그인</button>
-      <button class="btn btn-lg btn-primary btn-block" onClick="location.href='/member/signup'" onmouseover="this.style.background='#002A11'" onmouseout="this.style.background='#027F48'" style="width: 100%; background-color: #027F48; border-color: #002A11; transition: all 0.3s; font-size: 20px;">회원가입</button>
+      <button class="btn btn-lg btn-primary btn-block" type="button" onClick="location.href='/member/signup'" onmouseover="this.style.background='#002A11'" onmouseout="this.style.background='#027F48'" style="width: 100%; background-color: #027F48; border-color: #002A11; transition: all 0.3s; font-size: 20px;">회원가입</button>
     </p>
     <span th:if="${param.errorMessage}" th:text="${param.errorMessage}" style="color: red; font-size: 13px; font-weight: bolder"></span>
   </form>

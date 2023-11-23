@@ -46,7 +46,7 @@ public class ReviewStatisticsController {
 
         return reports.stream()
                 .collect(Collectors.groupingBy(
-                        report -> report.getLecture().getTitle(),
+                        report -> "[" + report.getId() + "]" + report.getLecture().getTitle(),
                         Collectors.averagingDouble(Report::getAverageScore)
                 ));
     }
@@ -58,7 +58,7 @@ public class ReviewStatisticsController {
 
         return reports.stream()
                 .collect(Collectors.groupingBy(
-                        report -> report.getLecture().getTitle(),
+                        report -> "[" + report.getId() + "]" + report.getLecture().getTitle(),
                         Collectors.summingInt(Report::getReviewCount)
                 ));
     }
