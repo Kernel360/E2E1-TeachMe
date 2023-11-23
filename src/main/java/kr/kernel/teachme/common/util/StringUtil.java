@@ -1,4 +1,4 @@
-package kr.kernel.teachme.domain.lecture.util;
+package kr.kernel.teachme.common.util;
 
 public class StringUtil {
     public static boolean isNumeric(String s) {
@@ -11,6 +11,6 @@ public class StringUtil {
     }
 
     public static String removeNotNumeric(final String str) {
-        return str.replaceAll("\\W", "");
+        return str.replaceAll("\\D", "");
     }
 }

@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/defaultLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Teach Me : 내가 고르는 강의 - 내가 작성한 리뷰</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member/review.css}">
 </head>
 <body>
-
+    <div class="content" layout:fragment="content">
+        <div class="parent-div">
+            <div style="width: 80%; margin-top: 50px;">
+                <h3 style="font-weight: bolder; color:#555555;">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    리뷰
+                </h3>
+                <p style="text-align: left; color: #585858; font-size: 15px;">내가 작성한 모든 리뷰를 확인하세요 🧐</p>
+                <div style="color: #666; background-color: #f5f5f7; margin-top: 10px; margin-bottom: 30px; padding: 24px; border-radius: 8px; font-size: 14px;" th:each="review : ${reviews}" th:class="${'box' + review.id}">
+                    <a class="lecture_title" th:href="@{|/lecture/${review.lecture.id}|}" style="font-size: 17px; font-weight: bolder; color:black" th:text="${'강의명: ' + review.lecture.title}"></a>
+                    <br><br>
+                    <span style="font-size: 15px; font-weight: bolder; color: black;" th:text="${'🧍' + review.member.name}"></span>
+                    <span  th:text="${'(' + review.score + ')'}"></span>
+                    <input type="hidden" th:id="${'score' + review.id}" th:value="${review.score}">
+                    <br><br>
+                    <span th:id="${'content' + review.id}" th:text="${review.content}"></span>
+                    <br><br>
+                    <button class="edit_button" th:onclick="'showEditForm(' + ${review.id} + ')'">리뷰 수정</button>
+                    <button class="delete_button" th:onclick="'remove(' + ${review.id} + ')'">리뷰 삭제</button>
+                </div>
+                <div th:if="${#lists.size(reviews.content) == 0}" style="color: #666; background-color: #f5f5f7; margin-top: 10px; margin-bottom: 30px; padding: 24px; border-radius: 8px; font-size: 14px; display: flex; align-items: center; justify-content: center">
+                    <p>아직 작성된 후기가 없습니다😭</p>
+                </div>
+                <nav th:if="${#lists.size(reviews.content) != 0}" aria-label="Page navigation example" style="width: 80%; margin: 0 auto; margin-top:50px;">
+                    <ul class="pagination" style="justify-content: center;">
+                        <li class="page-item" th:classappend="${reviews.hasPrevious() ? '': 'disabled'}">
+                            <a class="page-link" th:href="@{/review/me(page=${reviews.number - 1})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" th:href="@{/review/me(page=${reviews.number})}" th:text="${reviews.number + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${reviews.hasNext() ? '': 'disabled'}">
+                            <a class="page-link" th:href="@{/review/me(page=${reviews.number + 1})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <script src="/js/member/review.js"></script>
+    </div>
 </body>
 </html>

@@ -1,7 +1,12 @@
 .form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
+    max-width: 550px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 50px auto 0;
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -29,4 +34,8 @@
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+#carouselExampleSlidesOnly {
+    display: none;
 }

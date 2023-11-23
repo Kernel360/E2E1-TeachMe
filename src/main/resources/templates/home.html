@@ -9,22 +9,85 @@
  </head>
 <body>
     <div class="content" layout:fragment="content">
-        <div style="display: flex; justify-content: center; gap: 20px; flex-direction: column; align-items: center; background-color: white; padding-top: 50px; width: 80%; margin: 0 auto; border-radius: 15px; margin-bottom: 100px;">
-            <h3>✨최근 추가된 강의</h3>
-            <div class="parent-div">
-                <div th:if="${#lists.size(lectures) == 0}" style="text-align: center">
-                    <p style="color: grey">최근 추가된 강의가 없습니다.😢</p>
+        <img style="width: 100%;" th:src="@{../images/mockup.png}" alt="mock-up">
+        <div id="main-img-wrapper">
+            <img width="480" th:src="@{../images/main1.png}" alt="coding image">
+        </div>
+        <div id="intro-main">
+            <p>너무 많은 인터넷 강의</p>
+            <p>무얼 들을지<br>고민되시나요?</p>
+            <a href="/lecture/list" id="go-list-text">찾아보기!</a>
+            <i id="down-arrow-icon" class="fa-solid fa-angle-down"></i>
+        </div>
+        <ul id="list-item-wrapper">
+            <li class="list-item">💻프로그래밍</li>
+            <li class="list-item">🏴󠁧󠁢󠁥󠁮󠁧󠁿토익</li>
+            <li class="list-item">🧑‍🎨디자인</li>
+            <li class="list-item">🧑‍💻UI/UX</li>
+            <li class="list-item">👩‍💻웹 개발</li>
+            <li class="list-item">🏞️HTML</li>
+            <li class="list-item">🪮CSS</li>
+            <li class="list-item">🍦소프트스킬</li>
+            <li class="list-item">🏡부동산</li>
+            <li class="list-item">☕️Java</li>
+            <li class="list-item">🐍Python</li>
+            <li class="list-item">䷴AWS</li>
+            <li class="list-item">🍃Spring</li>
+            <li class="list-item">🥬SpringBoot</li>
+            <li class="list-item">🐱Django</li>
+            <li class="list-item">💎ruby</li>
+            <li class="list-item">👀javascript</li>
+            <li class="list-item">🚊rails</li>
+            <li class="list-item">🏃fastapi</li>
+            <li class="list-item">✅node.js</li>
+            <li class="list-item">⏭️next.js</li>
+            <li class="list-item">🪺nest.js</li>
+            <li class="list-item">📱Mysql</li>
+            <li class="list-item">🇲🇳MongoDB</li>
+            <li class="list-item">🧔Jenkins</li>
+            <li class="list-item">🐈‍⬛Github</li>
+            <li class="list-item">🐳Docker</li>
+            <li class="list-item">🙀Github actions</li>
+            <li class="list-item">🕸️kubernatis</li>
+        </ul>
+        <div class="emoji_area">
+            <h1 class="emoji_title">👀</h1>
+            <span class="title_span">솔직후기</span>
+            <h1 style="font-size: calc(1rem + 1.3vw); font-weight: bolder"><b class="teach_me">티치미</b>를 경험한 사람들의 반응은?</h1>
+        </div>
+        <div style="width: 90%; margin: 10px auto 0 auto; text-align: center;">
+            <div class="emoji_box">
+                <img class="mimoji_img" alt="mimoji" src="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDFfMjIx/MDAxNjI3ODE1MTkyMjI2.MttKEaAXsLAtJbii9P-5OGX06s6-uVzMSVa6Db7D96gg.qITLHjb_-CZGx0pt3JXbKybmOaY54vrI1tqO7qP7mscg.PNG.brotherm1n/IMG_3219.PNG?type=w800">
+                <div class="mimoji_comment">
+                    <div class="tail"></div>
+                    <span>어떤 강의를 선택해야할 지 알 수 있었어요!</span>
                 </div>
-                <div th:each="lecture : ${lectures}" class="card" style="width: 18rem;">
-                    <img th:src="${lecture.img}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${lecture.title}">Card title</h5>
-                        <p class="card-text ellipsis" th:text="${lecture.description}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a th:href="${lecture.url}" class="btn btn-primary">자세히 보기</a>
-                    </div>
+            </div>
+            <div class="emoji_box">
+                <img class="mimoji_img" alt="mimoji" src="https://images.velog.io/images/chang626/post/c9533c4f-adbb-4411-bce4-b09293d64fbf/A03EACB4-4DFA-439A-A3FE-084635A89FE6.png">
+                <div class="mimoji_comment">
+                    <div class="tail"></div>
+                    <span>1분당 가격을 확인해서 가성비 좋은 강의를 듣고 있어요</span>
                 </div>
             </div>
         </div>
+        <div style="width: 90%; margin: 10px auto 150px auto; text-align: center;">
+            <div class="emoji_box">
+                <img class="mimoji_img" alt="mimoji" src="https://www.techm.kr/news/photo/202107/86116_89524_203.png">
+                <div class="mimoji_comment">
+                    <div class="tail"></div>
+                    <span>여러 리뷰를 보고 강의를 고르는데 도움을 받았어요</span>
+                </div>
+            </div>
+            <div class="emoji_box">
+                <img class="mimoji_img" alt="mimoji" src="https://openads-real.s3.amazonaws.com/openadsAdmin/ckeditor/images/14_%EC%9D%B4%EB%AA%A8%ED%8B%B0%EC%BD%98.png">
+                <div class="mimoji_comment">
+                    <div class="tail"></div>
+                    <span>좋은 강의를 선택해서 결국 취업까지 달성할 수 있었어요!</span>
+                </div>
+            </div>
+        </div>
+        <script th:src="@{/js/home.js}"></script>
     </div>
 </body>
 </html>

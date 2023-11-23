@@ -16,6 +16,7 @@ import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 
+
 public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport implements LectureRepositoryCustom{
 	@Autowired
 	private final JPAQueryFactory queryFactory;
@@ -28,7 +29,7 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 	@Override
 	public Page<Lecture> findBySearchOption(Pageable pageable, SearchRequest search) {
 		JPQLQuery<Lecture> query = queryFactory.selectFrom(QLecture.lecture)
-			.where(eqFilter(search.getSearchFilter()), eqOption(search.getSearchSelect(), search.getSearchInput()), isUpdated())
+					.where(eqFilter(search.getSearchFilter()), eqOption(search.getSearchSelect(), search.getSearchInput()), isUpdated())
 			.orderBy(sortList(search.getSearchSort()));
 		QueryResults<Lecture> results = this.getQuerydsl().applyPagination(pageable, query).fetchResults();
 		return new PageImpl<>(results.getResults(), pageable, results.getTotal());
@@ -60,13 +61,15 @@ public class LectureRepositoryCustomImpl extends QuerydslRepositorySupport imple
 	}
 
 	private OrderSpecifier<?> sortList(String sort) {
-		if (sort.equals("title")) {
-			return QLecture.lecture.title.asc();
-		} else if (sort.equals("updateDate")) {
-			return QLecture.lecture.createDate.desc();
-		} else if (sort.equals("salePrice")) {
-			return QLecture.lecture.discountPrice.asc();
+        switch (sort) {
+            case "title":
+                return QLecture.lecture.title.asc();
+            case "updateDate":
+                return QLecture.lecture.updateDate.desc();
+            case "salePrice":
+                return QLecture.lecture.discountPrice.asc();
+			default:
+				return null;
 		}
-		return null;
 	}
 }

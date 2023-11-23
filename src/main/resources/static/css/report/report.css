@@ -1,0 +1,12 @@
+.parent-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    background-color: white;
+    padding-top: 30px;
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 15px;
+}

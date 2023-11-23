@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/defaultLayout}">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +14,7 @@
             <img class="thumbnail" th:src="${lecture.img}"/>
             <h2 style="width: 100%;" class="title" th:text="${lecture.title}"></h2>
             <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
-                <a th:href="@{${lecture.url}}" class="homepageUrl">
+                <a th:href="@{${lecture.url}}" target='_blank' class="homepageUrl">
                     <i class="fa-solid fa-arrow-right"></i>
                     &nbsp;&nbsp;
                     홈페이지 바로가기
@@ -33,7 +34,7 @@
                 <div class="fastcampus_image"></div>
                 <span class="platform_name">&nbsp;패스트캠퍼스</span>
                 <span class="platform_description"> 에서 제공합니다.</span>
-                <a href="https://fastcampus.co.kr/" class="platform_link">
+                <a href="https://fastcampus.co.kr/" target='_blank' class="platform_link">
                     바로가기
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
@@ -42,7 +43,7 @@
                 <div class="inflearn_image"></div>
                 <span class="platform_name">&nbsp;인프런</span>
                 <span class="platform_description"> 에서 제공합니다.</span>
-                <a href="https://www.inflearn.com/" class="platform_link">
+                <a href="https://www.inflearn.com/" target='_blank' class="platform_link">
                     바로가기
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
@@ -144,6 +145,54 @@
                     <br>
                     <span th:text="${lecture.description}"></span>
                 </div>
+            </div>
+            <div style="width: 80%; margin-top: 50px;">
+                <h3 style="font-weight: bolder; color:#555555;">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    리뷰
+                </h3>
+                <p style="text-align: left; color: #585858; font-size: 15px;">수강자들의 생생한 리뷰를 확인하세요 🧐</p>
+                <div style="color: #666; background-color: #f5f5f7; margin-top: 10px; margin-bottom: 30px; padding: 24px; border-radius: 8px; font-size: 14px;" th:each="review : ${reviews}">
+                    <span style="font-size: 15px; font-weight: bolder; color: black;" th:text="${'🧍' + review.member.name}">소개 문구 </span>
+                    <span th:text="${'(' + review.score + ')'}"></span>
+                    <br>
+
+                    <br>
+                    <span th:text="${review.content}"></span>
+                </div>
+                <div th:if="${#lists.size(reviews.content) == 0}" style="color: #666; background-color: #f5f5f7; margin-top: 10px; margin-bottom: 30px; padding: 24px; border-radius: 8px; font-size: 14px; display: flex; align-items: center; justify-content: center">
+                    <p>아직 작성된 후기가 없습니다😭</p>
+                </div>
+                <nav th:if="${#lists.size(reviews.content) != 0}" aria-label="Page navigation example" style="width: 80%; margin: 0 auto; margin-top:50px;">
+                    <ul class="pagination" style="justify-content: center;">
+                        <li class="page-item" th:classappend="${reviews.hasPrevious() ? '': 'disabled'}">
+                            <a class="page-link" th:href="@{/lecture/{id}(id=${lecture.id}, page=${reviews.number - 1})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" th:href="@{/lecture/{id}(id=${lecture.id}, page=${reviews.number})}" th:text="${reviews.number + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${reviews.hasNext() ? '': 'disabled'}">
+                            <a class="page-link" th:href="@{/lecture/{id}(id=${lecture.id}, page=${reviews.number + 1})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div sec:authorize="isAuthenticated()" class="rating_box">
+                    <div class="rating">
+                        ★★★★★
+                        <span class="rating_star">★★★★★</span>
+                        <input id="review_score" type="range" value="0" step="1" min="0" max="10">
+                    </div>
+                </div>
+                <label sec:authorize="isAuthenticated()" style="width: 100%; margin-bottom: 30px; display: flex;">
+                    <textarea id="review_text" placeholder="당신의 리뷰를 남겨주세요 ✏️" class="review_area" maxlength="500"></textarea>
+                    <button id="review_button" class="review_button">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </label>
             </div>
         </div>
         <script src="/js/lecture/detail.js"></script>

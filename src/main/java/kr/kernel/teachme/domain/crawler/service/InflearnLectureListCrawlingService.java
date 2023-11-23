@@ -1,59 +1,73 @@
 package kr.kernel.teachme.domain.crawler.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import kr.kernel.teachme.common.annotation.LogExecutionTime;
 import kr.kernel.teachme.common.exception.CrawlerException;
+import kr.kernel.teachme.common.util.StringUtil;
 import kr.kernel.teachme.domain.crawler.dto.InflearnLectureListResponse;
 import kr.kernel.teachme.domain.lecture.entity.Lecture;
 import kr.kernel.teachme.domain.lecture.repository.LectureRepository;
-import kr.kernel.teachme.domain.lecture.util.StringUtil;
-
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import lombok.RequiredArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class InflearnLectureListCrawlingService {
+public class InflearnLectureListCrawlingService implements LectureListCrawlingService<InflearnLectureListResponse> {
 
 	private final LectureRepository lectureRepository;
-	private static final String platform = "inflearn";
+	private static final String PLATFORM = "inflearn";
+	@Value("${url.inflearn.courses}")
+	String TARGET_URL;
+	@Value("${url.inflearn.page}")
+	String PAGE_URL;
 
-	private List<InflearnLectureListResponse> crawlInflearnLectureList() throws IOException {
-		String targetUrl = "https://www.inflearn.com/courses";
-		Connection conn = Jsoup.connect(targetUrl);
-		Document doc = conn.get();
+
+	@Override
+	@LogExecutionTime("인프런 목록 크롤링 실행")
+	public List<InflearnLectureListResponse> crawlData() throws IOException {
+		Document doc = getDocument(TARGET_URL);
 		int pageNum = getPageNumFromInflearn(doc);
 
 		if(pageNum == 0) return Collections.emptyList();
 
+		return getCourseForAllPages(pageNum);
+	}
+
+	private Document getDocument(String url) throws IOException {
+		Connection conn = Jsoup.connect(url);
+		return conn.get();
+	}
+
+	private List<InflearnLectureListResponse> getCourseForAllPages(int pageNum) throws IOException {
 		List<InflearnLectureListResponse> crawledDataList = new ArrayList<>();
-
 		for(var i = 1; i <= pageNum; i++) {
-			String url = "https://www.inflearn.com/courses?order=seq&page=";
-			String pageUrl = url + i;
-			Connection pageConn = Jsoup.connect(pageUrl);
-			Document document = pageConn.get();
-			Elements courseElements = document.select("div.course");
-
-			for (Element course : courseElements) {
-				InflearnLectureListResponse inflearnCourse = buildCourseToObject(course);
-				crawledDataList.add(inflearnCourse);
-			}
+			crawledDataList.addAll(getCoursesForPage(i));
 		}
-
 		return crawledDataList;
+	}
+
+	private List<InflearnLectureListResponse> getCoursesForPage(int pageNumber) throws IOException {
+		String pageUrl = PAGE_URL + pageNumber;
+		Document pageDoc = getDocument(pageUrl);
+		Elements courseElements = pageDoc.select("div.course");
+
+		List<InflearnLectureListResponse> courses = new ArrayList<>();
+		for(Element course : courseElements) {
+			courses.add(buildCourseToObject(course));
+		}
+		return courses;
 	}
 
 	private static int getPageNumFromInflearn(Document doc) {
@@ -96,6 +110,7 @@ public class InflearnLectureListCrawlingService {
 		return inflearnCourse;
 	}
 
+	@Override
 	public void saveCrawledData(List<InflearnLectureListResponse> crawledData) {
 		List<Lecture> lectureList = new ArrayList<>();
 		for(InflearnLectureListResponse data : crawledData) {
@@ -104,18 +119,20 @@ public class InflearnLectureListCrawlingService {
 		lectureRepository.saveAll(lectureList);
 	}
 
+
+	@Override
 	public boolean isAtLeastOneRowExists() {
-		return lectureRepository.countByPlatform(platform) > 0;
+		return lectureRepository.countByPlatform(PLATFORM) > 0;
 	}
 
-	public void runInflearnLectureCrawler() {
+	@Override
+	public void runCrawler() {
 		if(isAtLeastOneRowExists()) throw new CrawlerException("크롤링 불가 상태");
-		List<InflearnLectureListResponse> crawledDataList = null;
 		try {
-			crawledDataList = crawlInflearnLectureList();
+			List<InflearnLectureListResponse> crawledDataList = crawlData();
+			saveCrawledData(crawledDataList);
 		} catch (IOException e) {
 			throw new CrawlerException("크롤링 중 에러 발생", e);
 		}
-		saveCrawledData(crawledDataList);
 	}
 }

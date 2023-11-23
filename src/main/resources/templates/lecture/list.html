@@ -22,7 +22,7 @@
             <label>
                 <select id="search_sort" name="searchSort" class="search_sort">
                     <option value="updateDate">최신 순</option>
-                    <option value="title">가나다 순</option>
+<!--                    <option value="title">가나다 순</option>-->
                     <option value="salePrice">가격 낮은 순</option>
                 </select>
             </label>
@@ -51,10 +51,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:if="${#lists.size(lecturePage.body) == 0}">
+                <tr th:if="${#lists.size(lecturePage) == 0}">
                     <td colspan="7">검색된 강의가 없습니다.🥲</td>
                 </tr>
-                <tr th:each="lecture : ${lecturePage.body}">
+                <tr th:each="lecture : ${lecturePage}">
                     <td><img th:src="${lecture.img}" style="width: 150px; height: 90px; border-radius: 10px;" alt="..."></td>
                     <td style="max-width: 200px;"><a class="lecture_title" th:href="@{|/lecture/${lecture.id}|}" th:text="${lecture.title}" style="font-weight: bolder; font-size: 13px;"></a></td>
                     <td style="max-width: 130px;">
@@ -88,16 +88,16 @@
         </table>
         <nav aria-label="Page navigation example" style="width: 80%; margin: 0 auto; margin-top:50px; ">
             <ul class="pagination" style="justify-content: center;">
-                <li class="page-item" th:classappend="${(lecturePage.pagination.page == 0) ? 'disabled': ''}">
-                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page}, searchFilter=${param.searchFilter}, searchSort=${param.searchSort}, searchSelect=${param.searchSelect}, searchInput=${param.searchInput})}" aria-label="Previous">
+                <li class="page-item" th:classappend="${lecturePage.hasPrevious() ? '': 'disabled'}">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.number}, searchFilter=${param.searchFilter}, searchSort=${param.searchSort}, searchSelect=${param.searchSelect}, searchInput=${param.searchInput})}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item active">
-                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 1})}" th:text="${lecturePage.pagination.page + 1}"></a>
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.number + 1})}" th:text="${lecturePage.number + 1}"></a>
                 </li>
-                <li class="page-item" th:classappend="${!(lecturePage.pagination.page + 1 == lecturePage.pagination.totalPage) && (lecturePage.pagination.totalPage != 0) ? '': 'disabled'}">
-                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.pagination.page + 2}, searchFilter=${param.searchFilter}, searchSort=${param.searchSort}, searchSelect=${param.searchSelect}, searchInput=${param.searchInput})}" aria-label="Next">
+                <li class="page-item" th:classappend="${lecturePage.hasNext() ? '': 'disabled'}">
+                    <a class="page-link" th:href="@{/lecture/list(page=${lecturePage.number + 2}, searchFilter=${param.searchFilter}, searchSort=${param.searchSort}, searchSelect=${param.searchSelect}, searchInput=${param.searchInput})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

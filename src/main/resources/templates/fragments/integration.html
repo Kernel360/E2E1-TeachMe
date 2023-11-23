@@ -24,7 +24,7 @@
 <!-- fragment : header -->
 
 <nav th:fragment="headerFragment" class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid" style="margin-left: 200px;">
+  <div class="container-fluid" style="margin-left: 200px; margin-right: 200px;">
     <a class="navbar-brand" href="/">
       <img th:src="@{../images/logo.png}" style="position: relative; bottom:6px;">
     </a>
@@ -32,57 +32,67 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <!-- home 화면: 모두 -->
-        <li class="nav-item">
-          <a class="nav-link active"
-             href="/"> 홈 </a>
-        <!-- 강의 리스트: 로그인한 사용자만 -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: flex; width: 100%;">
         <li class="nav-item">
           <a class="nav-link active"
              aria-current="page"
              href="/lecture/list"> 강의 리스트 </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active"
-             aria-current="page"
-             sec:authorize="isAuthenticated()"
-             href="/favor/list">내가 찜한 강의</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page"
+             sec:authorize="isAuthenticated()">
+            마이페이지
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/favor/list">내가 찜한 강의</a></li>
+            <li><a class="dropdown-item" href="/review/me">내가 작성한 리뷰</a></li>
+<!--            <li><hr class="dropdown-divider"></li>-->
+<!--            <li><a class="dropdown-item" href="/member/me">내 정보 관리</a></li>-->
+          </ul>
         </li>
-        <!-- 크롤링: 관리자만 -->
-        <li class="nav-item">
-          <a class="nav-link active"
-             aria-current="page"
-             sec:authorize="hasAnyRole('ROLE_ADMIN')"
-             href="/crawler"> 크롤링 </a>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page"
+             sec:authorize="hasAnyRole('ROLE_ADMIN')">
+            관리자메뉴
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/crawler">데이터 관리</a></li>
+            <li><a class="dropdown-item" href="/report">통계</a></li>
+          </ul>
         </li>
-        <!-- 로그인: 로그인 안한 사람만 -->
-        <li class="nav-item">
+        <li class="nav-item" style="margin-left: auto" sec:authorize="!isAuthenticated()">
           <a class="nav-link active"
+             style="font-size: 13px; border-radius: 4px; border-color: gainsboro; border-style: solid; border-width: 1px; letter-spacing: 1px; display: inline-block; cursor: pointer;"
              aria-current="page"
              sec:authorize="!isAuthenticated()"
-             href="/login"> 로그인 </a>
-        </li>
-        <!-- 회원가입: 로그인 안한 사람만 -->
-        <li class="nav-item">
+             onmouseover="this.style.color='rgb(2,127,72)'"
+             onmouseout="this.style.color='black'"
+             href="/login"> <i class="fa-solid fa-user"></i> LOGIN </a>
           <a class="nav-link active"
+             style="font-size: 13px; border-radius: 4px; border-color: gainsboro; border-style: solid; border-width: 1px; letter-spacing: 2px; display: inline-block; cursor: pointer;"
              aria-current="page"
              sec:authorize="!isAuthenticated()"
-             href="/member/signup"> 회원가입 </a>
+             onmouseover="this.style.color='rgb(2,127,72)'"
+             onmouseout="this.style.color='black'"
+             href="/member/signup"><i class="fa-solid fa-user-plus"></i> JOIN </a>
         </li>
         <!-- 로그아웃: 로그인한 사람만 -->
         <li class="nav-item">
-          <a class="nav-link active"
-             aria-current="page"
-             sec:authorize="isAuthenticated()"
-             href="/logout"> 로그아웃 </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" style="margin-left: auto;" sec:authorize="isAuthenticated()">
           <a
                   class="nav-link active"
+                  style="display: inline-block;"
                   sec:authorize="isAuthenticated()">
-            <span th:text="${#authentication.principal.name + '님 환영합니다. '}"></span>
+            <span th:text="${#authentication.principal.name + '님 환영합니다! '}"></span>
           </a>
+          <a class="nav-link active"
+             style="font-size: 12px; border-radius: 4px; border-color: gainsboro; border-style: solid; border-width: 1px; letter-spacing: 1px; display: inline-block; cursor: pointer;"
+             aria-current="page"
+             sec:authorize="isAuthenticated()"
+             onmouseover="this.style.color='rgb(2,127,72)'"
+             onmouseout="this.style.color='black'"
+             href="/logout"><i class="fa-solid fa-user-minus"></i> LOGOUT </a>
         </li>
       </ul>
     </div>
