@@ -77,9 +77,11 @@ Teach Me를 통해 여러 플랫폼의 강의를 한 곳에 모아 비교할 수
 </div>
 
 ## API 명세서
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/8c899cd1-c35a-4afc-ad67-04719ed4f22c" width="800">
+
 https://teach-me.live/swagger-ui/
+</div>
 
 ## 시연
-
-
-## 가이드라인
