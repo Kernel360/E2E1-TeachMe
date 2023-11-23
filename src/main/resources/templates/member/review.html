@@ -20,9 +20,10 @@
                     <a class="lecture_title" th:href="@{|/lecture/${review.lecture.id}|}" style="font-size: 17px; font-weight: bolder; color:black" th:text="${'강의명: ' + review.lecture.title}"></a>
                     <br><br>
                     <span style="font-size: 15px; font-weight: bolder; color: black;" th:text="${'🧍' + review.member.name}"></span>
-                    <span th:text="${'(' + review.score + ')'}"></span>
+                    <span  th:text="${'(' + review.score + ')'}"></span>
+                    <input type="hidden" th:id="${'score' + review.id}" th:value="${review.score}">
                     <br><br>
-                    <span th:text="${review.content}"></span>
+                    <span th:id="${'content' + review.id}" th:text="${review.content}"></span>
                     <br><br>
                     <button class="edit_button" th:onclick="'showEditForm(' + ${review.id} + ')'">리뷰 수정</button>
                     <button class="delete_button" th:onclick="'remove(' + ${review.id} + ')'">리뷰 삭제</button>

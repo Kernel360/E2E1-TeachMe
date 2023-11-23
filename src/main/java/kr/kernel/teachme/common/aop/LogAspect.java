@@ -14,7 +14,9 @@ public class LogAspect {
 
     @Pointcut("within(kr.kernel.teachme.domain.crawler.controller.*) || " +
             "within(kr.kernel.teachme.domain.lecture.controller.*) || " +
-            "within(kr.kernel.teachme.domain.member.controller.*)")
+            "within(kr.kernel.teachme.domain.member.controller.*) || " +
+            "within(kr.kernel.teachme.domain.report.controller.*) || " +
+            "within(kr.kernel.teachme.domain.review.controller.*)")
     public void controller(){
 
     }

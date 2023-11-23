@@ -4,34 +4,39 @@
       layout:decorate="~{layout/defaultLayout}">
 
 <head>
-  <link rel="stylesheet" type="text/css" href="css/signin.css">
+  <meta charset="UTF-8">
+  <title>Teach Me : 내가 고르는 강의 - 회원가입</title>
+  <link rel="stylesheet" type="text/css" href="../css/signin.css">
 </head>
 <body>
 <div class="container" layout:fragment="content">
-  <form class="form-signin" method="post" th:action="@{/member/signup}">
-    <h2 class="form-signin-heading">회원가입</h2>
-    <span th:if="${errorMessage}" th:text="${errorMessage}" style="color: red; font-size: 13px; font-weight: bolder"></span>
-    <p>
+  <form id="join-form" class="form-signin" method="post" th:action="@{/member/signup}" style="max-width: 850px;">
+    <img th:src="@{../images/logo_big.png}" style="width: 70%;" alt="로고 이미지"/>
+    <p style="width: 60%;">
       <label for="username" class="sr-only">Id</label>
-      <input type="text" id="username" name="username" class="form-control" th:value="${memberDto != null} ? ${memberDto.username} : ''" placeholder="사용할 id를 입력해주세요." required autofocus>
+      <input type="text" id="username" name="username" class="form-control" th:value="${memberDto != null} ? ${memberDto.username} : ''" placeholder="사용할 id를 입력해주세요." maxlength="250" required autofocus>
+      <span id="usernameMatchMessage" class="text-danger"></span>
       <span th:if="${valid_username}" id="valid_username" th:text="${valid_username}"></span>
     </p>
-    <p>
+    <p style="width: 60%;">
       <label for="name" class="sr-only">Name</label>
-      <input type="text" id="name" name="name" class="form-control" th:value="${memberDto != null} ? ${memberDto.name} : ''" placeholder="이름을 입력해주세요." required autofocus>
+      <input type="text" id="name" name="name" class="form-control" th:value="${memberDto != null} ? ${memberDto.name} : ''" placeholder="이름을 입력해주세요." maxlength="250" required autofocus>
       <span th:if="${valid_name}" id="valid_name" th:text="${valid_username}"></span>
     </p>
-    <p>
+    <p style="width: 60%;">
       <label for="password" class="sr-only">Password</label>
-      <input type="password" id="password" name="password" class="form-control" th:value="${memberDto != null} ? ${memberDto.password} : ''" placeholder="비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요." required>
-      <span th:if="${valid_password}" id="valid_password" th:text="${valid_password}"></span>
+      <input type="password" id="password" name="password" class="form-control" th:value="${memberDto != null} ? ${memberDto.password} : ''" maxlength="250" placeholder="비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요." required>
     </p>
-    <p>
+    <p style="width: 60%;">
       <label for="confirmPassword" class="sr-only">Confirm Password</label>
       <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Password를 한번 더 입력해주세요." required>
       <span id="passwordMatchMessage" class="text-danger"></span>
+      <br th:if="${valid_password}">
+      <span th:if="${valid_password}" id="valid_password" th:text="${valid_password}" class="text-danger"></span>
+      <br th:if="${errorMessage}">
+      <span th:if="${errorMessage}" th:text="${errorMessage}" class="text-danger"></span>
     </p>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">회원가입</button>
+    <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit" onmouseover="this.style.background='#002A11'" onmouseout="this.style.background='#027F48'" style="width: 60%; background-color: #027F48; margin-bottom: 10px; border-color: #002A11; transition: all 0.3s; font-size: 20px;">회원가입</button>
   </form>
   <script src="/js/member/passwordMatch.js"></script>
 </div>
