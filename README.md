@@ -1,13 +1,18 @@
+<div align="center">
 <img src="https://github.com/Kernel360/E2E1-TeachMe/assets/69861207/e4536173-ba9a-4c97-9a03-165a2e21ddbe" width="800"/>
+</div>
 
 ## Teach Me! 📚
 
+<div align="center">
 강의 추천 플랫폼 Teach Me 입니다!<br/>
 온라인 강의 플랫폼이 많아 강의를 비교하는 데 어려움이 있어 Teach Me를 개발하게 되었습니다.<br/>
 Teach Me를 통해 여러 플랫폼의 강의를 한 곳에 모아 비교할 수 있습니다.<br/>
 최신순, 가격순 정렬과 키워드, 강사명 검색 등의 기능을 제공합니다.<br/>
 
 [ -> Teach Me! 바로가기 🍀](https://teach-me.live/)
+
+</div>
 
 ## 팀원 구성
 </table>
