@@ -85,3 +85,78 @@ https://teach-me.live/swagger-ui/
 </div>
 
 ## 시연
+
+1. 홈
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/139b3938-57dd-465b-8bd7-a813cf113840" width="800">
+</div>
+
+2. 회원 가입
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/cfdf4f74-20c3-4295-a421-664e76201534" width="800">
+</div>
+
+3. 로그인
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/397aebcc-b36a-4709-a3aa-268841b9e955" width="800">
+</div>
+
+4. 리뷰 조회
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/be181434-f3a5-4f09-976d-631929e5c972" width="800">
+</div>
+
+5. 리뷰 작성
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/ff8bfe4a-748c-4a1b-916b-1b9cbaa71608" width="800">
+</div>
+
+6. 리뷰 삭제
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/3621d3a6-9435-4ce5-9f2f-c224f6c6602c" width="800">
+</div>
+
+7. 리뷰 수정
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/da549924-beac-47d0-8806-c4479a7fe6af" width="800">
+</div>
+
+8. 찜 하기
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/3786b111-a3e4-44f4-8cdf-559e80b2ad20" width="800">
+</div>
+
+9. 찜 조회
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/563e0a77-28eb-44b3-afdc-0120fac11ab5" width="800">
+</div>
+
+10. 강의 리스트 조회
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/887d94d6-d7ab-4758-88c6-a647f6abc601" width="800">
+</div>
+
+11. 강의 상세 내용 조회
+
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/901dd801-0895-4f56-91f7-4b6df474f3bf" width="800">
+</div>
+
+12. 크롤링 관리 페이지
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/c4e6b420-4929-47ef-b846-c7e1abfd8aa7" width="800">
+</div>
+
+13. 통계 페이지 확인
+<div align="center">
+<img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/bf1a255f-1664-4f4f-9080-95852c33b7d2" width="800">
+</div>
