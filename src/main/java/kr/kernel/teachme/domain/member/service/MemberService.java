@@ -56,7 +56,7 @@ public class MemberService {
             String password,
             String name
     ) {
-        if (memberRepository.findByUsername(username) != null) {
+        if (memberRepository.findByUsername(username).isPresent()) {
             throw new AlreadyRegisteredMemberException();
         }
         return memberRepository.save(new Member(username, passwordEncoder.encode(password), "ROLE_ADMIN", name));
