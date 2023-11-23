@@ -86,125 +86,122 @@ https://teach-me.live/swagger-ui/
 ./
 ├── main/
 │         ├── generated/
-│         ├── java/
-│         │         └── kr/
-│         │             ├── kernel/
-│         │             │         └── teachme/
-│         │             │             ├── TeachmeApplication.java
-│         │             │             ├── common/
-│         │             │             │         ├── annotation/
-│         │             │             │         │         └── LogExecutionTime.java
-│         │             │             │         ├── aop/
-│         │             │             │         │         └── LogAspect.java
-│         │             │             │         ├── config/
-│         │             │             │         │         ├── Appconfig.java
-│         │             │             │         │         ├── InitializeDefaultConfig.java
-│         │             │             │         │         ├── PasswordEncoderConfig.java
-│         │             │             │         │         ├── QuerydslConfiguration.java
-│         │             │             │         │         ├── SpringSecurityConfig.java
-│         │             │             │         │         ├── SwaggerConfig.java
-│         │             │             │         │         └── UrlConfig.java
-│         │             │             │         ├── exception/
-│         │             │             │         │         ├── AlreadyRegisteredMemberException.java
-│         │             │             │         │         ├── CrawlerException.java
-│         │             │             │         │         ├── CustomAuthenticationFailureHandler.java
-│         │             │             │         │         ├── GlobalExceptionHandler.java
-│         │             │             │         │         ├── MemberNotFoundException.java
-│         │             │             │         │         ├── NotOwnerForReviewException.java
-│         │             │             │         │         └── ReviewNotFoundException.java
-│         │             │             │         ├── jwt/
-│         │             │             │         │         ├── JwtAuthenticationFilter.java
-│         │             │             │         │         ├── JwtAuthorizationFilter.java
-│         │             │             │         │         ├── JwtKey.java
-│         │             │             │         │         ├── JwtProperties.java
-│         │             │             │         │         ├── JwtUtils.java
-│         │             │             │         │         └── SigningKeyResolver.java
-│         │             │             │         └── util/
-│         │             │             │             ├── DateUtil.java
-│         │             │             │             └── StringUtil.java
-│         │             │             └── domain/
-│         │             │                 ├── crawler/
-│         │             │                 │         ├── component/
-│         │             │                 │         │         ├── AutoCrawler.java
-│         │             │                 │         │         ├── FastcampusAutoCrawler.java
-│         │             │                 │         │         └── InflearnAutoCrawler.java
-│         │             │                 │         ├── controller/
-│         │             │                 │         │         └── CrawlerController.java
-│         │             │                 │         ├── dto/
-│         │             │                 │         │         ├── CrawlingRequest.java
-│         │             │                 │         │         ├── CrawlingResponse.java
-│         │             │                 │         │         ├── FastcampusLectureDetailResponse.java
-│         │             │                 │         │         ├── FastcampusLectureListResponse.java
-│         │             │                 │         │         ├── FastcampusLectureResponse.java
-│         │             │                 │         │         ├── FastcampusLectureUpdateResponse.java
-│         │             │                 │         │         ├── InflearnLectureDetailResponse.java
-│         │             │                 │         │         └── InflearnLectureListResponse.java
-│         │             │                 │         └── service/
-│         │             │                 │             ├── FastcampusLectureDetailCrawlingService.java
-│         │             │                 │             ├── FastcampusLectureListCrawlingService.java
-│         │             │                 │             ├── InflearnLectureDetailCrawlingService.java
-│         │             │                 │             ├── InflearnLectureListCrawlingService.java
-│         │             │                 │             ├── LectureDetailCrawlingService.java
-│         │             │                 │             └── LectureListCrawlingService.java
-│         │             │                 ├── lecture/
-│         │             │                 │         ├── controller/
-│         │             │                 │         │         ├── HomeController.java
-│         │             │                 │         │         └── LectureController.java
-│         │             │                 │         ├── dto/
-│         │             │                 │         │         └── SearchRequest.java
-│         │             │                 │         ├── entity/
-│         │             │                 │         │         └── Lecture.java
-│         │             │                 │         ├── repository/
-│         │             │                 │         │         ├── LectureRepository.java
-│         │             │                 │         │         ├── LectureRepositoryCustom.java
-│         │             │                 │         │         └── LectureRepositoryCustomImpl.java
-│         │             │                 │         └── service/
-│         │             │                 │             └── LectureService.java
-│         │             │                 ├── member/
-│         │             │                 │         ├── controller/
-│         │             │                 │         │         ├── FavorController.java
-│         │             │                 │         │         ├── LoginController.java
-│         │             │                 │         │         ├── MyPageController.java
-│         │             │                 │         │         └── SignUpController.java
-│         │             │                 │         ├── dto/
-│         │             │                 │         │         ├── FavorRequest.java
-│         │             │                 │         │         ├── FavorResponse.java
-│         │             │                 │         │         └── MemberRegisterDto.java
-│         │             │                 │         ├── entity/
-│         │             │                 │         │         ├── Member.java
-│         │             │                 │         │         └── MemberFavorLecture.java
-│         │             │                 │         ├── repository/
-│         │             │                 │         │         ├── MemberFavorRepository.java
-│         │             │                 │         │         └── MemberRepository.java
-│         │             │                 │         └── service/
-│         │             │                 │             ├── MemberFavorService.java
-│         │             │                 │             └── MemberService.java
-│         │             │                 ├── report/
-│         │             │                 │         ├── component/
-│         │             │                 │         │         └── ReviewStatisticsScheduler.java
-│         │             │                 │         ├── controller/
-│         │             │                 │         │         ├── ReportController.java
-│         │             │                 │         │         └── ReviewStatisticsController.java
-│         │             │                 │         ├── dto/
-│         │             │                 │         │         └── ReviewReportResponse.java
-│         │             │                 │         ├── entity/
-│         │             │                 │         │         └── Report.java
-│         │             │                 │         └── repository/
-│         │             │                 │             └── ReportRepository.java
-│         │             │                 └── review/
-│         │             │                     ├── controller/
-│         │             │                     │         └── ReviewController.java
-│         │             │                     ├── dto/
-│         │             │                     │         ├── RemoveRequest.java
-│         │             │                     │         ├── ReviewRequest.java
-│         │             │                     │         └── ReviewResponse.java
-│         │             │                     ├── entity/
-│         │             │                     │         └── Review.java
-│         │             │                     ├── repository/
-│         │             │                     │         └── ReviewRepository.java
-│         │             │                     └── service/
-│         │             │                         └── ReviewService.java
-│         │             └── kernel360/
+│         ├── java/kr/kernel/teachme/
+│         │         └── teachme/
+│         │             ├── TeachmeApplication.java
+│         │             ├── common/
+│         │             │         ├── annotation/
+│         │             │         │         └── LogExecutionTime.java
+│         │             │         ├── aop/
+│         │             │         │         └── LogAspect.java
+│         │             │         ├── config/
+│         │             │         │         ├── Appconfig.java
+│         │             │         │         ├── InitializeDefaultConfig.java
+│         │             │         │         ├── PasswordEncoderConfig.java
+│         │             │         │         ├── QuerydslConfiguration.java
+│         │             │         │         ├── SpringSecurityConfig.java
+│         │             │         │         ├── SwaggerConfig.java
+│         │             │         │         └── UrlConfig.java
+│         │             │         ├── exception/
+│         │             │         │         ├── AlreadyRegisteredMemberException.java
+│         │             │         │         ├── CrawlerException.java
+│         │             │         │         ├── CustomAuthenticationFailureHandler.java
+│         │             │         │         ├── GlobalExceptionHandler.java
+│         │             │         │         ├── MemberNotFoundException.java
+│         │             │         │         ├── NotOwnerForReviewException.java
+│         │             │         │         └── ReviewNotFoundException.java
+│         │             │         ├── jwt/
+│         │             │         │         ├── JwtAuthenticationFilter.java
+│         │             │         │         ├── JwtAuthorizationFilter.java
+│         │             │         │         ├── JwtKey.java
+│         │             │         │         ├── JwtProperties.java
+│         │             │         │         ├── JwtUtils.java
+│         │             │         │         └── SigningKeyResolver.java
+│         │             │         └── util/
+│         │             │             ├── DateUtil.java
+│         │             │             └── StringUtil.java
+│         │             └── domain/
+│         │                       ├── crawler/
+│         │                       │         ├── component/
+│         │                       │         │         ├── AutoCrawler.java
+│         │                       │         │         ├── FastcampusAutoCrawler.java
+│         │                       │         │         └── InflearnAutoCrawler.java
+│         │                       │         ├── controller/
+│         │                       │         │         └── CrawlerController.java
+│         │                       │         ├── dto/
+│         │                       │         │         ├── CrawlingRequest.java
+│         │                       |         │         ├── CrawlingResponse.java
+│         │                       │         │         ├── FastcampusLectureDetailResponse.java
+│         │                       │         │         ├── FastcampusLectureListResponse.java
+│         │                       │         │         ├── FastcampusLectureResponse.java
+│         │                       │         │         ├── FastcampusLectureUpdateResponse.java
+│         │                       │         │         ├── InflearnLectureDetailResponse.java
+│         │                       │         │         └── InflearnLectureListResponse.java
+│         │                       │         └── service/
+│         │                       │             ├── FastcampusLectureDetailCrawlingService.java
+│         │                       │             ├── FastcampusLectureListCrawlingService.java
+│         │                       |             ├── InflearnLectureDetailCrawlingService.java
+│         │                       │             ├── InflearnLectureListCrawlingService.java
+│         │                       │             ├── LectureDetailCrawlingService.java
+│         │                       │             └── LectureListCrawlingService.java
+│         │                       ├── lecture/
+│         │                       │         ├── controller/
+│         │                       │         │         ├── HomeController.java
+│         │                       │         │         └── LectureController.java
+│         │                       │         ├── dto/
+│         │                       │         │         └── SearchRequest.java
+│         │                       │         ├── entity/
+│         │                       │         │         └── Lecture.java
+│         │                       │         ├── repository/
+│         │                       │         │         ├── LectureRepository.java
+│         │                       │         │         ├── LectureRepositoryCustom.java
+│         │                       │         │         └── LectureRepositoryCustomImpl.java
+│         │                       │         └── service/
+│         │                       │             └── LectureService.java
+│         │                       ├── member/
+│         │                       │         ├── controller/
+│         │                       │         │         ├── FavorController.java
+│         │                       │         │         ├── LoginController.java
+│         │                       │         │         ├── MyPageController.java
+│         │                       │         │         └── SignUpController.java
+│         │                       │         ├── dto/
+│         │                       │         │         ├── FavorRequest.java
+│         │                       │         │         ├── FavorResponse.java
+│         │                       │         │         └── MemberRegisterDto.java
+│         │                       │         ├── entity/
+│         │                       │         │         ├── Member.java
+│         │                       │         │         └── MemberFavorLecture.java
+│         │                       │         ├── repository/
+│         │                       │         │         ├── MemberFavorRepository.java
+│         │                       │         │         └── MemberRepository.java
+│         │                       │         └── service/
+│         │                       │             ├── MemberFavorService.java
+│         │                       │             └── MemberService.java
+│         │                       ├── report/
+│         │                       │         ├── component/
+│         │                       │         │         └── ReviewStatisticsScheduler.java
+│         │                       │         ├── controller/
+│         │                       │         │         ├── ReportController.java
+│         │                       │         │         └── ReviewStatisticsController.java
+│         │                       │         ├── dto/
+│         │                       |         │         └── ReviewReportResponse.java
+│         │                       │         ├── entity/
+│         │                       │         │         └── Report.java
+│         │                       │         └── repository/
+│         │                       │             └── ReportRepository.java
+│         │                       └── review/
+│         │                                 ├── controller/
+│         │                                 │         └── ReviewController.java
+│         │                                 ├── dto/
+│         │                                 │         ├── RemoveRequest.java
+│         │                                 │         ├── ReviewRequest.java
+│         │                                 │         └── ReviewResponse.java
+│         │                                 ├── entity/
+│         │                                 │         └── Review.java
+│         │                                 ├── repository/
+│         │                                 │         └── ReviewRepository.java
+│         │                                 └── service/
+│         │                                           └── ReviewService.java
 │         └── resources/
 │             ├── META-INF/
 │             ├── application.yml
