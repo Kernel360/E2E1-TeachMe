@@ -15,6 +15,8 @@ Teach Me를 통해 여러 플랫폼의 강의를 한 곳에 모아 비교할 수
 </div>
 
 ## 팀원 구성
+
+<div align="center">
 </table>
 <table>
   <tbody>
@@ -25,8 +27,11 @@ Teach Me를 통해 여러 플랫폼의 강의를 한 곳에 모아 비교할 수
     </tr>
   </tbody>
 </table>
+</div>
 
 ## 기술 스택
+
+<div align="center">
 <div>
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
   <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
@@ -47,6 +52,7 @@ Teach Me를 통해 여러 플랫폼의 강의를 한 곳에 모아 비교할 수
   <img src="https://img.shields.io/badge/Amazon CloudWatch-FF4F8B?style=for-the-badge&logo=Amazon CloudWatch&logoColor=white">
   <img src="https://img.shields.io/badge/AWS Lambda-FF9900?style=for-the-badge&logo=AWS Lambda&logoColor=white">
 </div>
+</div>
 
 ## 개발 환경
 - MySQL 8.1.0
@@ -57,16 +63,23 @@ Teach Me를 통해 여러 플랫폼의 강의를 한 곳에 모아 비교할 수
 - Docker
 
 ## 시스템 아키텍처
+
+<div align="center">
 <img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/215c2b75-8c79-4bf0-82e6-2af8beefd96c" width="800">
 <img src="https://github.com/Kernel360/E2E1-TeachMe/assets/69861207/75c68093-e892-403b-adc2-034159920d13" width="500">
+</div>
 
 ## DB ERD
+
+<div align="center">
 <img src="https://github.com/Kernel360/E2E1-TeachMe/assets/118032886/7dd7c9f6-9e8b-4b8b-8934-b7c8bf242f9f" width="800">
+</div>
 
 ## API 명세서
 https://teach-me.live/swagger-ui/
 
 ## 프로젝트 구조
+
 
 ```
 ./
