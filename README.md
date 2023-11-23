@@ -264,49 +264,6 @@ https://teach-me.live/swagger-ui/
 │             │             └── report.html
 │             └── url.properties
 └── test/
-          └── java/
-              └── kr/
-                  ├── kernel/
-                  │         └── teachme/
-                  │             ├── TeachmeApplicationTests.java
-                  │             ├── common/
-                  │             │         ├── config/
-                  │             │         │         ├── PasswordEncoderConfigTest.java
-                  │             │         │         └── SpringSecurityConfigTest.java
-                  │             │         ├── exception/
-                  │             │         │         └── AlreadyRegisteredMemberExceptionTest.java
-                  │             │         ├── jwt/
-                  │             │         │         ├── JwtAuthenticationFilterTest.java
-                  │             │         │         └── JwtAuthorizationFilterTest.java
-                  │             │         └── util/
-                  │             │             ├── DateUtilTest.java
-                  │             │             └── StringUtilTest.java
-                  │             └── domain/
-                  │                 ├── crawler/
-                  │                 │         ├── component/
-                  │                 │         │         ├── FastcampusAutoCrawlerTest.java
-                  │                 │         │         └── InflearnAutoCrawlerTest.java
-                  │                 │         └── controller/
-                  │                 │             └── CrawlerControllerTest.java
-                  │                 ├── lecture/
-                  │                 │         ├── controller/
-                  │                 │         │         ├── HomeControllerTest.java
-                  │                 │         │         └── LectureControllerTest.java
-                  │                 │         ├── dto/
-                  │                 │         │         ├── PaginationResponseTest.java
-                  │                 │         │         ├── PaginationTest.java
-                  │                 │         │         └── SearchRequestTest.java
-                  │                 │         ├── entity/
-                  │                 │         │         └── LectureTest.java
-                  │                 │         ├── repository/
-                  │                 │         │         └── LecutreRepositoryCustomImplTest.java
-                  │                 │         └── service/
-                  │                 │             └── LectureServiceTest.java
-                  │                 └── member/
-                  │                     └── service/
-                  │                         └── MemberServiceTest.java
-                  └── kernel360/
-
 ```
 
 ## 프로젝트 기능
