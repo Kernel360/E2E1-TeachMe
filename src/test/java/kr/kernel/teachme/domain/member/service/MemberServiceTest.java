@@ -46,9 +46,10 @@ public class MemberServiceTest {
     @DisplayName("이미 가입된 username으로 회원가입을 시도할 경우 AlreadyRegisteredMemberException을 throw 한다.")
     void signupAlreadyResisteredExceptionTest() {
         //given
-        String username = "user";
+        String username = "user1";
         String password = "user12345678*";
         String name = "홍길동1";
+        memberService.signup(username,password,name); //한 번 가입
 
         //when
         assertThrows(AlreadyRegisteredMemberException.class, ()-> memberService.signup(username,password,name));
