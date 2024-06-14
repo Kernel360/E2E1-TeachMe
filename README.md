@@ -26,7 +26,7 @@ Teach Me를 통해 여러 플랫폼의 강의를 한 곳에 모아 비교할 수
   <tbody>
     <tr>
       <td align="center"><a href="https://github.com/stoneHee99"><img src="https://avatars.githubusercontent.com/u/101683784?v=4" alt="" width="200" height="200"/><br /><sub><b> 박석희 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/yejincode"><img src="https://avatars.githubusercontent.com/u/69861207?v=4" alt="" width="200" height="200"/><br /><sub><b> 송예진 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/yejincode"><img src="https://avatars.githubusercontent.com/u/69861207?v=4" alt="" width="200" height="200"/><br /><sub><b> 송시원 </b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/minson96"><img src="https://avatars.githubusercontent.com/u/118032886?v=4" alt="" width="200" height="200"/><br /><sub><b> 손민우 </b></sub></a><br /></td>
     </tr>
   </tbody>
